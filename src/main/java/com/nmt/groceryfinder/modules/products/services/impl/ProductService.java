@@ -3,7 +3,7 @@ package com.nmt.groceryfinder.modules.products.services.impl;
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
 import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.exceptions.messages.ProductsModuleExceptionMessages;
-import com.nmt.groceryfinder.modules.inventories.domain.model.dtos.InventoryDto;
+import com.nmt.groceryfinder.modules.inventories.domain.dtos.InventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.mappers.*;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.*;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;

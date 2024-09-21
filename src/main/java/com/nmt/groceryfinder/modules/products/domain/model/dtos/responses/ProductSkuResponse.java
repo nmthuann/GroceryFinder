@@ -1,6 +1,6 @@
 package com.nmt.groceryfinder.modules.products.domain.model.dtos.responses;
 
-import com.nmt.groceryfinder.modules.inventories.domain.model.dtos.InventoryDto;
+import com.nmt.groceryfinder.modules.inventories.domain.dtos.InventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

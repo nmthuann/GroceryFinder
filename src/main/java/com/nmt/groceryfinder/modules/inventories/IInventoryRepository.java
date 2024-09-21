@@ -1,7 +1,7 @@
-package com.nmt.groceryfinder.modules.inventories.repositories;
+package com.nmt.groceryfinder.modules.inventories;
 
 
-import com.nmt.groceryfinder.modules.inventories.domain.model.entities.InventoryEntity;
+import com.nmt.groceryfinder.modules.inventories.domain.InventoryEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -25,7 +25,7 @@ public interface IInventoryRepository
         extends JpaRepository<InventoryEntity, UUID>
 {
     List<InventoryEntity> findByProductSkuOrderByCreatedAt(ProductSkuEntity productSkuCreated);
-    Optional<InventoryEntity> findByProductSkuIdAndWarehouseId(Integer productSkuId, Integer warehouseId);
+    Optional<InventoryEntity> findByProductSkuId(Integer productSkuId);
 
     @Modifying
     @Transactional

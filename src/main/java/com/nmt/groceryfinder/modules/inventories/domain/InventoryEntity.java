@@ -1,8 +1,9 @@
-package com.nmt.groceryfinder.modules.inventories.domain.model.entities;
+package com.nmt.groceryfinder.modules.inventories.domain;
 
 
 import com.nmt.groceryfinder.common.bases.AuditableEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
+import com.nmt.groceryfinder.modules.users.domain.model.entities.UserEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -40,16 +41,10 @@ public class InventoryEntity extends AuditableEntity {
     @Column(nullable = false)
     private Boolean wholesale;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "warehouse_id",
-            foreignKey = @ForeignKey(name = "fk_inventory_warehouse")
-    )
-    private WarehouseEntity warehouse;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(
             name = "product_sku_id",
+            unique = true,
             foreignKey = @ForeignKey(name = "fk_inventory_product_sku")
     )
     private ProductSkuEntity productSku;

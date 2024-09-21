@@ -1,16 +1,11 @@
-package com.nmt.groceryfinder.modules.inventories.services.impl;
+package com.nmt.groceryfinder.modules.inventories;
 
 
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
 import com.nmt.groceryfinder.exceptions.ModuleException;
-import com.nmt.groceryfinder.modules.inventories.domain.mappers.InventoryMapper;
-import com.nmt.groceryfinder.modules.inventories.domain.mappers.WarehouseMapper;
-import com.nmt.groceryfinder.modules.inventories.domain.model.dtos.InventoryDto;
-import com.nmt.groceryfinder.modules.inventories.domain.model.dtos.requests.CreateInventoryDto;
-import com.nmt.groceryfinder.modules.inventories.domain.model.entities.InventoryEntity;
-import com.nmt.groceryfinder.modules.inventories.repositories.IInventoryRepository;
-import com.nmt.groceryfinder.modules.inventories.services.IInventoryService;
-import com.nmt.groceryfinder.modules.inventories.services.IWarehouseService;
+import com.nmt.groceryfinder.modules.inventories.domain.dtos.CreateInventoryDto;
+import com.nmt.groceryfinder.modules.inventories.domain.dtos.InventoryDto;
+import com.nmt.groceryfinder.modules.inventories.domain.InventoryEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +28,14 @@ public class InventoryService
 {
     private final IInventoryRepository inventoryRepository;
     private final InventoryMapper inventoryMapper;
-    private final IWarehouseService warehouseService;
-    private final WarehouseMapper warehouseMapper;
     @Autowired
     public InventoryService(
             IInventoryRepository inventoryRepository,
-            InventoryMapper inventoryMapper,
-            IWarehouseService warehouseService,
-            WarehouseMapper warehouseMapper
+            InventoryMapper inventoryMapper
     ) {
         super(inventoryRepository, inventoryMapper);
         this.inventoryRepository = inventoryRepository;
         this.inventoryMapper = inventoryMapper;
-        this.warehouseService = warehouseService;
-        this.warehouseMapper = warehouseMapper;
     }
 
     @Override
@@ -60,11 +49,10 @@ public class InventoryService
     @Transactional
     public InventoryDto updateInventory(
             Integer productSkuId,
-            Integer warehouseId,
             int soldQuantity
     ) throws ModuleException {
         InventoryEntity inventory =
-                this.inventoryRepository.findByProductSkuIdAndWarehouseId(productSkuId, warehouseId)
+                this.inventoryRepository.findByProductSkuId(productSkuId)
                 .orElseThrow(() -> new ModuleException("Inventory not found"));
         if (inventory.getStock() < soldQuantity) {
             throw new ModuleException("Not enough stock available");
@@ -87,18 +75,13 @@ public class InventoryService
         inventory.setImportPrice(data.importPrice());
         inventory.setWholesale(data.wholesale());
         inventory.setProductSku(productSkuCreated);
-        inventory.setWarehouse(
-                this.warehouseMapper.toEntity(
-                        this.warehouseService.getOneById(data.warehouseId()).get()
-                )
-        );
         return Optional.ofNullable(this.inventoryMapper.toDto(this.inventoryRepository.save(inventory)));
     }
 
     @Override
-    public Optional<InventoryDto> getOneByProductSkuIdAndWarehouseId(Integer productSkuId, Integer warehouseId) {
+    public Optional<InventoryDto> getOneByProductSkuId(Integer productSkuId) {
         Optional<InventoryEntity> findInventory =
-                this.inventoryRepository.findByProductSkuIdAndWarehouseId(productSkuId, warehouseId);
+                this.inventoryRepository.findByProductSkuId(productSkuId);
         return findInventory.map(entity -> this.inventoryMapper.toDto(entity));
     }
 }

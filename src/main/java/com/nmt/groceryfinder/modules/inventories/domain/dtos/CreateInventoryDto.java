@@ -1,4 +1,4 @@
-package com.nmt.groceryfinder.modules.inventories.domain.model.dtos.requests;
+package com.nmt.groceryfinder.modules.inventories.domain.dtos;
 
 import java.util.Date;
 

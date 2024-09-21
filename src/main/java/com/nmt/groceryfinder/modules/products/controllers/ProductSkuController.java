@@ -2,8 +2,8 @@ package com.nmt.groceryfinder.modules.products.controllers;
 
 
 import com.nmt.groceryfinder.exceptions.ModuleException;
-import com.nmt.groceryfinder.modules.inventories.domain.model.dtos.InventoryDto;
-import com.nmt.groceryfinder.modules.inventories.domain.model.dtos.requests.CreateInventoryDto;
+import com.nmt.groceryfinder.modules.inventories.domain.dtos.InventoryDto;
+import com.nmt.groceryfinder.modules.inventories.domain.dtos.CreateInventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreatePriceDto;

@@ -1,8 +1,7 @@
-package com.nmt.groceryfinder.modules.inventories.controllers;
+package com.nmt.groceryfinder.modules.inventories;
 
 
-import com.nmt.groceryfinder.modules.inventories.domain.model.dtos.InventoryDto;
-import com.nmt.groceryfinder.modules.inventories.services.IInventoryService;
+import com.nmt.groceryfinder.modules.inventories.domain.dtos.InventoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +25,10 @@ public class InventoryController {
 
     @GetMapping("")
     public ResponseEntity<InventoryDto> getInventoryBySkuAndWarehouse(
-            @RequestParam(required = false) Integer productSkuId,
-            @RequestParam(required = false) Integer warehouseId
+            @RequestParam(required = false) Integer productSkuId
     ) {
         Optional<InventoryDto> inventory =
-                inventoryService.getOneByProductSkuIdAndWarehouseId(productSkuId, warehouseId);
+                inventoryService.getOneByProductSkuId(productSkuId);
         return inventory.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }

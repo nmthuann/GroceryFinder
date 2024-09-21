@@ -1,7 +1,7 @@
 package com.nmt.groceryfinder.modules.products.domain.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.nmt.groceryfinder.modules.inventories.domain.model.entities.InventoryEntity;
+import com.nmt.groceryfinder.modules.inventories.domain.InventoryEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,6 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "product_skus",
@@ -49,9 +48,9 @@ public class ProductSkuEntity {
     @JsonIgnore
     private SpuSkuMappingEntity spuSkuMapping;
 
-    @OneToMany(mappedBy = "productSku", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "productSku")
     @JsonIgnore
-    private List<InventoryEntity> inventories;
+    private InventoryEntity inventory;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)

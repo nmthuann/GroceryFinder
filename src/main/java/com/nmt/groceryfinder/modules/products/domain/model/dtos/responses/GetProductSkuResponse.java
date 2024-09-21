@@ -1,7 +1,5 @@
 package com.nmt.groceryfinder.modules.products.domain.model.dtos.responses;
 
-import com.nmt.groceryfinder.modules.inventories.domain.model.dtos.WarehouseDto;
-
 /**
  * @author LENOVO
  * @project ecommerce-spring-boot-be

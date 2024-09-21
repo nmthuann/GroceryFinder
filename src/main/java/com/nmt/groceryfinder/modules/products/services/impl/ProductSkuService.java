@@ -2,11 +2,10 @@ package com.nmt.groceryfinder.modules.products.services.impl;
 
 
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
-import com.nmt.groceryfinder.common.enums.WarehouseSellOrderEnum;
 import com.nmt.groceryfinder.exceptions.ModuleException;
-import com.nmt.groceryfinder.modules.inventories.domain.model.dtos.InventoryDto;
-import com.nmt.groceryfinder.modules.inventories.domain.model.dtos.requests.CreateInventoryDto;
-import com.nmt.groceryfinder.modules.inventories.services.IInventoryService;
+import com.nmt.groceryfinder.modules.inventories.domain.dtos.InventoryDto;
+import com.nmt.groceryfinder.modules.inventories.domain.dtos.CreateInventoryDto;
+import com.nmt.groceryfinder.modules.inventories.IInventoryService;
 import com.nmt.groceryfinder.modules.products.domain.mappers.ProductSkuMapper;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
@@ -100,8 +99,8 @@ public class ProductSkuService
     public Optional<InventoryDto> getInventoryOnlineByProductSkuId(Integer id) throws ModuleException {
         this.productSkuRepository.findById(id)
                 .orElseThrow(() -> new ModuleException("ProductSku not found"));
-        return this.inventoryService.getOneByProductSkuIdAndWarehouseId(
-                id, WarehouseSellOrderEnum.WAREHOUSE_ONLINE.getWarehouseId()
+        return this.inventoryService.getOneByProductSkuId(
+                id
         );
     }
 }

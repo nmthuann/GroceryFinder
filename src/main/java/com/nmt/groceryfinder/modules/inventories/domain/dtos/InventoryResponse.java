@@ -1,4 +1,4 @@
-package com.nmt.groceryfinder.modules.inventories.domain.model.dtos.responses;
+package com.nmt.groceryfinder.modules.inventories.domain.dtos;
 
 import com.nmt.ecommercespringbootbe.modules.inventories.domain.model.dtos.WarehouseDto;
 

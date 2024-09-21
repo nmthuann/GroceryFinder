@@ -1,8 +1,8 @@
-package com.nmt.groceryfinder.modules.inventories.domain.mappers;
+package com.nmt.groceryfinder.modules.inventories;
 
 import com.nmt.groceryfinder.common.bases.AbstractModelMapper;
-import com.nmt.groceryfinder.modules.inventories.domain.model.dtos.InventoryDto;
-import com.nmt.groceryfinder.modules.inventories.domain.model.entities.InventoryEntity;
+import com.nmt.groceryfinder.modules.inventories.domain.dtos.InventoryDto;
+import com.nmt.groceryfinder.modules.inventories.domain.InventoryEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
