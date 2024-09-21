@@ -4,18 +4,53 @@ networks:
   default:
 
 services:
+  zookeeper:
+    image: quay.io/debezium/zookeeper:2.7
+    ports:
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
+    networks:
+      - default
+
+  kafka:
+    image: quay.io/debezium/kafka:2.7
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      ZOOKEEPER_CONNECT: zookeeper:2181
+#      KAFKA_LISTENERS: EXTERNAL_SAME_HOST://:9092,INTERNAL://:9092
+#      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,EXTERNAL_SAME_HOST://localhost:9092
+#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+#      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - default
+
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - "8080:8080"
+    environment:
+      DYNAMIC_CONFIG_ENABLED: true
+      KAFKA_CLUSTERS_0_NAME: "local"
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka:9092"
+
   postgresql-db:
     container_name: postgresql-db-container
-    image: postgres:17rc1-alpine
+    image: debezium/postgres:16-alpine
     restart: always
     ports:
-      - "5433:5432"
+      - "5432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123456  # Fixed this
-      - POSTGRES_DB=ecommerce_core
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: grocery
     volumes:
-      - ecommerce-postgresql-db:/var/lib/postgresql/data  # Correct volume path
+      - grocery-finder-postgresql-db:/var/lib/postgresql/data
     networks:
       - default
 
@@ -26,13 +61,13 @@ services:
       - "6379:6379"
     restart: always
     volumes:
-      - redis-data:/data  # Corrected volume
+      - redis-data:/data
     networks:
       - default
 
-  ecommerce-spring-boot-be:
-    container_name: ecommerce-spring-boot-be
-    image: ecommerce-spring-boot-be:1.0 # Make sure this image exists, or build it correctly
+  grocery-finder-spring-boot:
+    container_name: grocery-finder-spring-boot-container
+    image: grocery-finder-spring-boot:1.0
     ports:
       - "3333:3333"
     depends_on:
@@ -41,80 +76,53 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql-db:5432/ecommerce_core?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false  # Use the correct service name for PostgreSQL
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=123456
-      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=org.postgresql.Driver
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql-db:5432/grocery?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 123456
+      SPRING_DATASOURCE_DRIVER-CLASS-NAME: org.postgresql.Driver
     networks:
       - default
 
-  nginx:
-    container_name: nginx-container
-    image: nginx:latest
-    restart: always
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.24
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
     ports:
-      - "80:80"
-    depends_on:
-      - ecommerce-spring-boot-be
+      - "9200:9200"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf  # Mount custom Nginx config file
+      - es-data:/usr/share/elasticsearch/data
+    networks:
+      - default
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.24
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+    depends_on:
+      - elasticsearch
+    networks:
+      - default
+
+  connect:
+    image: debezium/connect:2.7
+    ports:
+      - "8083:8083"
+    environment:
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: my_connect_configs
+      OFFSET_STORAGE_TOPIC: my_connect_offsets
+      STATUS_STORAGE_TOPIC: my_connect_statuses
+    depends_on:
+      - kafka
     networks:
       - default
 
 volumes:
-  ecommerce-postgresql-db:
-  redis-data:  # Added a volume for Redis
+  grocery-finder-postgresql-db:
+  redis-data:
+  es-data:
 
-
-#variables:
-#  IMAGE_NAME: tonykien2012/demo-gitlab-cicd-app
-#  IMAGE_TAG: python-app-1.0
-#
-#stages:
-#  - test
-#  - build
-#  - deploy
-#
-#run_tests:
-#  stage: test
-#  image: python:3.9-slim-buster
-#  before_script:
-#    - apt-get update && apt-get install make
-#  script:
-#    - make test
-#
-#.build:
-#  stage: build
-#  image: docker:20.10.16
-#  services:
-#    - docker:20.10.16-dind
-#  variables:
-#    DOCKER_TLS_CERTDIR: "/certs"
-#  before_script:
-#    - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
-#  script:
-#    - docker build -t $IMAGE_NAME:v1.0.0-$CI_COMMIT_SHA .
-#    - docker push $IMAGE_NAME:v1.0.0-$CI_COMMIT_SHA
-#
-#build-dev:
-#  extends: .build
-#  only:
-#    - main
-#deploy:
-#  stage: deploy
-#  before_script:
-#    - chmod 400 $SSH_KEY
-#  script:
-#    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@35.247.145.253 "
-#      docker login -u $REGISTRY_USER -p $REGISTRY_PASS &&
-#      docker run -d -p 5000:5000 $IMAGE_NAME:$CI_COMMIT_SHA"
-# $ docker run -it --rm --name zookeeper -p 2181:2181 -p 2888:2888 -p 3888:3888 quay.io/debezium/zookeeper:2.7
-# $ docker run -it --rm --name kafka -p 9092:9092 --link zookeeper:zookeeper quay.io/debezium/kafka:2.7
-# $ docker run -it --rm --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=debezium -e MYSQL_USER=mysqluser -e MYSQL_PASSWORD=mysqlpw quay.io/debezium/example-mysql:2.7
-# $ docker run -it --rm --name connect -p 8083:8083 -e GROUP_ID=1 -e CONFIG_STORAGE_TOPIC=my_connect_configs -e OFFSET_STORAGE_TOPIC=my_connect_offsets -e STATUS_STORAGE_TOPIC=my_connect_statuses --link kafka:kafka --link mysql:mysql quay.io/debezium/connect:2.7
-# $ docker stop mysqlterm watcher connect mysql kafka zookeeper
-# $ docker run -it --rm --name kafka-ui -p 9090:8080 --link kafka:kafka -e KAFKA_CLUSTERS_O_NAME=local -e KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
-# https://medium.com/@cloud_geek/run-debezium-kafka-connect-using-docker-kafka-zookeeper-kafdrop-kafka-connect-docker-2e67760ef85d
-# docker run -it --rm --name kafka-ui -p 9090:8080 --link kafka:kafka \
-#  -e KAFKA_CLUSTERS_0_NAME=local \
-#  -e KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
+# $ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d @register-postgres.json

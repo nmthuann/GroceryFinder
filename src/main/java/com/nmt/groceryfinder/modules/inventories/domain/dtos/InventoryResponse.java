@@ -1,6 +1,5 @@
 package com.nmt.groceryfinder.modules.inventories.domain.dtos;
 
-import com.nmt.ecommercespringbootbe.modules.inventories.domain.model.dtos.WarehouseDto;
 
 /**
  * @author LENOVO
@@ -12,7 +11,6 @@ public record InventoryResponse(
         Double importPrice,
         Integer conversionFactor,
         String unit,
-        Boolean wholesale,
-        WarehouseDto warehouse
+        Boolean wholesale
 ) {
 }

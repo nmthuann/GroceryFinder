@@ -49,8 +49,6 @@ public class InventoryDto extends AbstractBaseDto implements Serializable {
     @NotNull(message = "Wholesale is required")
     private Boolean wholesale;
 
-    @NotNull(message = "Warehouse is required")
-    private WarehouseDto warehouse;
 
     @JsonIgnore
     private ProductSkuDto productSku;

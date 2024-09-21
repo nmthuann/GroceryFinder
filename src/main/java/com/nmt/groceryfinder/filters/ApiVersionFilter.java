@@ -1,7 +1,6 @@
 package com.nmt.groceryfinder.filters;
 
-
-import com.nmt.groceryfinder.common.ApiVersionEnum;
+import com.nmt.groceryfinder.common.enums.ApiVersionEnum;
 import com.nmt.groceryfinder.exceptions.messages.AuthExceptionMessages;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

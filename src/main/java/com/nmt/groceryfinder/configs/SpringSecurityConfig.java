@@ -1,8 +1,8 @@
 package com.nmt.groceryfinder.configs;
 
-import com.nmt.ecommercespringbootbe.exceptions.handler.DelegatedAuthenticationEntryPoint;
-import com.nmt.ecommercespringbootbe.filters.ApiVersionFilter;
-import com.nmt.ecommercespringbootbe.filters.AuthMiddlewareFilter;
+import com.nmt.groceryfinder.exceptions.handler.DelegatedAuthenticationEntryPoint;
+import com.nmt.groceryfinder.filters.ApiVersionFilter;
+import com.nmt.groceryfinder.filters.AuthMiddlewareFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

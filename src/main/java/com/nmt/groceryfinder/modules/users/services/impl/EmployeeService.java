@@ -43,7 +43,7 @@ public class EmployeeService
         newEmployee.setSalary(data.salary());
         newEmployee.setWorkStatus(true);
         newEmployee.setUser(userCreated);
-        newEmployee.setPosition(data.positionName());
+        newEmployee.setPosition(data.position());
         return this.employeeMapper.toDto(this.employeeRepository.save(newEmployee));
     }
 

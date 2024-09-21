@@ -1,8 +1,8 @@
 FROM openjdk:24-ea-14-jdk-oraclelinux9
 
-WORKDIR /nmthuann/ecommerce-spring-boot-be
+WORKDIR /nmthuann/grocery-finder-spring-boot
 
-COPY target/*.jar /nmthuann/ecommerce-spring-boot-be/app.jar
+COPY target/*.jar /nmthuann/grocery-finder-spring-boot/app.jar
 
 EXPOSE 3333
 

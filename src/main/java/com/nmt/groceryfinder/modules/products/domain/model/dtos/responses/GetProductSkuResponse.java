@@ -16,7 +16,6 @@ public record GetProductSkuResponse(
         Double oldPrice,
         Integer stock,
         Integer conversionFactor,
-        WarehouseDto warehouse,
         String unit
 ) {
 }
