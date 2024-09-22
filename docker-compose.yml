@@ -135,18 +135,4 @@ volumes:
   redis-data:
   es-data:
 
-
-#  connect:
-#    image: debezium/connect:2.7
-#    ports:
-#      - "8083:8083"
-#    environment:
-#      GROUP_ID: 1
-#      CONFIG_STORAGE_TOPIC: my_connect_configs
-#      OFFSET_STORAGE_TOPIC: my_connect_offsets
-#      STATUS_STORAGE_TOPIC: my_connect_statuses
-#    depends_on:
-#      - kafka
-#    networks:
-#      - default
 # $ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d @register-postgres.json
