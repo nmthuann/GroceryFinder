@@ -27,41 +27,38 @@
     }
   </style>
   <div class="social-icons">
-    <a href="https://www.facebook.com/thuanleo.wall/" target="_blank">
-      <img src="../GroceryFinder/docs/36fda1085cffacaebc7613ab8f227351.png" alt="nmthuann-facebook" />
+    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/36fda1085cffacaebc7613ab8f227351.png" target="_blank">
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/36fda1085cffacaebc7613ab8f227351.png" alt="springboot" />
+    </a>
+    <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/debezium.png" alt="debezium" />
+    </a>
+    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/postgresql-icon-1987x2048-v2fkmdaw.png" target="_blank">
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/postgresql-icon-1987x2048-v2fkmdaw.png" alt="postgresql" />
     </a>
     <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
       <img src="../GroceryFinder/docs/debezium.png" alt="debezium" />
     </a>
     <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
-      <img src="../GroceryFinder/docs/debezium.png" alt="debezium" />
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/elasticsearch-icon-1839x2048-s0i8mk51.png" alt="elasticsearch" />
+    </a>
+    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/image_processing20210616-28548-1y1p6zh.png" target="_blank">
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/image_processing20210616-28548-1y1p6zh.png" alt="kafka" />
+    </a>
+    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/kafka-ui-logo.png" target="_blank">
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/kafka-ui-logo.png" alt="kafka-ui" />
+    </a>
+    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/R.png" target="_blank">
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/R.png" alt="kibana" />
     </a>
     <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
-      <img src="../GroceryFinder/docs/postgresql-icon-1987x2048-v2fkmdaw.png" alt="debezium" />
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/zookeeper-icon.png" alt="zookeeper" />
     </a>
     <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
-      <img src="../GroceryFinder/docs/debezium.png" alt="debezium" />
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/docker-icon.png" alt="docker" />
     </a>
     <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
-      <img src="../GroceryFinder/docs/elasticsearch-icon-1839x2048-s0i8mk51.png" alt="debezium" />
-    </a>
-    <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
-      <img src="../GroceryFinder/docs/image_processing20210616-28548-1y1p6zh.png" alt="d" />
-    </a>
-    <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
-      <img src="../GroceryFinder/docs/kafka-ui-logo.png" alt="d" />
-    </a>
-    <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
-      <img src="../GroceryFinder/docs/R.png" alt="d" />
-    </a>
-    <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
-      <img src="../GroceryFinder/docs/zookeeper-icon.png" alt="d" />
-    </a>
-    <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
-      <img src="../GroceryFinder/docs/docker-icon.png" alt="d" />
-    </a>
-    <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
-      <img src="../GroceryFinder/docs/1100px_Redis_Logo_01.png" alt="d" />
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/1100px_Redis_Logo_01.png" alt="redis" />
     </a>
   </div>
 </div>
