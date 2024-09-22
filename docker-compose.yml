@@ -1,33 +1,55 @@
 version: '3.8'
 
 networks:
-  default:
+  bridge-net:
+    driver: bridge
 
 services:
   zookeeper:
-    image: quay.io/debezium/zookeeper:2.7
+    image: debezium/zookeeper:2.7
+    container_name: zookeeper
+    environment:
+      SERVER_ID: 1
+      SERVER_COUNT: 1
     ports:
-      - "2181:2181"
-      - "2888:2888"
-      - "3888:3888"
+      - '2181:2181'
     networks:
-      - default
+      - bridge-net
 
   kafka:
-    image: quay.io/debezium/kafka:2.7
+    image: debezium/kafka:2.7
+    container_name: kafka
     depends_on:
       - zookeeper
-    ports:
-      - "9092:9092"
     environment:
+      BROKER_ID: 1
       ZOOKEEPER_CONNECT: zookeeper:2181
-#      KAFKA_LISTENERS: EXTERNAL_SAME_HOST://:9092,INTERNAL://:9092
-#      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,EXTERNAL_SAME_HOST://localhost:9092
-#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
-#      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      HOST_NAME: kafka
+      ADVERTISED_HOST_NAME: kafka  # Thay đổi từ localhost thành kafka
+    ports:
+      - '9092:9092'
     networks:
-      - default
+      - bridge-net
+
+  debezium-connect:
+    container_name: debezium-connect
+    image: debezium/connect:2.7
+    ports:
+      - '8083:8083'
+    environment:
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: my_connect_configs
+      OFFSET_STORAGE_TOPIC: my_connect_offsets
+      BOOTSTRAP_SERVERS: kafka:9092
+      HOST_NAME: debezium-connect
+      ADVERTISED_HOST_NAME: debezium-connect
+      ADVERTISED_PORT: 8083
+      KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+    networks:
+      - bridge-net
 
   kafka-ui:
     container_name: kafka-ui
@@ -38,6 +60,8 @@ services:
       DYNAMIC_CONFIG_ENABLED: true
       KAFKA_CLUSTERS_0_NAME: "local"
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka:9092"
+    networks:
+      - bridge-net
 
   postgresql-db:
     container_name: postgresql-db-container
@@ -52,7 +76,7 @@ services:
     volumes:
       - grocery-finder-postgresql-db:/var/lib/postgresql/data
     networks:
-      - default
+      - bridge-net
 
   redis:
     container_name: redis-container
@@ -63,7 +87,7 @@ services:
     volumes:
       - redis-data:/data
     networks:
-      - default
+      - bridge-net
 
   grocery-finder-spring-boot:
     container_name: grocery-finder-spring-boot-container
@@ -81,7 +105,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: 123456
       SPRING_DATASOURCE_DRIVER-CLASS-NAME: org.postgresql.Driver
     networks:
-      - default
+      - bridge-net
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.24
@@ -93,7 +117,7 @@ services:
     volumes:
       - es-data:/usr/share/elasticsearch/data
     networks:
-      - default
+      - bridge-net
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.17.24
@@ -104,25 +128,25 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      - default
-
-  connect:
-    image: debezium/connect:2.7
-    ports:
-      - "8083:8083"
-    environment:
-      GROUP_ID: 1
-      CONFIG_STORAGE_TOPIC: my_connect_configs
-      OFFSET_STORAGE_TOPIC: my_connect_offsets
-      STATUS_STORAGE_TOPIC: my_connect_statuses
-    depends_on:
-      - kafka
-    networks:
-      - default
+      - bridge-net
 
 volumes:
   grocery-finder-postgresql-db:
   redis-data:
   es-data:
 
+
+#  connect:
+#    image: debezium/connect:2.7
+#    ports:
+#      - "8083:8083"
+#    environment:
+#      GROUP_ID: 1
+#      CONFIG_STORAGE_TOPIC: my_connect_configs
+#      OFFSET_STORAGE_TOPIC: my_connect_offsets
+#      STATUS_STORAGE_TOPIC: my_connect_statuses
+#    depends_on:
+#      - kafka
+#    networks:
+#      - default
 # $ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d @register-postgres.json
