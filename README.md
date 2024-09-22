@@ -13,7 +13,6 @@
   <a href="https://twitter.com/springboot" target="_blank"><img src="https://img.shields.io/twitter/follow/springboot.svg?style=social&label=Follow" alt="Follow on Twitter" /></a>
 </p>
 
----
 <br>
 <div align="center">
   <div class="social-icons">
