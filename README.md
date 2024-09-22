@@ -38,21 +38,21 @@
     <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/R.png" target="_blank">
       <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/R.png" alt="kibana" width="50"  />
     </a>
-    <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
+    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/zookeeper-icon.png" target="_blank">
       <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/zookeeper-icon.png" alt="zookeeper"  width="50" />
     </a>
-    <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
+    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/docker-icon.png" target="_blank">
       <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/docker-icon.png" alt="docker"  width="50"  />
     </a>
-    <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
+    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/1100px_Redis_Logo_01.png" target="_blank">
       <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/1100px_Redis_Logo_01.png" alt="redis"  width="50"  />
     </a>
   </div>
 </div>
+
 <br>
+
 ---
-
-
 
 ## Mục Lục
 
