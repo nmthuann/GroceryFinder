@@ -1,0 +1,17 @@
+FROM debezium/connect:2.7
+
+ENV GROUP_ID=1
+ENV CONFIG_STORAGE_TOPIC=my_connect_configs
+ENV OFFSET_STORAGE_TOPIC=my_connect_offsets
+ENV BOOTSTRAP_SERVERS=kafka:9092
+ENV HOST_NAME=debezium-connect
+ENV ADVERTISED_HOST_NAME=debezium-connect
+ENV ADVERTISED_PORT=8083
+ENV KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+ENV VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+ENV INTERNAL_KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+ENV INTERNAL_VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+
+EXPOSE 8083
+
+CMD ["start"]

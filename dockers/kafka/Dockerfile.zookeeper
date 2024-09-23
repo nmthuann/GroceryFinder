@@ -1,0 +1,10 @@
+FROM debezium/kafka:2.7
+
+ENV BROKER_ID=1
+ENV ZOOKEEPER_CONNECT=zookeeper:2181
+ENV HOST_NAME=kafka
+ENV ADVERTISED_HOST_NAME=kafka
+
+EXPOSE 9092
+
+CMD ["start-kafka"]

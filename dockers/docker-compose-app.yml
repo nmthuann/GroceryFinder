@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  grocery-finder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: grocery-finder-container
+    ports:
+      - "5432:5432"
+      - "6379:6379"
+      - "3333:3333"
+    networks:
+      - shared_network
+
+networks:
+  shared_network:
+    external: true

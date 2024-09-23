@@ -1,0 +1,23 @@
+# Sử dụng image Java làm base
+FROM openjdk:17-jdk-slim
+
+# Cài đặt Elasticsearch và Kibana
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg \
+    && wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add - \
+    && echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" >> /etc/apt/sources.list.d/elastic-7.x.list \
+    && apt-get update && apt-get install -y elasticsearch=7.17.24 kibana=7.17.24 \
+    && apt-get clean
+
+# Expose các cổng
+EXPOSE 9200 5601
+
+# Thiết lập môi trường cho Elasticsearch
+ENV discovery.type=single-node
+ENV ES_JAVA_OPTS="-Xms512m -Xmx512m"
+
+# Khởi động Elasticsearch và Kibana khi container khởi động
+CMD service elasticsearch start && \
+    service kibana start && \
+    tail -f /dev/null

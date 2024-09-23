@@ -1,0 +1,48 @@
+version: '3.8'
+
+networks:
+  shared_network:
+    external: true
+
+services:
+  zookeeper:
+    build:
+      context: ./docker  # Đường dẫn đến thư mục chứa Dockerfile
+      dockerfile: Dockerfile.zookeeper
+    container_name: zookeeper
+    ports:
+      - '2181:2181'
+    networks:
+      - shared_network
+
+  kafka:
+    build:
+      context: ./docker  # Đường dẫn đến thư mục chứa Dockerfile
+      dockerfile: Dockerfile.kafka
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - '9092:9092'
+    networks:
+      - shared_network
+
+  debezium-connect:
+    build:
+      context: ./docker  # Đường dẫn đến thư mục chứa Dockerfile
+      dockerfile: Dockerfile.debezium
+    container_name: debezium-connect
+    ports:
+      - '8083:8083'
+    networks:
+      - shared_network
+
+  kafka-ui:
+    build:
+      context: ./docker  # Đường dẫn đến thư mục chứa Dockerfile
+      dockerfile: Dockerfile.kafka-ui
+    container_name: kafka-ui
+    ports:
+      - "8080:8080"
+    networks:
+      - shared_network
