@@ -25,7 +25,7 @@ import java.util.concurrent.Callable;
 @Component
 @Slf4j
 public class CircuitBreakerAspect {
-    private final CircuitBreaker circuitBreaker ;
+    private final CircuitBreaker circuitBreaker;
 
     @Autowired
     public CircuitBreakerAspect(CircuitBreaker circuitBreaker){
