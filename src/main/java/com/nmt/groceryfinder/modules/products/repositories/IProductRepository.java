@@ -237,5 +237,7 @@ public interface IProductRepository extends JpaRepository<ProductEntity, UUID> {
     );
 
     Page<ProductEntity> findByPrioritySort(Integer prioritySort, Pageable pageable);
+
+    List<ProductEntity> findByProductNameOrderByPrioritySortAsc(String key);
 }
 

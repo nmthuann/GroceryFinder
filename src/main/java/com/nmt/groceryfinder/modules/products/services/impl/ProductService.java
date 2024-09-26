@@ -173,6 +173,11 @@ public class ProductService
         return averageRating != null ? averageRating : 5.0;
     }
 
+    @Override
+    public List<String> getProductNameListByKey(String key) {
+        this.productRepository.findByProductNameOrderByPrioritySortAsc(key);
+        return null;
+    }
 
 
     @Override

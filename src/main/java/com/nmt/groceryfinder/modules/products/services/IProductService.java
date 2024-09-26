@@ -26,4 +26,5 @@ public interface  IProductService extends IBaseService<UUID, ProductDto> {
     ReviewDto createReviewById (UUID id, String email, CreateReviewDto data);
     Page<ReviewDto> getReviewsById (UUID id, Pageable pageable);
     Double getAverageRating(UUID productId);
+    List<String> getProductNameListByKey(String key);
 }

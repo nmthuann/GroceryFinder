@@ -4,15 +4,16 @@ import com.nmt.groceryfinder.shared.cqrs.commands.CreateProductCommand;
 import com.nmt.groceryfinder.shared.cqrs.handlers.ICommandHandler;
 import com.nmt.groceryfinder.shared.elasticsearch.ProductDocument;
 import com.nmt.groceryfinder.shared.elasticsearch.ProductDocumentRepository;
+import com.nmt.groceryfinder.utils.SlugUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * @author LENOVO
  * @project GroceryFinder
  * @date 9/25/2024
  */
-@Component
+@Service
 public class CreateProductHandler implements ICommandHandler<CreateProductCommand> {
 
     private final ProductDocumentRepository productDocumentRepository;
@@ -27,7 +28,7 @@ public class CreateProductHandler implements ICommandHandler<CreateProductComman
     public void execute(CreateProductCommand command) {
         ProductDocument productDocument = new ProductDocument();
         productDocument.setProductName(command.productName());
-        productDocument.setSlug(command.slug());
+        productDocument.setSlug(SlugUtil.createSlug(command.productName()));
         productDocument.setDescription(command.description());
         this.productDocumentRepository.save(productDocument);
     }

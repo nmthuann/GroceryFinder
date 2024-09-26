@@ -46,8 +46,6 @@ public class ProductController {
         this.productService = productService;
     }
 
-
-
     @Operation(
             summary = "Get a product by ID or slug",
             description = "Retrieve a product by its unique ID or slug.",
@@ -222,5 +220,13 @@ public class ProductController {
         PageRequest pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
         Page<ReviewDto> findReviewsByProductId = this.productService.getReviewsById(id, pageable);
         return new ResponseEntity<>(findReviewsByProductId, HttpStatus.OK);
+    }
+
+
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchProducts(@RequestParam String key) {
+        List<String> products = productService.getProductNameListByKey(key);
+        return ResponseEntity.ok(products);
     }
 }

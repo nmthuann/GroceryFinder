@@ -1,5 +1,6 @@
 package com.nmt.groceryfinder.shared.elasticsearch;
 
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -12,12 +13,12 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
  * @project GroceryFinder
  * @date 9/22/2024
  */
-@Document(indexName = "products")
 @Getter
 @Setter
+@Document(indexName = "products")
 public class ProductDocument {
 
-    @Field(type = FieldType.Text)
+    @Id
     private String id;
 
     @Field(type = FieldType.Text)
