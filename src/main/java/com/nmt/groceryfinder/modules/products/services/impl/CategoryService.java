@@ -40,6 +40,12 @@ public class CategoryService
         this.categoryMapper = categoryMapper;
     }
 
+    private CategoryEntity findCategoryById(Integer id) throws ModuleException {
+        return this.categoryRepository.findById(id)
+                .orElseThrow(() -> new ModuleException(
+                        ProductsModuleExceptionMessages.CATEGORY_NOT_FOUND.getMessage()));
+    }
+
     /**
      * Creates a new category
      *
@@ -50,19 +56,10 @@ public class CategoryService
     @Override
     @Transactional
     public CategoryDto createOne(CreateCategoryDto data) throws  ModuleException {
-        Optional<CategoryEntity> findParentNode = this.categoryRepository.findById(data.parentId());
-        if (!findParentNode.isPresent()){
-            throw new ModuleException(ProductsModuleExceptionMessages.CATEGORY_PARENT_NOT_FOUND.getMessage());
-        }
-        categoryRepository.incrementRightValue(findParentNode.get().getRightValue()); // transaction
-        categoryRepository.incrementLeftValue(findParentNode.get().getRightValue()); // transaction
-        CategoryEntity newCategory = new CategoryEntity();
-        newCategory.setCategoryName(data.categoryName());
-        newCategory.setDescription(data.description());
-        newCategory.setCategoryUrl(data.categoryUrl());
-        newCategory.setParentId((findParentNode.get().getId().toString()));
-        newCategory.setLeftValue(findParentNode.get().getRightValue());
-        newCategory.setRightValue(findParentNode.get().getRightValue() + 1);
+        CategoryEntity findParentNode = findCategoryById(data.parentId());
+        categoryRepository.incrementRightValue(findParentNode.getRightValue()); // transaction
+        categoryRepository.incrementLeftValue(findParentNode.getRightValue()); // transaction
+        CategoryEntity newCategory = this.categoryMapper.generateCategory(data, findParentNode);
         return this.categoryMapper.toDto(this.categoryRepository.save(newCategory));
     }
 
@@ -94,19 +91,13 @@ public class CategoryService
     }
 
     @Override
-    public List<CategoryDto> getChildCategoriesByParentId(String parentId) {
-        Optional<CategoryEntity> parentCategory = this.categoryRepository.findById(Integer.parseInt(parentId));
-        if (!parentCategory.isPresent()) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    ProductsModuleExceptionMessages.CATEGORY_NOT_FOUND.getMessage()
-            );
-        }
-        List<CategoryEntity> childCategories = this.categoryRepository.findChildrenByLeftAndRight (
-                        parentCategory.get().getLeftValue(),
-                        parentCategory.get().getRightValue()
+    public List<CategoryDto> getChildCategoriesByParentId(String parentId) throws ModuleException {
+        CategoryEntity parentCategory = findCategoryById(Integer.parseInt(parentId));
+        List<CategoryEntity> childCategories =
+                this.categoryRepository.findChildrenByLeftAndRight (
+                        parentCategory.getLeftValue(),
+                        parentCategory.getRightValue()
                 );
-
         return StreamSupport.stream(childCategories.spliterator(), false)
                 .map(entity -> categoryMapper.toDto(entity))
                 .collect(Collectors.toList());
@@ -121,8 +112,6 @@ public class CategoryService
                 .collect(Collectors.toList());
     }
 
-
-
     @Override
     public Iterable<CategoryDto> getLeafCategories() {
         return StreamSupport.stream(
@@ -133,28 +122,27 @@ public class CategoryService
                 .collect(Collectors.toList());
     }
 
-
-
     @Override
+    @Transactional
     public void deleteOneById(Integer id) {
-        Optional<CategoryEntity> findCategoryToDelete = this.categoryRepository.findById(id);
-        if (!findCategoryToDelete.isPresent()) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    ProductsModuleExceptionMessages.CATEGORY_NOT_FOUND.getMessage()
-            );
+        CategoryDto categoryToDelete;
+        try {
+            categoryToDelete = this.getOneById(id)
+                    .orElseThrow(() -> new ModuleException(
+                            ProductsModuleExceptionMessages.CATEGORY_NOT_FOUND.getMessage())
+                    );
+        } catch (ModuleException e) {
+            throw new RuntimeException(e);
         }
-        CategoryEntity category = findCategoryToDelete.get();
-        if (category.getProducts() != null && !category.getProducts().isEmpty()) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    ProductsModuleExceptionMessages.CATEGORY_NOT_DELETE.getMessage()
-            );
-        }
-        Integer leftValue = findCategoryToDelete.get().getLeftValue();
-        Integer rightValue = findCategoryToDelete.get().getRightValue();
-        this.categoryRepository.deleteById(id);
+
+        Integer leftValue = categoryToDelete.getLeftValue();
+        Integer rightValue = categoryToDelete.getRightValue();
+
+        super.deleteOneById(id);
+
         this.categoryRepository.updateLeftValuesAfterDelete(leftValue);
         this.categoryRepository.updateRightValuesAfterDelete(rightValue);
     }
 }
+
+

@@ -5,7 +5,12 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.BrandDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.CategoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ImageDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductDto;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;
+import com.nmt.groceryfinder.modules.products.domain.model.entities.BrandEntity;
+import com.nmt.groceryfinder.modules.products.domain.model.entities.CategoryEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntity;
+import com.nmt.groceryfinder.modules.products.domain.model.entities.SupplierEntity;
+import com.nmt.groceryfinder.utils.SlugUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -47,5 +52,26 @@ public class ProductMapper
         productDto.setModifiedBy(productCreated.getModifiedBy());
         productDto.setImages(images);
         return productDto;
+    }
+
+    public ProductEntity generateEntity(
+            CreateProductDto data,
+            BrandEntity brand,
+            CategoryEntity category,
+            SupplierEntity supplier
+    ){
+        ProductEntity product = new ProductEntity();
+        product.setIsDeleted(false);
+        product.setPrioritySort(1);
+        product.setStatus(true);
+        product.setSlug(SlugUtil.createSlug(data.productName()));
+        product.setProductName(data.productName());
+        product.setProductLine(data.productLine());
+        product.setDescription(data.description());
+        product.setProductSpecs(data.productSpecs());
+        product.setBrand(brand);
+        product.setCategory(category);
+        product.setSupplier(supplier);
+        return product;
     }
 }

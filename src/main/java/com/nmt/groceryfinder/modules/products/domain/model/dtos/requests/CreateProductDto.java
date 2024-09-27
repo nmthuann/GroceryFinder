@@ -27,6 +27,9 @@ public record CreateProductDto(
         Integer categoryId,
         @NotNull(message = "Brand ID is required")
         Integer brandId,
+
+        @NotNull(message = "Supplier ID is required")
+        Integer supplierId,
         @NotNull(message = "Images is required")
         List<CreateImageDto> images
 ) {

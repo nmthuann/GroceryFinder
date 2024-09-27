@@ -35,12 +35,7 @@ public class PriceService
 
     @Override
     public Optional<PriceDto> createOne(ProductSkuEntity productSkuCreated, CreatePriceDto data) {
-        PriceIdEntity newPriceId = new PriceIdEntity();
-        newPriceId.setBeginAt(data.beginAt());
-        newPriceId.setProductSku(productSkuCreated);
-        PriceEntity newPrice = new PriceEntity();
-        newPrice.setId(newPriceId);
-        newPrice.setUnitPrice(data.unitPrice());
+        PriceEntity newPrice = this.priceMapper.generatePrice(data, productSkuCreated);
         return Optional.ofNullable(this.priceMapper.toDto(this.priceRepository.save(newPrice)));
     }
 

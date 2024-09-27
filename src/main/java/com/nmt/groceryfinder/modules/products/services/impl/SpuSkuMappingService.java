@@ -56,15 +56,4 @@ public class SpuSkuMappingService
                 .map(entity -> this.spuSkuMappingMapper.toDto(entity))
                 .collect(Collectors.toList());
     }
-
-    @Override
-    public SpuSkuMappingDto getOneByProductSkuId(ProductSkuEntity productSkuCreated) {
-        SpuSkuMappingEntity spuSkuMappingEntity = this.spuSkuMappingRepository.findByProductSku(productSkuCreated);
-        return this.spuSkuMappingMapper.toDto(spuSkuMappingEntity);
-    }
-
-    @Override
-    public ProductEntity getProductByProductSkuId(Integer skuId) {
-        return this.spuSkuMappingRepository.findProductBySkuId(skuId);
-    }
 }

@@ -16,7 +16,4 @@ public interface IProductSkuService extends IBaseService<Integer, ProductSkuDto>
     Optional<ProductSkuDto> createOne(CreateProductSkuDto data);
     Optional<InventoryDto> createInventoryById(Integer id, CreateInventoryDto data)throws ModuleException;
     Optional<PriceDto> createPriceById(Integer id, CreatePriceDto data)throws ModuleException;
-    Double  getUnitPriceByProductSkuId(Integer productSkuId);
-    List<PriceDto> getPricesByProductSku(Integer productSkuId) throws ModuleException;
-    Optional<InventoryDto> getInventoryOnlineByProductSkuId(Integer id)throws ModuleException;
 }

@@ -1,5 +1,6 @@
 package com.nmt.groceryfinder.common.bases;
 
+import com.nmt.groceryfinder.exceptions.ModuleException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

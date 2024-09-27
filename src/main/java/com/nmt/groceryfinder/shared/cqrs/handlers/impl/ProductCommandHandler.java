@@ -1,11 +1,13 @@
 package com.nmt.groceryfinder.shared.cqrs.handlers.impl;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import com.nmt.groceryfinder.shared.cqrs.commands.CreateProductCommand;
 import com.nmt.groceryfinder.shared.cqrs.handlers.ICommandHandler;
 import com.nmt.groceryfinder.shared.elasticsearch.ProductDocument;
 import com.nmt.groceryfinder.shared.elasticsearch.ProductDocumentRepository;
 import com.nmt.groceryfinder.utils.SlugUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.client.elc.ReactiveElasticsearchClient;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,13 +16,17 @@ import org.springframework.stereotype.Service;
  * @date 9/25/2024
  */
 @Service
-public class CreateProductHandler implements ICommandHandler<CreateProductCommand> {
+public class ProductCommandHandler implements ICommandHandler<CreateProductCommand> {
 
-    private final ProductDocumentRepository productDocumentRepository;
+
+    private final ElasticsearchClient elasticsearchClient;
 
     @Autowired
-    public CreateProductHandler(ProductDocumentRepository productDocumentRepository) {
-        this.productDocumentRepository = productDocumentRepository;
+    public ProductCommandHandler(
+            ProductDocumentRepository productDocumentRepository, ElasticsearchClient elasticsearchClient
+    ) {
+
+        this.elasticsearchClient = elasticsearchClient;
     }
 
 
@@ -30,6 +36,6 @@ public class CreateProductHandler implements ICommandHandler<CreateProductComman
         productDocument.setProductName(command.productName());
         productDocument.setSlug(SlugUtil.createSlug(command.productName()));
         productDocument.setDescription(command.description());
-        this.productDocumentRepository.save(productDocument);
+        // this.productDocumentRepository.save(productDocument);
     }
 }

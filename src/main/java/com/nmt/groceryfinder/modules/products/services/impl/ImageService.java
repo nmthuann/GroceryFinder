@@ -39,9 +39,7 @@ public class ImageService
     public List<ImageDto> createImages(ProductEntity productCreated, List<CreateImageDto> data) {
         List<ImageEntity> images = new ArrayList<>();
         for (CreateImageDto createImageDto : data) {
-            ImageEntity newImage = new ImageEntity();
-            newImage.setImageUrl(createImageDto.imageUrl());
-            newImage.setProduct(productCreated);
+            ImageEntity newImage = this.imageMapper.generateImage(createImageDto, productCreated);
             images.add(imageRepository.save(newImage));
         }
         return  StreamSupport.stream(images.spliterator(), false)

@@ -3,11 +3,9 @@ package com.nmt.groceryfinder.modules.products.controllers;
 import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.ReviewDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.SpuSkuMappingDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateReviewDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.GetProductDetailResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SpuSkuMappingResponse;
 import com.nmt.groceryfinder.modules.products.services.IProductService;
@@ -18,15 +16,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -175,54 +170,9 @@ public class ProductController {
             @Parameter(description = "ID of the product to retrieve SKUs for", required = true)
             @PathVariable UUID id
     ) throws ModuleException {
-        List<ProductSkuDto> findSpuSkuMappingDtoList = this.productService.getSkusById(id);
-        return new ResponseEntity<>(findSpuSkuMappingDtoList, HttpStatus.OK); //findSpuSkuMappingDtoList
+        List<ProductSkuDto> findSpuSkuMappingDtoList = this.productService.getProductSkusById(id);
+        return new ResponseEntity<>(findSpuSkuMappingDtoList, HttpStatus.OK);
     }
-
-
-    @Operation(
-            summary = "Create a new Review",
-            description = "Create a new Review with the provided details.",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "201",
-                            description = "Review successfully created",
-                            content = @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ReviewDto.class))
-                    ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "Invalid input data"
-                    )
-            }
-    )
-    @PostMapping("/{id}/reviews")
-    @LoggingInterceptor
-    public ResponseEntity<ReviewDto> createReviewById(
-            @PathVariable UUID id,
-            @Valid @RequestBody CreateReviewDto data,
-            @AuthenticationPrincipal UserDetails userDetails
-
-    ) {
-        ReviewDto result = this.productService.createReviewById(id, userDetails.getUsername(),  data);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
-    }
-
-    @GetMapping("/{id}/reviews")
-    @LoggingInterceptor
-    public ResponseEntity<?> getReviewsByProductId(
-            @PathVariable UUID id,
-            @Parameter(description = "Page number for pagination", example = "0")
-            @RequestParam(defaultValue = "0") int page,
-            @Parameter(description = "Number of products per page", example = "10")
-            @RequestParam(defaultValue = "10") int size
-    ) {
-        PageRequest pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending());
-        Page<ReviewDto> findReviewsByProductId = this.productService.getReviewsById(id, pageable);
-        return new ResponseEntity<>(findReviewsByProductId, HttpStatus.OK);
-    }
-
-
 
     @GetMapping("/search")
     public ResponseEntity<?> searchProducts(@RequestParam String key) {

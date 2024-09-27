@@ -1,5 +1,6 @@
 package com.nmt.groceryfinder.modules.users.controllers;
 
+import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.modules.users.domain.model.dtos.EmployeeDto;
 import com.nmt.groceryfinder.modules.users.services.IEmployeeService;
 import jakarta.persistence.EntityNotFoundException;
@@ -44,17 +45,6 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDto> updateOneById(@PathVariable UUID id, @RequestBody EmployeeDto data) {
         EmployeeDto employeeUpdated = this.employeeService.updateOneById(id, data);
         return new ResponseEntity<>(employeeUpdated, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOneById(@PathVariable UUID id) {
-        employeeService.deleteOneById(id);
-        try {
-            this.employeeService.getOneById(id);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }catch (EntityNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
     }
 
     @GetMapping("")

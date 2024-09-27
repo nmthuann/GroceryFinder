@@ -67,8 +67,4 @@ public class ProductEntity extends AuditableEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<SpuSkuMappingEntity> spuSkuMappings;
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<ReviewEntity> reviews;
 }

@@ -38,6 +38,13 @@ public class InventoryService
         this.inventoryMapper = inventoryMapper;
     }
 
+    private InventoryEntity findInventoryByProductSkuId(Integer productSkuId) throws ModuleException {
+        return inventoryRepository.findByProductSkuId(productSkuId)
+                .orElseThrow(() -> new ModuleException(
+                        "Inventory not found for Product SKU ID: " + productSkuId)
+                );
+    }
+
     @Override
     public List<InventoryDto> getInventoriesByProductSkuId(ProductSkuEntity productSkuCreated) {
         List<InventoryEntity> findInventoryEntities =
@@ -51,9 +58,7 @@ public class InventoryService
             Integer productSkuId,
             int soldQuantity
     ) throws ModuleException {
-        InventoryEntity inventory =
-                this.inventoryRepository.findByProductSkuId(productSkuId)
-                .orElseThrow(() -> new ModuleException("Inventory not found"));
+        InventoryEntity inventory = findInventoryByProductSkuId(productSkuId);
         if (inventory.getStock() < soldQuantity) {
             throw new ModuleException("Not enough stock available");
         }
@@ -65,16 +70,7 @@ public class InventoryService
 
     @Override
     public Optional<InventoryDto> createOne(ProductSkuEntity productSkuCreated, CreateInventoryDto data) {
-        InventoryEntity inventory = new InventoryEntity();
-        inventory.setSold(0);
-        inventory.setDefective(0);
-        inventory.setUnit(data.unit());
-        inventory.setStock(data.stock());
-        inventory.setCheckAt(data.checkAt());
-        inventory.setConversionFactor(data.conversionFactor());
-        inventory.setImportPrice(data.importPrice());
-        inventory.setWholesale(data.wholesale());
-        inventory.setProductSku(productSkuCreated);
+        InventoryEntity inventory = this.inventoryMapper.generateInventory(data, productSkuCreated);
         return Optional.ofNullable(this.inventoryMapper.toDto(this.inventoryRepository.save(inventory)));
     }
 
@@ -84,4 +80,6 @@ public class InventoryService
                 this.inventoryRepository.findByProductSkuId(productSkuId);
         return findInventory.map(entity -> this.inventoryMapper.toDto(entity));
     }
+
+
 }

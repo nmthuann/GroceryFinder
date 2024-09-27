@@ -1,5 +1,6 @@
 package com.nmt.groceryfinder.modules.products.controllers;
 
+import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.BrandDto;
 import com.nmt.groceryfinder.modules.products.services.IBrandService;
 import jakarta.persistence.EntityNotFoundException;
@@ -51,7 +52,7 @@ public class BrandController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOneById(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteOneById(@PathVariable Integer id) throws ModuleException {
         brandService.deleteOneById(id);
         try {
             this.brandService.getOneById(id);

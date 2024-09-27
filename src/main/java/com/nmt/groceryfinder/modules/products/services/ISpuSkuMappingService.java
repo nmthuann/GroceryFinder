@@ -12,6 +12,4 @@ import java.util.UUID;
 public interface ISpuSkuMappingService extends IBaseService<Integer, SpuSkuMappingDto> {
     Optional<SpuSkuMappingDto> createOne(ProductEntity productCreated, ProductSkuEntity productSkuCreated);
     List<SpuSkuMappingDto> getSkusByProductId(UUID id);
-    SpuSkuMappingDto getOneByProductSkuId(ProductSkuEntity productSkuCreated);
-    ProductEntity getProductByProductSkuId(Integer skuId);
 }

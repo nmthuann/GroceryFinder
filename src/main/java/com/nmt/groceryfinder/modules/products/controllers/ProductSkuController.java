@@ -1,6 +1,5 @@
 package com.nmt.groceryfinder.modules.products.controllers;
 
-
 import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.modules.inventories.domain.dtos.InventoryDto;
 import com.nmt.groceryfinder.modules.inventories.domain.dtos.CreateInventoryDto;

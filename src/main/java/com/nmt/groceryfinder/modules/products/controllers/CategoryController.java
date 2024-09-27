@@ -1,6 +1,5 @@
 package com.nmt.groceryfinder.modules.products.controllers;
 
-
 import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.CategoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateCategoryDto;
@@ -70,7 +69,7 @@ public class CategoryController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "true") Boolean isPagination,
             @RequestParam(required = false,  defaultValue = "false") Boolean isChild
-    ) {
+    ) throws ModuleException{
         try {
             if (!isPagination) {
                 if(isChild){
@@ -94,7 +93,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOneById(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteOneById(@PathVariable Integer id){
         try {
             categoryService.deleteOneById(id);
             return ResponseEntity.noContent().build();
