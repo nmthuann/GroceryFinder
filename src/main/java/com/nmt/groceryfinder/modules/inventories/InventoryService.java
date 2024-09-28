@@ -80,6 +80,4 @@ public class InventoryService
                 this.inventoryRepository.findByProductSkuId(productSkuId);
         return findInventory.map(entity -> this.inventoryMapper.toDto(entity));
     }
-
-
 }

@@ -1,4 +1,4 @@
-package com.nmt.groceryfinder.modules.products.services;
+package com.nmt.groceryfinder.modules.categories;
 
 /**
  * @author LENOVO

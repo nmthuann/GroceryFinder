@@ -34,7 +34,6 @@ public class RedisService implements IRedisService{
     @Override
     public void setCacheWithExpiration(String key, Object data, int minute) {
         redisTemplate.opsForValue().set(key, data, Duration.ofMinutes(minute));
-
     }
 
     @Override

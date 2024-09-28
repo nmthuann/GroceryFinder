@@ -1,6 +1,5 @@
 package com.nmt.groceryfinder.shared.passport.strategies;
 
-
 import com.nmt.groceryfinder.common.dtos.Payload;
 import com.nmt.groceryfinder.exceptions.messages.AuthExceptionMessages;
 import com.nmt.groceryfinder.modules.auth.dtos.requests.PassportDto;
@@ -12,8 +11,6 @@ import com.nmt.groceryfinder.utils.PasswordUtil;
 import jakarta.security.auth.message.AuthException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 /**
  * @author LENOVO

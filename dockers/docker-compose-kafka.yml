@@ -8,7 +8,7 @@ services:
   zookeeper:
     build:
       context: ./docker  # Đường dẫn đến thư mục chứa Dockerfile
-      dockerfile: Dockerfile.zookeeper
+      dockerfile: kafka/Dockerfile.zookeeper
     container_name: zookeeper
     ports:
       - '2181:2181'
@@ -18,7 +18,7 @@ services:
   kafka:
     build:
       context: ./docker  # Đường dẫn đến thư mục chứa Dockerfile
-      dockerfile: Dockerfile.kafka
+      dockerfile: kafka/Dockerfile.kafka
     container_name: kafka
     depends_on:
       - zookeeper
@@ -30,7 +30,7 @@ services:
   debezium-connect:
     build:
       context: ./docker  # Đường dẫn đến thư mục chứa Dockerfile
-      dockerfile: Dockerfile.debezium
+      dockerfile: kafka/Dockerfile.debezium
     container_name: debezium-connect
     ports:
       - '8083:8083'
@@ -40,7 +40,7 @@ services:
   kafka-ui:
     build:
       context: ./docker  # Đường dẫn đến thư mục chứa Dockerfile
-      dockerfile: Dockerfile.kafka-ui
+      dockerfile: kafka/Dockerfile.kafka-ui
     container_name: kafka-ui
     ports:
       - "8080:8080"

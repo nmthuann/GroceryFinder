@@ -4,10 +4,8 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import com.nmt.groceryfinder.shared.cqrs.commands.CreateProductCommand;
 import com.nmt.groceryfinder.shared.cqrs.handlers.ICommandHandler;
 import com.nmt.groceryfinder.shared.elasticsearch.ProductDocument;
-import com.nmt.groceryfinder.shared.elasticsearch.ProductDocumentRepository;
 import com.nmt.groceryfinder.utils.SlugUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.client.elc.ReactiveElasticsearchClient;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,7 +21,7 @@ public class ProductCommandHandler implements ICommandHandler<CreateProductComma
 
     @Autowired
     public ProductCommandHandler(
-            ProductDocumentRepository productDocumentRepository, ElasticsearchClient elasticsearchClient
+            ElasticsearchClient elasticsearchClient
     ) {
 
         this.elasticsearchClient = elasticsearchClient;
