@@ -16,13 +16,13 @@ public interface ICategoryRepository extends JpaRepository<CategoryEntity, Integ
     @Transactional(isolation = Isolation.SERIALIZABLE)
     @Modifying // not use => InvalidDataAccessApiUsage
     @Query("UPDATE CategoryEntity c SET c.rightValue = c.rightValue + 2 WHERE c.rightValue >= :rightValue")
-    void incrementRightValue(int rightValue);
+    void increaseRightValuesByTwo(int rightValue);
 
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     @Modifying
     @Query("UPDATE CategoryEntity c SET c.leftValue = c.leftValue + 2 WHERE c.leftValue > :rightValue")
-    void incrementLeftValue(int rightValue);
+    void increaseLeftValuesByTwo (int rightValue);
 
     List<CategoryEntity> findByParentId(String parentId);
 
