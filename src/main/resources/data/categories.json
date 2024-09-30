@@ -1,0 +1,90 @@
+[
+  {
+    "categoryName": "ROOT",
+    "categoryUrl": null,
+    "description": "ROOT",
+    "leftValue": 1,
+    "parentId": "0",
+    "rightValue": 20
+  },
+  {
+    "categoryName": "Thực Phẩm và Đồ Uống",
+    "categoryUrl": "http://localhost:3000/categories/new",
+    "description": "Thực Phẩm và Đồ Uống",
+    "leftValue": 2,
+    "parentId": "1",
+    "rightValue": 11
+  },
+  {
+    "categoryName": "DẦU ĂN, NƯỚC CHẤM, GIA VỊ",
+    "categoryUrl": "/dau-an-nuoc-cham-gia-vi",
+    "description": "DẦU ĂN, NƯỚC CHẤM, GIA VỊ",
+    "leftValue": 3,
+    "parentId": "2",
+    "rightValue": 6
+  },
+  {
+    "categoryName": "Dầu ăn",
+    "categoryUrl": "/dau-an",
+    "description": "Dầu ăn",
+    "leftValue": 4,
+    "parentId": "3",
+    "rightValue": 5
+  },
+  {
+    "categoryName": "Nước mắm",
+    "categoryUrl": "/nuoc-mam",
+    "description": "Nước mắm",
+    "leftValue": 5,
+    "parentId": "3",
+    "rightValue": 6
+  },
+  {
+    "categoryName": "BIA, NƯỚC GIẢI KHÁT",
+    "categoryUrl": "/bia-nuoc-giai-khat",
+    "description": "BIA, NƯỚC GIẢI KHÁT",
+    "leftValue": 7,
+    "parentId": "2",
+    "rightValue": 10
+  },
+  {
+    "categoryName": "Bia",
+    "categoryUrl": "/bia",
+    "description": "Bia",
+    "leftValue": 8,
+    "parentId": "7",
+    "rightValue": 9
+  },
+  {
+    "categoryName": "Nước ngọt",
+    "categoryUrl": "/nuoc-ngot",
+    "description": "Nước ngọt",
+    "leftValue": 10,
+    "parentId": "7",
+    "rightValue": 11
+  },
+  {
+    "categoryName": "Linh Kiện, Điện Tử",
+    "categoryUrl": "http://localhost:3000/categories/new",
+    "description": "Linh Kiện, Điện Tử",
+    "leftValue": 12,
+    "parentId": "1",
+    "rightValue": 19
+  },
+  {
+    "categoryName": "Thiết bị di động",
+    "categoryUrl": null,
+    "description": "Thiết bị di động",
+    "leftValue": 13,
+    "parentId": "12",
+    "rightValue": 14
+  },
+  {
+    "categoryName": "Điện thoại",
+    "categoryUrl": "http://localhost:3000/categories/new",
+    "description": "điện thoại",
+    "leftValue": 14,
+    "parentId": "12",
+    "rightValue": 15
+  }
+]

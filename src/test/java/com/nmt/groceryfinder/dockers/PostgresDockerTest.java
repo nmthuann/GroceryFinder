@@ -1,6 +1,8 @@
 package com.nmt.groceryfinder.dockers;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -21,6 +23,7 @@ public class PostgresDockerTest {
             .withDatabaseName("testdb")
             .withUsername("tester")
             .withPassword("123456");
+
 
     @Test
     void testPostgresRunning() throws Exception {

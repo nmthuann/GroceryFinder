@@ -20,7 +20,7 @@ public class ApiVersionFilter  extends OncePerRequestFilter {
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain
-    ) throws ServletException, IOException {
+    ) throws IOException {
 
         String timestampVersion = request.getHeader("X-Rest-Api-Version");
         try {
