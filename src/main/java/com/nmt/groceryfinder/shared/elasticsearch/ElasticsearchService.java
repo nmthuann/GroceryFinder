@@ -4,6 +4,7 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.Result;
 
 
+import co.elastic.clients.elasticsearch.cluster.HealthResponse;
 import co.elastic.clients.elasticsearch.core.GetResponse;
 import co.elastic.clients.elasticsearch.core.IndexRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
@@ -83,6 +84,17 @@ public class ElasticsearchService<T> implements IElasticsearchService <T> {
     public Boolean checkIfIndexExists(String indexName) throws IOException {
         ExistsRequest request = ExistsRequest.of(b -> b.index(indexName));
         return elasticsearchClient.indices().exists(request).value();
+    }
+
+    @Override
+    public String checkClusterHealth() {
+        try {
+            HealthResponse healthResponse = this.elasticsearchClient.cluster().health();
+            return healthResponse.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Elasticsearch is not available. Error: " + e.getMessage();
+        }
     }
 }
 
