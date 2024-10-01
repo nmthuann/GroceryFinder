@@ -10,6 +10,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.entities.BrandEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.CategoryEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.SupplierEntity;
+import com.nmt.groceryfinder.shared.elasticsearch.documents.ProductDocument;
 import com.nmt.groceryfinder.utils.SlugUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,5 +74,22 @@ public class ProductMapper
         product.setCategory(category);
         product.setSupplier(supplier);
         return product;
+    }
+
+    public ProductDocument toDocument(ProductDto dto){
+        ProductDocument productDocument = new ProductDocument(
+                dto.getId().toString(),
+                dto.getProductName(),
+                dto.getSlug(),
+                dto.getProductLine(),
+                dto.getProductSpecs(),
+                dto.getStatus(),
+                dto.getIsDeleted(),
+                dto.getPrioritySort(),
+                dto.getBrand().getName(),
+                dto.getCategory().getCategoryName(),
+                dto.getSupplier().getSupplierName()
+        );
+        return productDocument;
     }
 }

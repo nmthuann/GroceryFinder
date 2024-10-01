@@ -12,6 +12,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntit
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 import com.nmt.groceryfinder.modules.products.repositories.IProductRepository;
 import com.nmt.groceryfinder.modules.products.services.*;
+import com.nmt.groceryfinder.shared.elasticsearch.sync.SyncData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,10 +39,9 @@ public class ProductService
     private final ISupplierService supplierService;
     private final SupplierMapper supplierMapper;
     private final IImageService imageService;
-    private final ImageMapper imageMapper;
     private final ISpuSkuMappingService spuSkuMappingService;
     private final IProductSkuService productSkuService;
-    private  final ProductSkuMapper productSkuMapper;
+    private final ProductSkuMapper productSkuMapper;
 
     @Autowired
     public ProductService(
@@ -54,7 +54,6 @@ public class ProductService
             ISupplierService supplierService,
             SupplierMapper supplierMapper,
             IImageService imageService,
-            ImageMapper imageMapper,
             ISpuSkuMappingService spuSkuMappingService,
             IProductSkuService productSkuService,
             ProductSkuMapper productSkuMapper
@@ -69,7 +68,6 @@ public class ProductService
         this.supplierService = supplierService;
         this.supplierMapper = supplierMapper;
         this.imageService = imageService;
-        this.imageMapper = imageMapper;
         this.spuSkuMappingService = spuSkuMappingService;
         this.productSkuService = productSkuService;
         this.productSkuMapper = productSkuMapper;
@@ -109,6 +107,7 @@ public class ProductService
 
     @Override
     @Transactional
+    @SyncData
     public Optional<ProductDto> createOne(CreateProductDto data) throws ModuleException {
         CategoryDto findCategory = findCategoryById(data.categoryId());
         BrandDto findBrand = findBrandById(data.brandId());

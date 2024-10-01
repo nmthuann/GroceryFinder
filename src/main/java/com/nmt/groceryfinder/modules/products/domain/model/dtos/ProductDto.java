@@ -13,7 +13,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ProductDto extends AbstractBaseDto implements Serializable {
+public class    ProductDto extends AbstractBaseDto implements Serializable {
 
     String slug;
 
