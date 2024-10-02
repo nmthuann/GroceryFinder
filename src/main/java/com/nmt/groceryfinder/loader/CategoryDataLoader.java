@@ -15,7 +15,7 @@ import java.util.List;
  * @date 9/30/2024
  */
 @Component
-public class CategoryDataLoader implements CommandLineRunner {
+public class CategoryDataLoader  { //implements CommandLineRunner
 
     private final ObjectMapper objectMapper;
     private final ICategoryRepository categoryRepository;
@@ -25,7 +25,6 @@ public class CategoryDataLoader implements CommandLineRunner {
         this.objectMapper = objectMapper;
     }
 
-    @Override
     public void run(String... args) throws Exception {
         if(categoryRepository.count() == 0) {
             String path = "/data/categories.json";

@@ -21,6 +21,5 @@ public interface  IProductService extends IBaseService<UUID, ProductDto> {
     GetProductDetailResponse getProductDetail(String identifier) throws ModuleException;
     List<ProductSkuDto> getProductSkusById(UUID id) throws ModuleException;
     Page<?> getAllPaginated(String option, Integer categoryId, Pageable pageable) throws ModuleException;
-    Double getAverageRating(UUID productId);
     List<String> getProductNameListByKey(String key);
 }

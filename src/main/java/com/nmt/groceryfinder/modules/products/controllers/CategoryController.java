@@ -37,9 +37,9 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<CategoryDto>> getOneById(@PathVariable Integer id) {
+    public ResponseEntity<CategoryDto> getOneById(@PathVariable Integer id) {
         Optional<CategoryDto> category = this.categoryService.getOneById(id);
-        return new ResponseEntity<>(category, HttpStatus.OK);
+        return new ResponseEntity<>(category.get(), HttpStatus.OK);
     }
 
     @PostMapping("")

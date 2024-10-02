@@ -1,0 +1,49 @@
+{
+  "id": "d98f78d3-643b-4c24-b0fa-874b39421623",
+  "createdAt": "2024-10-01 12:00:00.000",
+  "updatedAt": "2024-10-01 12:00:00.000",
+  "createdBy": "admin",
+  "modifiedBy": "admin",
+  "slug": "example-product-slug",
+  "productName": "Example Product Name",
+  "productLine": "Electronics",
+  "description": "This is an example product description.",
+  "status": true,
+  "isDeleted": false,
+  "prioritySort": 1,
+  "productSpecs": "Specifications of the example product.",
+  "category": {
+    "id": 1,
+    "categoryName": "Electronics",
+    "description": "Category for electronic items.",
+    "categoryUrl": "http://example.com/electronics",
+    "leftValue": 1,
+    "rightValue": 2,
+    "parentId": "0"
+  },
+  "brand": {
+    "id": 1,
+    "name": "Example Brand",
+    "description": "Brand description.",
+    "brandBusiness": "Example Business"
+  },
+  "supplier": {
+    "id": 1,
+    "supplierName": "Example Supplier",
+    "address": "123 Supplier St.",
+    "phoneNumber": "+1234567890",
+    "email": "supplier@example.com",
+    "contactPerson": "John Doe",
+    "description": "Supplier description."
+  },
+  "images": [
+    {
+      "id": "8c9f57b4-5f24-4665-8f41-0a4ed4de3e76",
+      "imageUrl": "http://example.com/image1.jpg"
+    },
+    {
+      "id": "7b00e2d8-f37a-4e8b-8a05-831b798d0343",
+      "imageUrl": "http://example.com/image2.jpg"
+    }
+  ]
+}

@@ -170,11 +170,7 @@ public class ProductService
     }
 
 
-    @Override
-    public Double getAverageRating(UUID productId) {
-        Double averageRating = this.productRepository.findAverageRatingByProductId(productId);
-        return averageRating != null ? averageRating : 5.0;
-    }
+
 
 
     @Override
