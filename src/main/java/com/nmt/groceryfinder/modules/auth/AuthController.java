@@ -151,7 +151,7 @@ public class AuthController {
 
     @LoggingInterceptor
     @PostMapping("/register/admin")
-    public ResponseEntity<?> register(
+    public ResponseEntity<?> registerAdmin(
             @RequestBody RegisterAdminRequestDto data
     ) throws MessagingException, AuthException, ModuleException {
         RegisterAdminResponseDto response = authService.registerAdmin(data);

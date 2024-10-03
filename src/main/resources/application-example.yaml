@@ -1,0 +1,90 @@
+spring:
+  application:
+    name: GroceryFinder
+
+  server:
+    port: 3333
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: update
+        show-sql: true
+        format_sql: false
+        use_nationalized_character_data: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    format-sql: false
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/grocery
+    username: ""
+    password: ""
+    driver-class-name: org.postgresql.Driver
+
+  sql:
+    init:
+      mode: always
+
+  mail:
+    username: ""
+    password: ""
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          connection-timeout: 5000
+          write timeout: 5000
+
+  kafka:
+    consumer:
+    # Uncomment and update with proper configuration
+    # bootstrap-servers: localhost:9092
+    # group-id: 1
+    # auto-offset-reset: earliest
+    # key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    # value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    # topic:
+    #   name: topic.name.consumer
+
+  elasticsearch:
+    rest:
+      uris: localhost:9200
+      username: ""
+      password:  ""
+    endpoint: ""
+
+  jwt:
+    secret-key: ""
+    refresh-secret-key: ""
+    access:
+      token:
+        expiration: 900
+    refresh:
+      jwt:
+        access:
+          token:
+            expiration: 3600
+  data:
+    redis:
+      host: ""
+      port: 6379
+      timeout: 6000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+      base-path: /v1/actuator
+
+  endpoint:
+    health:
+      show-details: always
+

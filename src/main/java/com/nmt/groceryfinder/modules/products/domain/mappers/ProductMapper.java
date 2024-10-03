@@ -1,10 +1,7 @@
 package com.nmt.groceryfinder.modules.products.domain.mappers;
 
 import com.nmt.groceryfinder.common.bases.AbstractModelMapper;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.BrandDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.CategoryDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.ImageDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductDto;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.*;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.BrandEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.CategoryEntity;
@@ -34,6 +31,7 @@ public class ProductMapper
             ProductEntity productCreated,
             BrandDto brand,
             CategoryDto category,
+            SupplierDto supplier,
             List<ImageDto> images
     ){
         ProductDto productDto = new ProductDto();
@@ -44,6 +42,7 @@ public class ProductMapper
         productDto.setProductSpecs(productCreated.getProductSpecs());
         productDto.setBrand(brand);
         productDto.setCategory(category);
+        productDto.setSupplier(supplier);
         productDto.setStatus(productCreated.getStatus());
         productDto.setIsDeleted(productCreated.getIsDeleted());
         productDto.setPrioritySort(productCreated.getPrioritySort());
@@ -80,7 +79,7 @@ public class ProductMapper
         ProductDocument productDocument = new ProductDocument(
                 dto.getId().toString(),
                 dto.getProductName(),
-                dto.getSlug(),
+                SlugUtil.createSlug(dto.getProductName()),
                 dto.getProductLine(),
                 dto.getProductSpecs(),
                 dto.getStatus(),

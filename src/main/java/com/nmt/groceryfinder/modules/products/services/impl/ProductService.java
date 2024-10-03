@@ -119,6 +119,7 @@ public class ProductService
                 productCreated,
                 findBrand,
                 findCategory,
+                findSupplier,
                 imagesCreated
         ));
     }

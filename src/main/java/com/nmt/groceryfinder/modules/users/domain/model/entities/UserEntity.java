@@ -5,12 +5,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nmt.groceryfinder.common.bases.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
 import java.util.Date;
 
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class UserEntity extends AuditableEntity {
@@ -21,7 +24,7 @@ public class UserEntity extends AuditableEntity {
     private String password;
 
     @Column(name = "status", nullable = false)
-    private boolean status = true;
+    private Boolean status = true;
 
     @Column(name = "sub", nullable = false)
     private String sub;

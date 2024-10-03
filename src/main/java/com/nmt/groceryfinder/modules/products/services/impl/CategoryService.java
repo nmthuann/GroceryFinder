@@ -58,7 +58,7 @@ public class CategoryService
     public CategoryDto createOne(CreateCategoryDto data) throws  ModuleException {
         CategoryEntity findParentNode = findCategoryById(data.parentId());
         categoryRepository.increaseRightValuesByTwo(findParentNode.getRightValue()); // transaction
-        categoryRepository.increaseRightValuesByTwo(findParentNode.getRightValue()); // transaction
+        categoryRepository.increaseLeftValuesByTwo(findParentNode.getRightValue()); // transaction
         CategoryEntity newCategory = this.categoryMapper.generateCategory(data, findParentNode);
         return this.categoryMapper.toDto(this.categoryRepository.save(newCategory));
     }

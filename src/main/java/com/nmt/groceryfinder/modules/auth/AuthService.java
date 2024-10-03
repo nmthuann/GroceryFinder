@@ -241,7 +241,7 @@ public class AuthService implements IAuthService {
             RegisterAdminRequestDto data
     ) throws AuthException, ModuleException, MessagingException {
         Optional<AccountDto> findAccount = this.userService.getAccountUserByEmail(data.email());
-        if (findAccount != null) {
+        if (findAccount.isPresent()) {
             throw new AuthException(AuthExceptionMessages.EMAIL_EXIST.getMessage());
         }
         String baseString = "0123456789";

@@ -38,13 +38,8 @@ public class EmployeeService
             UserEntity userCreated,
             CreateEmployeeDto data
     ) throws ModuleException {
-        EmployeeEntity newEmployee = new EmployeeEntity();
-        newEmployee.setCccd(data.cccd());
-        newEmployee.setSalary(data.salary());
-        newEmployee.setWorkStatus(true);
-        newEmployee.setUser(userCreated);
-        newEmployee.setPosition(data.position());
-        return this.employeeMapper.toDto(this.employeeRepository.save(newEmployee));
+        EmployeeEntity employeeEntity = this.employeeMapper.generateEntity(data, userCreated);
+        return this.employeeMapper.toDto(this.employeeRepository.save(employeeEntity));
     }
 
     @Override

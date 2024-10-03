@@ -13,14 +13,14 @@ import java.util.Date;
 @Getter
 @Setter
 public class UserDto extends AbstractBaseDto implements Serializable {
-    @NotBlank(message = "Email is required")
+    @NotEmpty(message = "Email is required")
     @Email(message = "Email should be valid")
     @Size(max = 50, message = "Email should not be longer than 50 characters")
     String email;
-    @NotNull(message = "Status is required")
+    @NotEmpty(message = "Status is required")
     Boolean status;
     String sub;
-    @NotNull(message = "First name is required")
+    @NotEmpty(message = "First name is required")
     @Size(max = 50, message = "First name must be less than or equal to 50 characters")
     private String firstName;
     @Size(max = 50, message = "Last name must be less than or equal to 50 characters")
@@ -29,14 +29,16 @@ public class UserDto extends AbstractBaseDto implements Serializable {
     private String avatarURL;
     @Size(max = 20, message = "Gender must be less than or equal to 20 characters")
     private String gender;
-    @NotNull(message = "Birthday is required")
+    @NotEmpty(message = "Birthday is required")
     private Date birthday;
     @Size(max = 255, message = "Address must be less than or equal to 255 characters")
     private String address;
-    @NotNull(message = "Phone number is required")
+    @NotEmpty(message = "Phone number is required")
     @Pattern(regexp = "^\\d{10}$", message = "Phone number must be exactly 10 digits")
     private String phone;
-    String refreshToken;
-    String authMethod;
-    String role;
+    private String refreshToken;
+    @NotEmpty
+    private String authMethod;
+    @NotEmpty
+    private String role;
 }

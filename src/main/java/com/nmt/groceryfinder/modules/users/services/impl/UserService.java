@@ -1,6 +1,5 @@
 package com.nmt.groceryfinder.modules.users.services.impl;
 
-
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
 import com.nmt.groceryfinder.common.enums.AuthMethodEnum;
 import com.nmt.groceryfinder.common.enums.RoleEnum;
@@ -39,12 +38,7 @@ public class UserService
     @Override
     public Optional<AccountDto> getAccountUserByEmail(String email) {
         Optional<UserEntity> findUserByAccount = this.userRepository.findByEmail(email);
-        if(findUserByAccount!=null){
-            return Optional.ofNullable(this.userMapper.toAccountWithPasswordDto(
-                    findUserByAccount.get())
-            );
-        }
-        return null;
+        return findUserByAccount.map(this.userMapper::toAccountWithPasswordDto);
     }
 
     @Override
@@ -61,22 +55,12 @@ public class UserService
 
     @Override
     public UserDto createOne(CreateUserDto data) {
-        UserEntity newUser = new UserEntity();
-        newUser.setEmail(data.email());
-        newUser.setPassword(data.hashedPassword());
-        newUser.setStatus(true);
-        newUser.setFirstName(data.firstName());
-        newUser.setLastName(data.lastName());
-        newUser.setBirthday(data.birthday());
-        newUser.setGender(data.gender());
-        newUser.setPhone(data.phone());
-        newUser.setAddress(data.address());
-        newUser.setAvatarURL(data.avatarUrl());
-        RoleEnum role = getRoleById(data.role());
-        newUser.setRole(role.name());
-        AuthMethodEnum authMethod = getAuthMethodById(data.authMethod());
-        newUser.setAuthMethod(authMethod.name());
-        return this.userMapper.toDto(this.userRepository.save(newUser));
+        RoleEnum role = this.getRoleById(data.role());
+        AuthMethodEnum authMethod = this.getAuthMethodById(data.authMethod());
+        UserEntity userEntity = this.userMapper.generateEntity(data, role.name(), authMethod.name());
+        return this.userMapper.toDto(
+                this.userRepository.save(userEntity)
+        );
     }
 
 

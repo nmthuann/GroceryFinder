@@ -1,6 +1,9 @@
 package com.nmt.groceryfinder.modules.users.domain.mappers;
 
 import com.nmt.groceryfinder.common.bases.AbstractModelMapper;
+import com.nmt.groceryfinder.common.enums.AuthMethodEnum;
+import com.nmt.groceryfinder.common.enums.RoleEnum;
+import com.nmt.groceryfinder.modules.auth.dtos.requests.CreateUserDto;
 import com.nmt.groceryfinder.modules.users.domain.model.dtos.AccountDto;
 import com.nmt.groceryfinder.modules.users.domain.model.dtos.UserDto;
 import com.nmt.groceryfinder.modules.users.domain.model.entities.UserEntity;
@@ -21,12 +24,30 @@ public class UserMapper extends AbstractModelMapper<UserEntity, UUID, UserDto> {
         return new AccountDto(
                 entity.getId(),
                 entity.getEmail(),
-                entity.isStatus(),
+                entity.getStatus(),
                 entity.getSub(),
                 entity.getPassword(),
                 entity.getRefreshToken(),
                 entity.getAuthMethod(),
                 entity.getRole()
         );
+    }
+
+    public UserEntity generateEntity(CreateUserDto createUserDto, String roleName, String authMethodName){
+        UserEntity userEntity = new UserEntity();
+        userEntity.setEmail(createUserDto.email());
+        userEntity.setPassword(createUserDto.hashedPassword());
+        userEntity.setStatus(true);
+        userEntity.setSub("");
+        userEntity.setFirstName(createUserDto.firstName());
+        userEntity.setLastName(createUserDto.lastName());
+        userEntity.setBirthday(createUserDto.birthday());
+        userEntity.setGender(createUserDto.gender());
+        userEntity.setPhone(createUserDto.phone());
+        userEntity.setAddress(createUserDto.address());
+        userEntity.setAvatarURL(createUserDto.avatarUrl());
+        userEntity.setRole(roleName);
+        userEntity.setAuthMethod(authMethodName);
+        return  userEntity;
     }
 }
