@@ -25,9 +25,6 @@ public class InventoryEntity extends AuditableEntity {
     @Column(nullable = false, columnDefinition = "integer default 0")
     private Integer sold = 0; // sold
 
-    @Column(name = "import_price", nullable = false, columnDefinition = "decimal default 0")
-    private Double importPrice; // unit_price + vat + discount + ... => the price paid for one product
-
     @Column(name = "check_at", nullable = true)
     @Temporal(TemporalType.DATE)
     private Date checkAt;

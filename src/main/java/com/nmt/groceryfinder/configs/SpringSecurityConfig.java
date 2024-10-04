@@ -63,13 +63,10 @@ public class SpringSecurityConfig {
                                 "/v1/products/**",
                                 "/v1/brands/**",
                                 "/v1/categories/**",
-                                "/v1/accounts/**",
+                                "/v1/suppliers/**",
                                 "/v1/redis/**",
                                 "/v1/health-check/**",
                                 "/v1/actuator/**",
-                                "/v1/shipping-methods/**",
-                                "/v1/payment-methods/**",
-                                "/v1/orders/**",
                                 "/v1/inventories/**"
                         ).permitAll()
                         .requestMatchers(
@@ -77,15 +74,13 @@ public class SpringSecurityConfig {
                                 "/v1/auth/**"
                         ).permitAll()
                         .requestMatchers(
-                                HttpMethod.POST,"/v1/products/**",
+                                HttpMethod.POST,
+                                "/v1/products/**",
                                 "/v1/brands/**",
                                 "/v1/categories/**",
-                                "/v1/warehouses/**",
+                                "/v1/suppliers/**",
                                 "/v1/inventories/**",
-                                "/v1/skus/**",
-                                "/v1/purchaseOrders",
-                                "/v1/stores",
-                                "/v1/warehouses"
+                                "/v1/skus/**"
                         ).hasRole("ADMIN")
                         .requestMatchers( HttpMethod.PUT,"/v1/orders/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/v1/orders/**"

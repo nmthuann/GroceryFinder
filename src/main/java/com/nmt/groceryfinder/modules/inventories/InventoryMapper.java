@@ -35,7 +35,6 @@ public class InventoryMapper extends AbstractModelMapper<InventoryEntity, UUID, 
         inventoryEntity.setStock(data.stock());
         inventoryEntity.setCheckAt(data.checkAt());
         inventoryEntity.setConversionFactor(data.conversionFactor());
-        inventoryEntity.setImportPrice(data.importPrice());
         inventoryEntity.setWholesale(data.wholesale());
         inventoryEntity.setProductSku(productSkuCreated);
         return inventoryEntity;

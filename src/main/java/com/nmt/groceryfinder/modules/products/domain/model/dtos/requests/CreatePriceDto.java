@@ -1,5 +1,7 @@
 package com.nmt.groceryfinder.modules.products.domain.model.dtos.requests;
 
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.Date;
 
 /**
@@ -8,7 +10,11 @@ import java.util.Date;
  * @date 7/31/2024
  */
 public record CreatePriceDto(
+        @NotEmpty
         Date beginAt,
-        Double unitPrice
+        @NotEmpty
+        Double unitPrice,
+        @NotEmpty
+        Double importPrice
 ) {
 }

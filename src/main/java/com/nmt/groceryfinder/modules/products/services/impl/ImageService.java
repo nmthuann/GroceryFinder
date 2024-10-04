@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class ImageService
@@ -42,8 +41,8 @@ public class ImageService
             ImageEntity newImage = this.imageMapper.generateImage(createImageDto, productCreated);
             images.add(imageRepository.save(newImage));
         }
-        return  StreamSupport.stream(images.spliterator(), false)
-                .map(entity -> imageMapper.toDto(entity))
+        return  images.stream()
+                .map(imageMapper::toDto)
                 .collect(Collectors.toList());
     }
 }

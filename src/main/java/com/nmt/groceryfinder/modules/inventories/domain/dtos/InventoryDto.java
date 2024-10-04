@@ -32,10 +32,6 @@ public class InventoryDto extends AbstractBaseDto implements Serializable {
     @PositiveOrZero(message = "Sold must be zero or positive")
     private Integer sold;
 
-    @NotNull(message = "Import price is required")
-    @PositiveOrZero(message = "Import price must be zero or positive")
-    private Double importPrice;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date checkAt;
 

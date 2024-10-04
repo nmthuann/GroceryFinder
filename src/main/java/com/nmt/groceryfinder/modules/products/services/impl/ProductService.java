@@ -13,16 +13,18 @@ import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEn
 import com.nmt.groceryfinder.modules.products.repositories.IProductRepository;
 import com.nmt.groceryfinder.modules.products.services.*;
 import com.nmt.groceryfinder.shared.elasticsearch.sync.SyncData;
+import com.nmt.groceryfinder.utils.UrlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.web.util.UrlUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
+import java.util.stream.Collectors;
 
 
 @Service
@@ -136,9 +138,7 @@ public class ProductService
                 );
         Optional<ProductSkuDto> productSkuCreated = this.productSkuService.createOne(data);
         ProductSkuEntity productSkuEntity = this.productSkuMapper.toEntity(productSkuCreated.get());
-        Optional<SpuSkuMappingDto> spuSkuMappingCreated =
-                this.spuSkuMappingService.createOne(productCreated, productSkuEntity);
-        return spuSkuMappingCreated;
+        return this.spuSkuMappingService.createOne(productCreated, productSkuEntity);
     }
 
     @Override
@@ -169,10 +169,13 @@ public class ProductService
         return null;
     }
 
-
     @Override
-    public List<String> getProductNameListByKey(String key) {
-        this.productRepository.findByProductNameOrderByPrioritySortAsc(key);
-        return null;
+    public List<String> searchProductsByKey(String key) {
+        String decodedKey = UrlUtil.decodeUrl(key);
+        List<ProductEntity> productEntities =
+                this.productRepository.findByProductNameContainingIgnoreCase(decodedKey);
+        return productEntities.stream()
+                .map(ProductEntity::getProductName)
+                .collect(Collectors.toList());
     }
 }

@@ -25,6 +25,11 @@ public record CreateProductSkuDto(
     @Size(max = 50, message = "SKU model number must be less than or equal to 50 characters")
     String skuName,
 
-    String skuDescription
+    String skuDescription,
+    @NotEmpty(message = "Sku Attributes cannot be empty")
+    String skuAttributes,
+
+    @NotEmpty(message = "Sku image cannot be empty")
+    String image
 ) {
 }

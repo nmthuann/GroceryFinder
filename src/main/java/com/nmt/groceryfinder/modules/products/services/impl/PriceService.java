@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class PriceService
@@ -42,8 +41,8 @@ public class PriceService
     @Override
     public  List<PriceDto> getByProductSkuId(ProductSkuEntity productSku) {
         List<PriceEntity> priceEntities = this.priceRepository.findTop2ByProductSkuOrderByBeginAtDesc(productSku);
-        return StreamSupport.stream(priceEntities.spliterator(), false)
-                .map(entity -> this.priceMapper.toDto(entity))
+        return priceEntities.stream()
+                .map(this.priceMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -51,6 +50,6 @@ public class PriceService
     public Optional<PriceDto> getLatestPriceByProductSkuId(Integer productSkuId) {
         Date currentDate = new Date();
         Optional<PriceEntity> findPrice = priceRepository.findLatestPriceByProductSkuId(productSkuId, currentDate);
-        return findPrice.map(priceEntity -> this.priceMapper.toDto(priceEntity));
+        return findPrice.map(this.priceMapper::toDto);
     }
 }

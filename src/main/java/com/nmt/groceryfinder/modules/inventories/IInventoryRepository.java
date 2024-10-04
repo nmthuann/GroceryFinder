@@ -31,7 +31,6 @@ public interface IInventoryRepository
     @Transactional
     @Query(value = "INSERT INTO inventory (" +
             "check_at, " +
-            "import_price, " +
             "stock, " +
             "conversion_factor, " +
             "unit, " +
@@ -43,7 +42,6 @@ public interface IInventoryRepository
     )
     default void insertInventory(
             @Param("checkAt") Date checkAt,
-            @Param("importPrice") Double importPrice,
             @Param("stock") Integer stock,
             @Param("conversionFactor") Integer conversionFactor,
             @Param("unit") String unit,

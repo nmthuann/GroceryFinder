@@ -22,8 +22,8 @@ public class SpuSkuMappingService
         extends AbstractBaseService<SpuSkuMappingEntity, Integer, SpuSkuMappingDto>
         implements ISpuSkuMappingService
 {
-    private ISpuSkuMappingRepository spuSkuMappingRepository;
-    private SpuSkuMappingMapper spuSkuMappingMapper;
+    private final ISpuSkuMappingRepository spuSkuMappingRepository;
+    private final SpuSkuMappingMapper spuSkuMappingMapper;
 
 
     @Autowired
@@ -51,9 +51,8 @@ public class SpuSkuMappingService
 
     @Override
     public List<SpuSkuMappingDto> getSkusByProductId(UUID id) {
-        return StreamSupport.stream(
-                this.spuSkuMappingRepository.findAllByProductId(id).spliterator(), false)
-                .map(entity -> this.spuSkuMappingMapper.toDto(entity))
+        return this.spuSkuMappingRepository.findAllByProductId(id).stream()
+                .map(this.spuSkuMappingMapper::toDto)
                 .collect(Collectors.toList());
     }
 }

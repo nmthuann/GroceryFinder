@@ -43,6 +43,7 @@ public class CategoryController {
     }
 
     @PostMapping("")
+    @LoggingInterceptor
     public  ResponseEntity<CategoryDto> createOne(
             @RequestBody CreateCategoryDto data
     ) throws ModuleException {
@@ -52,6 +53,7 @@ public class CategoryController {
 
 
     @PatchMapping("/{id}")
+    @LoggingInterceptor
     public ResponseEntity<CategoryDto> updateOneById(
             @PathVariable Integer id,
             @RequestBody UpdateCategoryDto data
@@ -93,6 +95,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
+    @LoggingInterceptor
     public ResponseEntity<Void> deleteOneById(@PathVariable Integer id){
         try {
             categoryService.deleteOneById(id);

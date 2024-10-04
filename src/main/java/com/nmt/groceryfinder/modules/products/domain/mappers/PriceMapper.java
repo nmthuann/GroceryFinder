@@ -34,7 +34,8 @@ public class PriceMapper extends AbstractModelMapper<PriceEntity, PriceIdEntity,
 
         PriceEntity priceEntity = new PriceEntity();
         priceEntity.setId(newPriceId);
-        
+
+        priceEntity.setImportPrice(data.importPrice());
         priceEntity.setUnitPrice(data.unitPrice());
         return priceEntity;
     }

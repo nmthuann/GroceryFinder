@@ -9,7 +9,6 @@ import java.util.Date;
  */
 public record CreateInventoryDto(
         Date checkAt,
-        Double importPrice,
         Integer stock,
         Integer conversionFactor,
         String unit,

@@ -9,6 +9,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateP
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.GetProductDetailResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SpuSkuMappingResponse;
 import com.nmt.groceryfinder.modules.products.services.IProductService;
+import com.nmt.groceryfinder.shared.elasticsearch.documents.ProductDocument;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -138,6 +140,7 @@ public class ProductController {
             }
     )
     @PostMapping("/{id}/skus")
+    @LoggingInterceptor
     public ResponseEntity<?> createSkuById(
             @Parameter(description = "List of SKUs to add", required = true)
             @RequestBody CreateProductSkuDto data,
@@ -175,8 +178,11 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> searchProducts(@RequestParam String key) {
-        List<String> products = productService.getProductNameListByKey(key);
-        return ResponseEntity.ok(products);
+    @LoggingInterceptor
+    public ResponseEntity<?> searchProducts(@RequestParam String key){
+        List<String> productNames = this.productService.searchProductsByKey(key);
+        return ResponseEntity.ok(productNames);
     }
+
+
 }

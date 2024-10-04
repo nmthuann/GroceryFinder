@@ -2,6 +2,7 @@ package com.nmt.groceryfinder.modules.products.controllers;
 
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.SupplierDto;
 import com.nmt.groceryfinder.modules.products.services.ISupplierService;
+import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +28,14 @@ public class SupplierController {
     }
 
     @GetMapping("/{id}")
+    @LoggingInterceptor
     public ResponseEntity<Optional<SupplierDto>> getOneById(@PathVariable Integer id) {
         Optional<SupplierDto> supplier = this.supplierService.getOneById(id);
         return new ResponseEntity<>(supplier, HttpStatus.OK);
     }
 
     @PostMapping("")
+    @LoggingInterceptor
     public ResponseEntity<SupplierDto> createOne(@RequestBody SupplierDto data) {
         SupplierDto supplierCreated = this.supplierService.createOne(data);
         return new ResponseEntity<>(supplierCreated, HttpStatus.CREATED);

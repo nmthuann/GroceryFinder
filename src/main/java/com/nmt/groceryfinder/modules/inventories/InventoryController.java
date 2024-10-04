@@ -35,6 +35,7 @@ public class InventoryController {
     }
 
     @PutMapping("/{id}")
+    @LoggingInterceptor
     public ResponseEntity<InventoryDto> updateOneById(
             @PathVariable UUID id,
             @RequestBody UpdateInventoryDto data
