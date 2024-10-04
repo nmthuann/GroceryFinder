@@ -26,6 +26,9 @@ public record ProductDocument (
         String productLine,
 
         @Field(type = FieldType.Text)
+        String productSpecs,
+
+        @Field(type = FieldType.Text)
         String description,
 
         @Field(type = FieldType.Boolean)

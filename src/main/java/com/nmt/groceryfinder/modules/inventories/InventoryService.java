@@ -6,6 +6,7 @@ import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.modules.inventories.domain.dtos.CreateInventoryDto;
 import com.nmt.groceryfinder.modules.inventories.domain.dtos.InventoryDto;
 import com.nmt.groceryfinder.modules.inventories.domain.InventoryEntity;
+import com.nmt.groceryfinder.modules.inventories.domain.dtos.UpdateInventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,24 +47,18 @@ public class InventoryService
     }
 
     @Override
-    public List<InventoryDto> getInventoriesByProductSkuId(ProductSkuEntity productSkuCreated) {
-        List<InventoryEntity> findInventoryEntities =
-                this.inventoryRepository.findByProductSkuOrderByCreatedAt(productSkuCreated);
-        return findInventoryEntities.stream().map(this.inventoryMapper::toDto).collect(Collectors.toList());
-    }
-
-    @Override
     @Transactional
     public InventoryDto updateInventory(
-            Integer productSkuId,
-            int soldQuantity
+            UUID id,
+            UpdateInventoryDto data
     ) throws ModuleException {
-        InventoryEntity inventory = findInventoryByProductSkuId(productSkuId);
-        if (inventory.getStock() < soldQuantity) {
+        InventoryEntity inventory = this.inventoryRepository.findById(id)
+                .orElseThrow(() -> new ModuleException("Inventory not found for ID: " + id));
+        if (inventory.getStock() < data.soldQuantity()) {
             throw new ModuleException("Not enough stock available");
         }
-        inventory.setStock(inventory.getStock() - soldQuantity);
-        inventory.setSold(inventory.getSold() + soldQuantity);
+        inventory.setStock(inventory.getStock() - data.soldQuantity());
+        inventory.setSold(inventory.getSold() + data.soldQuantity());
         InventoryEntity updatedInventory = this.inventoryRepository.save(inventory);
         return inventoryMapper.toDto(updatedInventory);
     }
@@ -78,6 +73,6 @@ public class InventoryService
     public Optional<InventoryDto> getOneByProductSkuId(Integer productSkuId) {
         Optional<InventoryEntity> findInventory =
                 this.inventoryRepository.findByProductSkuId(productSkuId);
-        return findInventory.map(entity -> this.inventoryMapper.toDto(entity));
+        return findInventory.map(this.inventoryMapper::toDto);
     }
 }

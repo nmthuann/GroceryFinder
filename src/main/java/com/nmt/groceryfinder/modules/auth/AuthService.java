@@ -3,6 +3,7 @@ package com.nmt.groceryfinder.modules.auth;
 import com.nmt.groceryfinder.common.dtos.Payload;
 import com.nmt.groceryfinder.common.dtos.Tokens;
 import com.nmt.groceryfinder.common.enums.RoleEnum;
+import com.nmt.groceryfinder.common.enums.SubjectMailEnum;
 import com.nmt.groceryfinder.common.messages.AuthMessages;
 import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.exceptions.messages.AuthExceptionMessages;
@@ -12,7 +13,6 @@ import com.nmt.groceryfinder.modules.auth.dtos.responses.AuthenticationResponseD
 import com.nmt.groceryfinder.modules.auth.dtos.responses.LoginResponseDto;
 import com.nmt.groceryfinder.modules.auth.dtos.responses.RegisterAdminResponseDto;
 import com.nmt.groceryfinder.modules.auth.dtos.responses.RegisterResponseDto;
-import com.nmt.groceryfinder.modules.users.domain.mappers.EmployeeMapper;
 import com.nmt.groceryfinder.modules.users.domain.mappers.UserMapper;
 import com.nmt.groceryfinder.modules.users.domain.model.dtos.AccountDto;
 import com.nmt.groceryfinder.modules.users.domain.model.dtos.EmployeeDto;
@@ -37,6 +37,8 @@ import java.util.Optional;
 @Service
 public class AuthService implements IAuthService {
 
+    private static final String BASE_STRING_NUMERIC = "0123456789";
+
     private final PassportContext passportContext;
     private final JwtServiceUtil jwtServiceUtil;
     private final PasswordUtil passwordUtil;
@@ -45,7 +47,7 @@ public class AuthService implements IAuthService {
     private final UserMapper userMapper;
     private final RedisService redisService;
     private final IEmployeeService employeeService;
-    private final EmployeeMapper employeeMapper;
+
 
     @Autowired
     public AuthService(
@@ -56,8 +58,7 @@ public class AuthService implements IAuthService {
             PasswordUtil passwordUtil,
             MailServiceUtil mailServiceUtil,
             RedisService redisService,
-            IEmployeeService employeeService,
-            EmployeeMapper employeeMapper
+            IEmployeeService employeeService
             ) {
         this.passportContext = passportContext;
         this.userMapper = userMapper;
@@ -67,7 +68,6 @@ public class AuthService implements IAuthService {
         this.userService = userService;
         this.redisService = redisService;
         this.employeeService = employeeService;
-        this.employeeMapper = employeeMapper;
     }
 
 
@@ -102,7 +102,7 @@ public class AuthService implements IAuthService {
     @Transactional
     public RegisterResponseDto register(RegisterRequestDto data) throws AuthException {
         Optional<AccountDto> findAccount = this.userService.getAccountUserByEmail(data.email());
-        if (findAccount != null) {
+        if (findAccount.isPresent()) {
             throw new AuthException(AuthExceptionMessages.EMAIL_EXIST.getMessage());
         }
         String hashedPassword = this.passwordUtil.hashPassword(data.password());
@@ -142,28 +142,12 @@ public class AuthService implements IAuthService {
 
     @Override
     public AuthenticationResponseDto verifyEmail(VerifyEmailRequestDto data) throws ModuleException {
-        String baseString = "0123456789";
-        String otpCode = this.passwordUtil.randomPassword(6, baseString);
-        String subject = "XÁC NHẬN EMAIL THÀNH CÔNG";
-
-        String htmlContent = "Chào bạn " + data.email() + ",<br><br>" +
-                "Chúng tôi rất vui thông báo rằng địa chỉ email của bạn đã được xác thực thành công. " +
-                "<p>Tài khoản của bạn trên <strong>Tiệm tạp hóa Tân Hiệp</strong> " +
-                "hiện đã được kích hoạt và sẵn sàng sử dụng.</p>" +
-                "<br>" +
-                "Để hoàn tất việc xác thực, vui lòng sử dụng mã OTP dưới đây để đăng nhập vào tài khoản của bạn:" +
-                "<p><strong>Mã OTP: " + otpCode + "</strong></p>" +
-                "<br>" +
-                "Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi qua email " +
-                "<a href=\"mailto:nmt.m10.2862001@gmail.com\">nmt.m10.2862001@gmail.com</a>." +
-                "<br><br>" +
-                "Cảm ơn bạn đã chọn <strong>Tiệm tạp hóa Tân Hiệp</strong>." +
-                "<br><br>" +
-                "Trân trọng," +
-                "<p><strong>Tiệm tạp hóa Tân Hiệp</strong></p>";
+        String otpCode = this.passwordUtil.randomPassword(6, BASE_STRING_NUMERIC);
+        String subject = SubjectMailEnum.VERIFY_EMAIL_SUBJECT.getSubject();
+        String htmlContent = this.mailServiceUtil.generateVerificationEmailContent(data.email(), otpCode);
         try{
             Optional<AccountDto> findAccount = this.userService.getAccountUserByEmail(data.email());
-            if(findAccount != null){
+            if(findAccount.isPresent()){
                 throw new ModuleException(AuthExceptionMessages.EMAIL_EXIST.getMessage());
             }
             String key = "user:" + data.email() + ":otp";
@@ -175,9 +159,7 @@ public class AuthService implements IAuthService {
             );
         }catch (ModuleException e) {
             throw e;
-        } catch (MessagingException e) {
-            throw new RuntimeException(AuthExceptionMessages.VERIFY_MAIL_FAILED.getMessage(), e);
-        } catch (RuntimeException e) {
+        } catch (MessagingException | RuntimeException e) {
             throw new RuntimeException(AuthExceptionMessages.VERIFY_MAIL_FAILED.getMessage(), e);
         }
     }
@@ -198,25 +180,20 @@ public class AuthService implements IAuthService {
     public AuthenticationResponseDto resetPassword(String email) {
         try {
             Optional<AccountDto> getAccount = userService.getAccountUserByEmail(email);
-            if (getAccount != null) {
+            if (getAccount.isPresent()) {
                 throw new AuthException(AuthExceptionMessages.EMAIL_EXIST.getMessage());
             } else {
-                String baseString = "0123456789";
-                String defaultPassword = this.passwordUtil.randomPassword(8, baseString);
-
-                String subject = "VERIFY EMAIL";
-                String content = "Default Password " + ": " + defaultPassword;
-
+                String defaultPassword = this.passwordUtil.randomPassword(8, BASE_STRING_NUMERIC);
+                String subject = SubjectMailEnum.RESET_PASSWORD_SUBJECT.getSubject();
+                String content = this.mailServiceUtil.generateResetPasswordContent(defaultPassword);
                 this.mailServiceUtil.sendEmail(email, subject, content);
                 return new AuthenticationResponseDto(
                         true,
                         AuthMessages.RESET_PASSWORD_SUCCESS.getMessage()
                 );
             }
-        } catch (RuntimeException ex) {
+        } catch (RuntimeException | AuthException ex) {
             throw new RuntimeException(ex.getMessage());
-        } catch (AuthException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -244,23 +221,9 @@ public class AuthService implements IAuthService {
         if (findAccount.isPresent()) {
             throw new AuthException(AuthExceptionMessages.EMAIL_EXIST.getMessage());
         }
-        String baseString = "0123456789";
-        String randomPassword = this.passwordUtil.randomPassword(8, baseString);
-        String htmlContent = "Chào bạn " + data.email() + ",<br><br>" +
-                "Tài khoản của bạn trên <strong>Tiệm tạp hóa Tân Hiệp</strong> đã được tạo thành công. " +
-                "Dưới đây là mật khẩu mặc định để đăng nhập vào tài khoản của bạn:" +
-                "<p><strong>Mật khẩu: " + randomPassword + "</strong></p>" +
-                "<br>" +
-                "Vui lòng đăng nhập và thay đổi mật khẩu ngay lập tức để đảm bảo an toàn cho tài khoản của bạn." +
-                "<br><br>" +
-                "Nếu bạn có bất kỳ thắc mắc nào, hãy liên hệ với chúng tôi qua email " +
-                "<a href=\"mailto:nmt.m10.2862001@gmail.com\">nmt.m10.2862001@gmail.com</a>." +
-                "<br><br>" +
-                "Cảm ơn bạn đã chọn <strong>Tiệm tạp hóa Tân Hiệp</strong>." +
-                "<br><br>" +
-                "Trân trọng," +
-                "<p><strong>Tiệm tạp hóa Tân Hiệp</strong></p>";
-        String subject = "MẬT KHẨU CỦA BẠN";
+        String randomPassword = this.passwordUtil.randomPassword(8, BASE_STRING_NUMERIC);
+        String htmlContent = this.mailServiceUtil.generateAdminRegistrationEmailContent(data.email(), randomPassword);
+        String subject = SubjectMailEnum.REGISTER_ADMIN_SUBJECT.getSubject();
         this.mailServiceUtil.sendHtmlEmail(data.email(), subject, htmlContent);
         String hashedPassword = this.passwordUtil.hashPassword(randomPassword);
         CreateUserDto createUserDto  = new CreateUserDto(
@@ -278,11 +241,12 @@ public class AuthService implements IAuthService {
                 data.roleId()
         );
         UserDto userCreated = this.userService.createOne(createUserDto);
-        Tokens tokens = this.jwtServiceUtil.getTokens(new Payload(
-                userCreated.getId(),
-                data.email(),
-                RoleEnum.ADMIN.name()
-        ));
+        Tokens tokens = this.jwtServiceUtil.getTokens(
+                new Payload(
+                        userCreated.getId(),
+                        data.email(),
+                        RoleEnum.ADMIN.name()
+                ));
         CreateEmployeeDto createEmployee = new CreateEmployeeDto(
                 data.cccd(),
                 data.salary(),

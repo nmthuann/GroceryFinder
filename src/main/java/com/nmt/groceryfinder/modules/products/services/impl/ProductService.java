@@ -142,17 +142,6 @@ public class ProductService
     }
 
     @Override
-    public GetProductDetailResponse getProductDetail(String identifier) throws ModuleException {
-        return null;
-    }
-
-    @Override
-    public Page<?> getAllPaginated(String option, Integer categoryId, Pageable pageable) throws ModuleException {
-        return null;
-    }
-
-
-    @Override
     public List<ProductSkuDto> getProductSkusById(UUID id) throws ModuleException  {
         ProductEntity productEntity = this.productRepository.findById(id)
                 .orElseThrow(() -> new ModuleException(
@@ -170,8 +159,15 @@ public class ProductService
         return productSkuDtoList;
     }
 
+    @Override
+    public GetProductDetailResponse getProductDetail(String identifier) throws ModuleException {
+        return null;
+    }
 
-
+    @Override
+    public Page<?> getAllPaginated(String option, Integer categoryId, Pageable pageable) throws ModuleException {
+        return null;
+    }
 
 
     @Override

@@ -42,4 +42,44 @@ public class MailServiceUtil {
             mailSender.send(message);
 
     }
+
+    public String generateVerificationEmailContent(String email, String otpCode) {
+        return "Chào bạn " + email + ",<br><br>" +
+                "Chúng tôi rất vui thông báo rằng địa chỉ email của bạn đã được xác thực thành công. " +
+                "<p>Tài khoản của bạn trên <strong>Tiệm tạp hóa Tân Hiệp</strong> " +
+                "hiện đã được kích hoạt và sẵn sàng sử dụng.</p>" +
+                "<br>" +
+                "Để hoàn tất việc xác thực, vui lòng sử dụng mã OTP dưới đây để đăng nhập vào tài khoản của bạn:" +
+                "<p><strong>Mã OTP: " + otpCode + "</strong></p>" +
+                "<br>" +
+                "Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi qua email " +
+                "<a href=\"mailto:nmt.m10.2862001@gmail.com\">nmt.m10.2862001@gmail.com</a>." +
+                "<br><br>" +
+                "Cảm ơn bạn đã chọn <strong>Tiệm tạp hóa Tân Hiệp</strong>." +
+                "<br><br>" +
+                "Trân trọng," +
+                "<p><strong>Tiệm tạp hóa Tân Hiệp</strong></p>";
+    }
+
+    public String generateAdminRegistrationEmailContent(String email, String password) {
+        return "Chào bạn " + email + ",<br><br>" +
+                "Tài khoản của bạn trên <strong>Tiệm tạp hóa Tân Hiệp</strong> đã được tạo thành công. " +
+                "Dưới đây là mật khẩu mặc định để đăng nhập vào tài khoản của bạn:" +
+                "<p><strong>Mật khẩu: " + password + "</strong></p>" +
+                "<br>" +
+                "Vui lòng đổi mật khẩu của bạn ngay sau khi đăng nhập để bảo mật tài khoản của bạn." +
+                "<br>" +
+                "Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi qua email " +
+                "<a href=\"mailto:nmt.m10.2862001@gmail.com\">nmt.m10.2862001@gmail.com</a>." +
+                "<br><br>" +
+                "Cảm ơn bạn đã chọn <strong>Tiệm tạp hóa Tân Hiệp</strong>." +
+                "<br><br>" +
+                "Trân trọng," +
+                "<p><strong>Tiệm tạp hóa Tân Hiệp</strong></p>";
+    }
+
+    public String generateResetPasswordContent(String defaultPassword) {
+        return "Default Password " + ": " + defaultPassword;
+    }
+
 }

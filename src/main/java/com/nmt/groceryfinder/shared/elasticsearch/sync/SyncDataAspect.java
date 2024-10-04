@@ -27,7 +27,7 @@ public class SyncDataAspect {
     private static final String TEMP_DIRECTORY_NAME = "temp";
     private static final String CSV_FILE_NAME = "temp_products.csv";
     private static final String CSV_HEADER =
-            "id,name,slug,productLine,description,status,isDeleted,prioritySort,brandName,categoryName,supplierName";
+            "id,name,slug,productLine,productSpecs,description,status,isDeleted,prioritySort,brandName,categoryName,supplierName";
     private static final String INDEX_NAME = "products";
 
     private final ElasticsearchService<ProductDocument> elasticsearchService;

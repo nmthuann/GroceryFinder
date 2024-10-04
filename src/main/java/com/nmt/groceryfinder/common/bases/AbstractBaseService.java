@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.nmt.groceryfinder.exceptions.ModuleException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,12 +12,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public abstract class AbstractBaseService<T, ID, D> implements IBaseService <ID, D> {
     private final JpaRepository<T, ID> baseRepository;
     private final AbstractModelMapper<T,ID, D> modelMapper;
-
 
     public AbstractBaseService(
             JpaRepository<T, ID> baseRepository,
@@ -32,14 +29,14 @@ public abstract class AbstractBaseService<T, ID, D> implements IBaseService <ID,
         if(baseRepository.count() > 20){
             throw new RuntimeException("Number of records exceeds 20. Cannot retrieve the list.");
         }
-        return StreamSupport.stream(baseRepository.findAll().spliterator(), false)
-                .map(entity -> modelMapper.toDto(entity))
+        return baseRepository.findAll().stream()
+                .map(modelMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     public Optional<D> getOneById(ID id)  {
         return baseRepository.findById(id)
-                .map(entity -> modelMapper.toDto(entity))
+                .map(modelMapper::toDto)
                 .or(() -> {
                     throw new EntityNotFoundException("Entity with id " + id + " not found");
                 });
@@ -92,6 +89,6 @@ public abstract class AbstractBaseService<T, ID, D> implements IBaseService <ID,
 
     public Page<D> getAllPaginated(Pageable pageable) {
         Page<T> entitiesPage = baseRepository.findAll(pageable);
-        return entitiesPage.map(entity -> modelMapper.toDto(entity));
+        return entitiesPage.map(modelMapper::toDto);
     }
 }

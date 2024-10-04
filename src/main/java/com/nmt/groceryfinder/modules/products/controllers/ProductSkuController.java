@@ -34,7 +34,6 @@ public class ProductSkuController {
         this.productSkuService = productSkuService;
     }
 
-
     @PostMapping("/{id}/inventories")
     @LoggingInterceptor
     public ResponseEntity<?> createInventoryById(
@@ -43,7 +42,8 @@ public class ProductSkuController {
             @PathVariable Integer id
     ) throws ModuleException {
         Optional<InventoryDto> inventoryDto = this.productSkuService.createInventoryById(id, data);
-        return new ResponseEntity<>(inventoryDto.get(), HttpStatus.CREATED);
+        return inventoryDto.map(dto -> new ResponseEntity<>(dto, HttpStatus.CREATED))
+                .orElseThrow(() -> new ModuleException("Inventory creation failed"));
     }
 
     @PostMapping("/{id}/prices")
@@ -54,7 +54,8 @@ public class ProductSkuController {
             @PathVariable Integer id
     ) throws ModuleException {
         Optional<PriceDto> priceDto = this.productSkuService.createPriceById(id, data);
-        return new ResponseEntity<>(priceDto.get(), HttpStatus.CREATED);
+        return priceDto.map(dto -> new ResponseEntity<>(dto, HttpStatus.CREATED))
+                .orElseThrow(() -> new ModuleException("Price creation failed"));
     }
 
 
@@ -65,6 +66,6 @@ public class ProductSkuController {
             @PathVariable Integer id
     ) {
         Optional<ProductSkuDto> productSkuDto = this.productSkuService.getOneById(id);
-        return new ResponseEntity<>(productSkuDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(productSkuDto.get(), HttpStatus.CREATED);
     }
 }

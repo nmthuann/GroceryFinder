@@ -82,6 +82,7 @@ public class ProductMapper
                 SlugUtil.createSlug(dto.getProductName()),
                 dto.getProductLine(),
                 dto.getProductSpecs(),
+                dto.getDescription(),
                 dto.getStatus(),
                 dto.getIsDeleted(),
                 dto.getPrioritySort(),
