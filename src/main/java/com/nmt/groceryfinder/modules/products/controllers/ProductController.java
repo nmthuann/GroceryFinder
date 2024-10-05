@@ -119,7 +119,7 @@ public class ProductController {
     ) throws ModuleException {
         PageRequest pageable = PageRequest.of(page, size, Sort.by("prioritySort").ascending());
         // getCache
-        Page<?> products = this.productService.getAllPaginated(option, categoryId, pageable);
+        Page<?> products = this.productService.getAllPaginated(categoryId,  option, pageable);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 

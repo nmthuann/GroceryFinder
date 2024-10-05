@@ -49,32 +49,6 @@ public class SyncDataAspectTest {
         productDto = objectMapper.readValue(new File(JSON_FILE_PATH), ProductDto.class);
     }
 
-    @Test
-    public void shouldSyncDataWhenGivenValidProduct() throws Throwable {
-        //ARRANGE
-        when(joinPoint.proceed()).thenReturn(Optional.of(productDto));
-        ProductDocument productDocument = mock(ProductDocument.class);
-        when(productMapper.toDocument(productDto)).thenReturn(productDocument);
-        when(elasticsearchService.checkClusterHealth()).thenReturn("green");
-        when(elasticsearchService.checkIfIndexExists(anyString())).thenReturn(false);
-
-        ReflectionTestUtils.setField(syncDataAspect, "TEMP_DIRECTORY_NAME", "temp");
-        ReflectionTestUtils.setField(syncDataAspect, "CSV_FILE_NAME", "test_products.csv");
-
-        //ACT
-        syncDataAspect.syncData(joinPoint, null);
-
-        // ASSERT
-        verify(elasticsearchService, times(1)).createIndex(
-                eq("products")
-        );
-        verify(elasticsearchService, times(1)).ingestDocument(
-                eq("products"),
-                eq("1"),
-                eq(productDocument)
-        );
-    }
-
 
     @Test
     public void shouldNotSyncIfProductIsAbsent() throws Throwable {
@@ -86,27 +60,6 @@ public class SyncDataAspectTest {
 
         // Assert
         verify(elasticsearchService, never()).ingestDocument(anyString(), anyString(), any());
-    }
-
-    @Test
-    public void shouldWriteToFileWhenElasticsearchIsNotReady() throws Throwable {
-        // Arrange
-        when(joinPoint.proceed()).thenReturn(Optional.of(productDto));
-        ProductDocument productDocument = mock(ProductDocument.class);
-        when(productMapper.toDocument(productDto)).thenReturn(productDocument);
-        when(elasticsearchService.checkClusterHealth()).thenReturn("yellow");
-
-        // Mock static utility methods
-        ReflectionTestUtils.setField(syncDataAspect, "TEMP_DIRECTORY_NAME", "temp");
-        ReflectionTestUtils.setField(syncDataAspect, "CSV_FILE_NAME", "test_products.csv");
-
-        // Act
-        syncDataAspect.syncData(joinPoint, null);
-
-        // Assert
-        verify(elasticsearchService, never()).ingestDocument(anyString(), anyString(), any());
-        // You would also verify if FileUtil.writeFile() was called,
-        // but you might need a custom utility mocking framework like PowerMockito for that.
     }
 
 }

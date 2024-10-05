@@ -20,6 +20,6 @@ public interface  IProductService extends IBaseService<UUID, ProductDto> {
     Optional<SpuSkuMappingDto> createProductSkuById(UUID id, CreateProductSkuDto data) throws ModuleException;
     GetProductDetailResponse getProductDetail(String identifier) throws ModuleException;
     List<ProductSkuDto> getProductSkusById(UUID id) throws ModuleException;
-    Page<?> getAllPaginated(String option, Integer categoryId, Pageable pageable) throws ModuleException;
+    Page<?> getAllPaginated(Integer categoryId, String option, Pageable pageable) throws ModuleException;
     List<String> searchProductsByKey(String key);
 }

@@ -165,8 +165,28 @@ public class ProductService
     }
 
     @Override
-    public Page<?> getAllPaginated(String option, Integer categoryId, Pageable pageable) throws ModuleException {
-        return null;
+    public Page<ProductDto> getAllPaginated(Integer categoryId, String option, Pageable pageable) throws ModuleException {
+        if (categoryId != null) {
+            switch (option) {
+                case "TopSale":
+                    return this.productRepository.findAllByCategoryIdAndPrioritySort(categoryId, 1, pageable)
+                            .map(this.productMapper::toDto);
+                default:
+                    return this.productRepository.findAllByCategoryId(categoryId, pageable)
+                        .map(this.productMapper::toDto);
+            }
+        }
+
+        if (option == null) {
+            return this.productRepository.findAll(pageable)
+                    .map(this.productMapper::toDto);
+        }
+
+        return Page.empty();
+    }
+
+    private Page<?> getProductsTopSale(Integer categoryId, Pageable pageable){
+        return this.productRepository.findAllByCategoryIdAndPrioritySort(categoryId, 1, pageable);
     }
 
     @Override
