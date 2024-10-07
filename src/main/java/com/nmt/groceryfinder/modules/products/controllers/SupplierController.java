@@ -1,13 +1,20 @@
 package com.nmt.groceryfinder.modules.products.controllers;
 
+import com.nmt.groceryfinder.exceptions.ModuleException;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.CategoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.SupplierDto;
 import com.nmt.groceryfinder.modules.products.services.ISupplierService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,9 +36,10 @@ public class SupplierController {
 
     @GetMapping("/{id}")
     @LoggingInterceptor
-    public ResponseEntity<Optional<SupplierDto>> getOneById(@PathVariable Integer id) {
+    public ResponseEntity<?> getOneById(@PathVariable Integer id) {
         Optional<SupplierDto> supplier = this.supplierService.getOneById(id);
-        return new ResponseEntity<>(supplier, HttpStatus.OK);
+        return supplier.map(supplierDto -> new ResponseEntity<>(supplierDto, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("")
@@ -39,5 +47,13 @@ public class SupplierController {
     public ResponseEntity<SupplierDto> createOne(@RequestBody SupplierDto data) {
         SupplierDto supplierCreated = this.supplierService.createOne(data);
         return new ResponseEntity<>(supplierCreated, HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("")
+    @LoggingInterceptor
+    public ResponseEntity<?> getAll()  {
+        Iterable<SupplierDto> suppliers = this.supplierService.getAll();
+        return new ResponseEntity<>(suppliers, HttpStatus.OK);
     }
 }

@@ -1,6 +1,7 @@
 package com.nmt.groceryfinder.modules.products.controllers;
 
 import com.nmt.groceryfinder.exceptions.ModuleException;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.BrandDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.CategoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateCategoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateCategoryDto;
@@ -37,9 +38,10 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDto> getOneById(@PathVariable Integer id) {
+    public ResponseEntity<?> getOneById(@PathVariable Integer id) {
         Optional<CategoryDto> category = this.categoryService.getOneById(id);
-        return new ResponseEntity<>(category.get(), HttpStatus.OK);
+        return category.map(categoryDto -> new ResponseEntity<>(categoryDto, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("")
@@ -75,19 +77,21 @@ public class CategoryController {
         try {
             if (!isPagination) {
                 if(isChild){
-                    Iterable<CategoryDto> categories = this.categoryService.getLeafCategories();
-                    return new ResponseEntity<>(categories, HttpStatus.OK);
+                    Iterable<CategoryDto> leafCategories = this.categoryService.getLeafCategories();
+                    return new ResponseEntity<>(leafCategories, HttpStatus.OK);
                 }
-                Iterable<CategoryDto> categories = this.categoryService.getChildCategories();
-                return new ResponseEntity<>(categories, HttpStatus.OK);
+                if (parentId != null && !parentId.isEmpty()) {
+                    List<CategoryDto> childCategoriesByParent =
+                            this.categoryService.getChildCategoriesByParentId(parentId);
+                    return new ResponseEntity<>(childCategoriesByParent, HttpStatus.OK);
+                }
+                Iterable<CategoryDto> childCategories = this.categoryService.getAll();
+                return new ResponseEntity<>(childCategories, HttpStatus.OK);
             }
-            else if (parentId != null) {
-                List<CategoryDto> categories = this.categoryService.getChildCategoriesByParentId(parentId);
-                return new ResponseEntity<>(categories, HttpStatus.OK);
-            } else {
+            else {
                 Pageable pageable = PageRequest.of(page, size);
-                Page<CategoryDto> categories = this.categoryService.getAllPaginated(pageable);
-                return new ResponseEntity<>(categories, HttpStatus.OK);
+                Page<CategoryDto> allCategories = this.categoryService.getAllPaginated(pageable);
+                return new ResponseEntity<>(allCategories, HttpStatus.OK);
             }
         } catch (ResponseStatusException e) {
             return ResponseEntity.status(e.getStatusCode()).build();

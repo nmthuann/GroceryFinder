@@ -85,8 +85,8 @@ public class CategoryService
     @Override
     public List<CategoryDto> getAllByParentId(String parentId) {
         List<CategoryEntity> categories = this.categoryRepository.findByParentId(parentId);
-        return  StreamSupport.stream(categories.spliterator(), false)
-                .map(entity -> categoryMapper.toDto(entity))
+        return  categories.stream()
+                .map(categoryMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -98,8 +98,8 @@ public class CategoryService
                         parentCategory.getLeftValue(),
                         parentCategory.getRightValue()
                 );
-        return StreamSupport.stream(childCategories.spliterator(), false)
-                .map(entity -> categoryMapper.toDto(entity))
+        return childCategories.stream()
+                .map(categoryMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -107,18 +107,17 @@ public class CategoryService
     public List<CategoryDto> getChildCategories() {
         List<CategoryEntity> findCategories
                 = this.categoryRepository.findChildCategories(CategoryParentEnum.GROCERY_PARENT_ID.getCategoryId());
-        return  StreamSupport.stream(findCategories.spliterator(), false)
-                .map(entity -> categoryMapper.toDto(entity))
+        return  findCategories.stream()
+                .map(categoryMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Iterable<CategoryDto> getLeafCategories() {
-        return StreamSupport.stream(
-                this.categoryRepository
-                        .findLeafCategories()
-                        .spliterator(), false)
-                .map(entity -> categoryMapper.toDto(entity))
+        return this.categoryRepository
+                .findLeafCategories()
+                .stream()
+                .map(categoryMapper::toDto)
                 .collect(Collectors.toList());
     }
 

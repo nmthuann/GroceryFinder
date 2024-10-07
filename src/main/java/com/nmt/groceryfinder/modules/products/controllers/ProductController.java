@@ -1,6 +1,7 @@
 package com.nmt.groceryfinder.modules.products.controllers;
 
 import com.nmt.groceryfinder.exceptions.ModuleException;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.CategoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.SpuSkuMappingDto;
@@ -43,30 +44,15 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @Operation(
-            summary = "Get a product by ID or slug",
-            description = "Retrieve a product by its unique ID or slug.",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Product found",
-                            content = @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ProductDto.class))
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Product not found"
-                    )
-            }
-    )
-    @GetMapping("/{identifier}")
+
+    @GetMapping("/{id}")
     @LoggingInterceptor
-    public ResponseEntity<GetProductDetailResponse> getProductDetail(
-            @Parameter(description = "ID or slug of the product to retrieve", required = true)
-            @PathVariable String identifier
+    public ResponseEntity<?> getOneById(
+            @PathVariable UUID id
     ) throws ModuleException {
-        GetProductDetailResponse product = this.productService.getProductDetail(identifier);;
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        Optional<?> product = this.productService.getOneById(id);
+        return product.map(productDto -> new ResponseEntity<>(productDto, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @Operation(

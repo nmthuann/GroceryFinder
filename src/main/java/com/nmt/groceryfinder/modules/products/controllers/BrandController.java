@@ -36,9 +36,10 @@ public class BrandController {
 
     @GetMapping("/{id}")
     @LoggingInterceptor
-    public ResponseEntity<Optional<BrandDto>> getOneById(@PathVariable Integer id) {
+    public ResponseEntity<BrandDto> getOneById(@PathVariable Integer id) {
         Optional<BrandDto> brand = this.brandService.getOneById(id);
-        return new ResponseEntity<>(brand, HttpStatus.OK);
+        return brand.map(brandDto -> new ResponseEntity<>(brandDto, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("")

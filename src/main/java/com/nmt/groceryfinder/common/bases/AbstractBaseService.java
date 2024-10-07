@@ -26,7 +26,7 @@ public abstract class AbstractBaseService<T, ID, D> implements IBaseService <ID,
     }
 
     public Iterable <D> getAll() {
-        if(baseRepository.count() > 20){
+        if(baseRepository.count() > 30){
             throw new RuntimeException("Number of records exceeds 20. Cannot retrieve the list.");
         }
         return baseRepository.findAll().stream()
