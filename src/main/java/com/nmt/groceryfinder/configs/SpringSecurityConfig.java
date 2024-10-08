@@ -64,6 +64,7 @@ public class SpringSecurityConfig {
                                 "/v1/brands/**",
                                 "/v1/categories/**",
                                 "/v1/suppliers/**",
+                                "/v1/skus/**",
                                 "/v1/redis/**",
                                 "/v1/health-check/**",
                                 "/v1/actuator/**",

@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -58,14 +59,35 @@ public class ProductSkuController {
                 .orElseThrow(() -> new ModuleException("Price creation failed"));
     }
 
-
-    @PostMapping("/{id}")
+    @GetMapping("/{id}")
     @LoggingInterceptor
     public ResponseEntity<?> getOneById(
-            @Parameter(description = "Product details to create", required = true)
             @PathVariable Integer id
     ) {
         Optional<ProductSkuDto> productSkuDto = this.productSkuService.getOneById(id);
-        return new ResponseEntity<>(productSkuDto.get(), HttpStatus.CREATED);
+        if (productSkuDto.isPresent()) {
+            return new ResponseEntity<>(productSkuDto.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Product SKU not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{id}/inventories")
+    @LoggingInterceptor
+    public ResponseEntity<InventoryDto> getInventoryBySkuId(
+            @PathVariable Integer id
+    ) throws ModuleException {
+        Optional<InventoryDto> inventory = this.productSkuService.getInventoryBySkuId(id);
+        return inventory.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @GetMapping("/{id}/prices")
+    @LoggingInterceptor
+    public ResponseEntity<?> getPricesBySkuId(
+            @PathVariable Integer id
+    ) {
+       List<PriceDto> prices = this.productSkuService.getPricesByProductSkuId(id);
+        return new ResponseEntity<>(prices, HttpStatus.OK);
     }
 }

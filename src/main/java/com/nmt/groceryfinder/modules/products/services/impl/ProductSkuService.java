@@ -19,6 +19,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -58,6 +59,16 @@ public class ProductSkuService
     public Optional<PriceDto> createPriceById(Integer id, CreatePriceDto data) throws ModuleException {
         ProductSkuEntity productSku = findProductSkuById(id);
         return priceService.createOne(productSku, data);
+    }
+
+    @Override
+    public Optional<InventoryDto> getInventoryBySkuId(Integer id) throws ModuleException {
+        return this.inventoryService.getOneByProductSkuId(id);
+    }
+
+    @Override
+    public List<PriceDto> getPricesByProductSkuId(Integer id) {
+        return this.priceService.getPricesByProductSkuId(id);
     }
 
     @Transactional

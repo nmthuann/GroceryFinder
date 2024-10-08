@@ -25,11 +25,11 @@ public class InventoryController {
 
     @GetMapping("")
     @LoggingInterceptor
-    public ResponseEntity<InventoryDto> getInventoryBySkuId(
-            @RequestParam(required = false) Integer productSkuId
+    public ResponseEntity<InventoryDto> getOneById(
+            @RequestParam(required = false) UUID id
     ) {
         Optional<InventoryDto> inventory =
-                inventoryService.getOneByProductSkuId(productSkuId);
+                inventoryService.getOneById(id);
         return inventory.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }

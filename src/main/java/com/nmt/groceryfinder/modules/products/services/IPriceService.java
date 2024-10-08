@@ -26,8 +26,8 @@ public interface IPriceService extends IBaseService<PriceIdEntity, PriceDto> {
      * @param productSku The product SKU entity for which prices are to be fetched.
      * @return A list of PriceDto objects representing the prices for the specified product SKU.
      */
-    List<PriceDto> getByProductSkuId(ProductSkuEntity productSku);
-
+    List<PriceDto> getTop2ByProductSku(ProductSkuEntity productSku);
+    List<PriceDto> getPricesByProductSkuId(Integer productSkuId);
     /**
      * Retrieves the latest price for a specified product SKU by its ID.
      *

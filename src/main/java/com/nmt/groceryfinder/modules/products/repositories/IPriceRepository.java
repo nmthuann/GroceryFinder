@@ -25,4 +25,7 @@ public interface IPriceRepository extends JpaRepository<PriceEntity, PriceIdEnti
             @Param("productSkuId") Integer productSkuId,
             @Param("currentDate") Date currentDate
     );
+
+    List<PriceEntity> findAllByIdProductSkuId(@Param("productSkuId") Integer productSkuId);
+
 }

@@ -39,8 +39,16 @@ public class PriceService
     }
 
     @Override
-    public  List<PriceDto> getByProductSkuId(ProductSkuEntity productSku) {
+    public  List<PriceDto> getTop2ByProductSku(ProductSkuEntity productSku) {
         List<PriceEntity> priceEntities = this.priceRepository.findTop2ByProductSkuOrderByBeginAtDesc(productSku);
+        return priceEntities.stream()
+                .map(this.priceMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PriceDto> getPricesByProductSkuId(Integer productSkuId) {
+        List<PriceEntity> priceEntities = this.priceRepository.findAllByIdProductSkuId(productSkuId);
         return priceEntities.stream()
                 .map(this.priceMapper::toDto)
                 .collect(Collectors.toList());
