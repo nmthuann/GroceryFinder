@@ -7,6 +7,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateC
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateCategoryDto;
 import com.nmt.groceryfinder.modules.products.services.ICategoryService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +27,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/v1/categories")
+@Tag(name = "Categories")
 public class CategoryController {
 
     private final ICategoryService categoryService;

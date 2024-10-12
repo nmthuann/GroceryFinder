@@ -30,9 +30,8 @@ public class BrandService
 
     @Override
     public Iterable<BrandDto> getBrandsByBrandBusiness(String brandBusiness) {
-        return StreamSupport.stream(
-                brandRepository.findByBrandBusiness(brandBusiness).spliterator(), false)
-                .map(entity -> brandMapper.toDto(entity))
+        return brandRepository.findByBrandBusiness(brandBusiness).stream()
+                .map(brandMapper::toDto)
                 .collect(Collectors.toList());
     }
 

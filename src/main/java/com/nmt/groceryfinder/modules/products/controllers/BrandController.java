@@ -4,6 +4,7 @@ import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.BrandDto;
 import com.nmt.groceryfinder.modules.products.services.IBrandService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -23,6 +25,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/v1/brands")
+@Tag(name = "Brands")
 public class BrandController {
 
     private final IBrandService brandService;
@@ -77,7 +80,7 @@ public class BrandController {
             @RequestParam(required = false, defaultValue = "true") Boolean isPagination
     ) {
         try {
-            if (!isPagination && brandBusiness != "") {
+            if (!isPagination && !Objects.equals(brandBusiness, "")) {
                 Iterable<BrandDto> brands = this.brandService.getBrandsByBrandBusiness(brandBusiness);
                 return new ResponseEntity<>(brands, HttpStatus.OK);
             } else {

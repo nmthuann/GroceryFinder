@@ -3,6 +3,7 @@ package com.nmt.groceryfinder.modules.products.controllers;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.SupplierDto;
 import com.nmt.groceryfinder.modules.products.services.ISupplierService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/v1/suppliers")
+@Tag(name = "Suppliers")
 public class SupplierController {
     private final ISupplierService supplierService;
 

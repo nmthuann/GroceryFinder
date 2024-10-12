@@ -10,9 +10,10 @@ import java.util.Date;
 public record CreateInventoryDto(
         Date checkAt,
         Integer stock,
+        Integer defective,
+        Integer sold,
         Integer conversionFactor,
         String unit,
-        Boolean wholesale,
-        Integer warehouseId
+        Boolean wholesale
 ) {
 }

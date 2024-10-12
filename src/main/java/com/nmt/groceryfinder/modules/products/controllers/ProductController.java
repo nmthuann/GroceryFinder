@@ -1,16 +1,13 @@
 package com.nmt.groceryfinder.modules.products.controllers;
 
 import com.nmt.groceryfinder.exceptions.ModuleException;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.CategoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.SpuSkuMappingDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.GetProductDetailResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SpuSkuMappingResponse;
 import com.nmt.groceryfinder.modules.products.services.IProductService;
-import com.nmt.groceryfinder.shared.elasticsearch.documents.ProductDocument;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -77,7 +74,8 @@ public class ProductController {
             @RequestBody CreateProductDto data
     ) throws ModuleException {
         Optional<ProductDto> productCreated = this.productService.createOne(data);
-        return new ResponseEntity<>(productCreated.get(), HttpStatus.CREATED);
+        return productCreated.map(productDto -> new ResponseEntity<>(productDto, HttpStatus.CREATED))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @Operation(
@@ -133,7 +131,8 @@ public class ProductController {
             @PathVariable UUID id
     ) throws ModuleException {
         Optional<SpuSkuMappingDto> productSkuCreated = this.productService.createProductSkuById(id, data);
-        return new ResponseEntity<>(productSkuCreated.get(), HttpStatus.CREATED);
+        return productSkuCreated.map(spuSkuDto -> new ResponseEntity<>(spuSkuDto, HttpStatus.CREATED))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @Operation(
@@ -168,6 +167,4 @@ public class ProductController {
         List<String> productNames = this.productService.searchProductsByKey(key);
         return ResponseEntity.ok(productNames);
     }
-
-
 }
