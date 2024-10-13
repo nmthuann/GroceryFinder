@@ -7,6 +7,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.SpuSkuMappingDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.GetProductDetailResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ import java.util.UUID;
 
 public interface  IProductService extends IBaseService<UUID, ProductDto> {
     Optional<ProductDto> createOne(CreateProductDto data) throws ModuleException;
+    Optional<ProductDto> updateOneById(UUID id, UpdateProductDto data) throws ModuleException;
     Optional<SpuSkuMappingDto> createProductSkuById(UUID id, CreateProductSkuDto data) throws ModuleException;
     GetProductDetailResponse getProductDetail(String identifier) throws ModuleException;
     List<ProductSkuDto> getProductSkusById(UUID id) throws ModuleException;

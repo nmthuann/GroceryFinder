@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -36,13 +37,53 @@ public class ImageService
     @Override
     @Transactional
     public List<ImageDto> createImages(ProductEntity productCreated, List<CreateImageDto> data) {
-        List<ImageEntity> images = new ArrayList<>();
-        for (CreateImageDto createImageDto : data) {
-            ImageEntity newImage = this.imageMapper.generateImage(createImageDto, productCreated);
-            images.add(imageRepository.save(newImage));
+            
+        // Step 1: Fetch existing images for the product
+        List<ImageEntity> existingImages = imageRepository.findAllByProductId(productCreated.getId());
+
+        // Step 2: Create a set of new image URLs for easier comparison
+        Set<String> newImageUrls = data.stream()
+                .map(CreateImageDto::imageUrl)
+                .collect(Collectors.toSet());
+
+        // Step 3: Determine images to delete
+        List<ImageEntity> imagesToDelete = new ArrayList<>();
+        for (ImageEntity existingImage : existingImages) {
+            if (!newImageUrls.contains(existingImage.getImageUrl())) {
+                imagesToDelete.add(existingImage);
+            }
         }
-        return  images.stream()
+
+        // Step 4: Delete images that are no longer present in the new data
+        imageRepository.deleteAll(imagesToDelete);
+
+        // Step 5: Determine images to insert
+        List<ImageEntity> imagesToInsert = new ArrayList<>();
+        for (CreateImageDto createImageDto : data) {
+            boolean existsInDb = existingImages.stream()
+                    .anyMatch(existingImage -> existingImage.getImageUrl().equals(createImageDto.imageUrl()));
+
+            if (!existsInDb) {
+                ImageEntity newImage = imageMapper.generateImage(createImageDto, productCreated);
+                imagesToInsert.add(imageRepository.save(newImage));
+            }
+        }
+
+        // Step 6: Convert newly inserted images to DTOs and return
+        return imagesToInsert.stream()
                 .map(imageMapper::toDto)
                 .collect(Collectors.toList());
+
     }
 }
+
+
+//    List<ImageEntity> images = new ArrayList<>();
+//        for (CreateImageDto createImageDto : data) {
+//    ImageEntity newImage = this.imageMapper.generateImage(createImageDto, productCreated);
+//    images.add(imageRepository.save(newImage));
+//}
+//        return  images.stream()
+//                .map(imageMapper::toDto)
+//                .collect(Collectors.toList());
+//}

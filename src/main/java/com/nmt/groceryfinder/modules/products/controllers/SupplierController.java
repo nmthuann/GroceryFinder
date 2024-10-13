@@ -51,4 +51,16 @@ public class SupplierController {
         Iterable<SupplierDto> suppliers = this.supplierService.getAll();
         return new ResponseEntity<>(suppliers, HttpStatus.OK);
     }
+
+    @PutMapping("/{id}")
+    @LoggingInterceptor
+    public ResponseEntity<?> updateById(
+            @PathVariable Integer id,
+            @RequestBody SupplierDto data
+    ) {
+        Optional<SupplierDto> updatedSupplier = Optional.ofNullable(this.supplierService.updateOneById(id, data));
+        return updatedSupplier
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

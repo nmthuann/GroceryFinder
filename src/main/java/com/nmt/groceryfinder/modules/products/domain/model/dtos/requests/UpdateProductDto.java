@@ -8,10 +8,10 @@ import java.util.List;
 
 /**
  * @author LENOVO
- * @project ecommerce-spring-boot-be
- * @date 7/19/2024
+ * @project GroceryFinder
+ * @date 10/13/2024
  */
-public record CreateProductDto(
+public record UpdateProductDto(
         @NotNull(message = "Product name is required")
         @NotEmpty(message = "Product name cannot be empty")
         @Size(max = 255, message = "Product name must be less than or equal to 255 characters")
@@ -37,7 +37,5 @@ public record CreateProductDto(
         Integer prioritySort,
         @NotNull(message = "Images is required")
         List<CreateImageDto> images
-
-
 ) {
 }

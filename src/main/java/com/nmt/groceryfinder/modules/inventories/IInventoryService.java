@@ -5,6 +5,7 @@ import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.modules.inventories.domain.dtos.CreateInventoryDto;
 import com.nmt.groceryfinder.modules.inventories.domain.dtos.InventoryDto;
 import com.nmt.groceryfinder.modules.inventories.domain.dtos.UpdateInventoryDto;
+import com.nmt.groceryfinder.modules.inventories.domain.dtos.UpdateQuantityInventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 
 import java.util.List;
@@ -20,6 +21,11 @@ public interface IInventoryService extends IBaseService<UUID, InventoryDto> {
     InventoryDto updateInventory(
             UUID id,
             UpdateInventoryDto data
+    ) throws ModuleException;
+
+    InventoryDto updateQuantityInventory(
+            UUID id,
+            UpdateQuantityInventoryDto data
     ) throws ModuleException;
     Optional<InventoryDto> createOne(ProductSkuEntity productSkuCreated, CreateInventoryDto data);
     Optional<InventoryDto> getOneByProductSkuId(Integer productSkuId);

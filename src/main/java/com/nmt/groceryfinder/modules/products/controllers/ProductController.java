@@ -6,6 +6,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.SpuSkuMappingDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SpuSkuMappingResponse;
 import com.nmt.groceryfinder.modules.products.services.IProductService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
@@ -75,6 +76,18 @@ public class ProductController {
     ) throws ModuleException {
         Optional<ProductDto> productCreated = this.productService.createOne(data);
         return productCreated.map(productDto -> new ResponseEntity<>(productDto, HttpStatus.CREATED))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    }
+
+
+    @PutMapping("{id}")
+    @LoggingInterceptor
+    public ResponseEntity<ProductDto> updateOneById(
+            @PathVariable UUID id,
+            @RequestBody UpdateProductDto data
+    ) throws ModuleException {
+        Optional<ProductDto> productUpdated = this.productService.updateOneById(id, data);
+        return productUpdated.map(productDto -> new ResponseEntity<>(productDto, HttpStatus.CREATED))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 

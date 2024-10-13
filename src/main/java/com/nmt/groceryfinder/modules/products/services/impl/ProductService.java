@@ -7,6 +7,7 @@ import com.nmt.groceryfinder.modules.products.domain.mappers.*;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.*;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.GetProductDetailResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
@@ -14,6 +15,7 @@ import com.nmt.groceryfinder.modules.products.repositories.IProductRepository;
 import com.nmt.groceryfinder.modules.products.services.*;
 import com.nmt.groceryfinder.shared.elasticsearch.sync.SyncData;
 import com.nmt.groceryfinder.utils.UrlUtil;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -107,6 +109,7 @@ public class ProductService
         );
     }
 
+
     @Override
     @Transactional
     @SyncData
@@ -125,6 +128,12 @@ public class ProductService
                 imagesCreated
         ));
     }
+
+    @Override
+    public Optional<ProductDto> updateOneById(UUID id, UpdateProductDto data) throws ModuleException {
+        return Optional.empty();
+    }
+
 
     @Override
     @Transactional

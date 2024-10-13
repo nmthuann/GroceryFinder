@@ -6,6 +6,7 @@ import com.nmt.groceryfinder.modules.inventories.domain.dtos.CreateInventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreatePriceDto;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.services.IProductSkuService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -67,6 +68,21 @@ public class ProductSkuController {
         Optional<ProductSkuDto> productSkuDto = this.productSkuService.getOneById(id);
         if (productSkuDto.isPresent()) {
             return new ResponseEntity<>(productSkuDto.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Product SKU not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/{id}")
+    @LoggingInterceptor
+    public ResponseEntity<?> updateById(
+            @PathVariable Integer id,
+            @RequestBody ProductSkuDto data
+
+    ) {
+        Optional<ProductSkuDto> productSkuDto = Optional.ofNullable(this.productSkuService.updateOneById(id, data));
+        if (productSkuDto.isPresent()) {
+            return new ResponseEntity<>(productSkuDto, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Product SKU not found", HttpStatus.NOT_FOUND);
         }

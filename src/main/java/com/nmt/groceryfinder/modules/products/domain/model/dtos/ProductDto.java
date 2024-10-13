@@ -14,7 +14,6 @@ import java.util.List;
 @Getter
 @Setter
 public class ProductDto extends AbstractBaseDto implements Serializable {
-
     String slug;
 
     @NotNull(message = "Product name is required")
@@ -36,8 +35,12 @@ public class ProductDto extends AbstractBaseDto implements Serializable {
     private Integer prioritySort;
 
     private String productSpecs;
+
     private CategoryDto category;
+
     private BrandDto brand;
+
     private SupplierDto supplier;
+
     private List<ImageDto> images;
 }

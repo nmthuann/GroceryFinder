@@ -7,6 +7,7 @@ import com.nmt.groceryfinder.modules.inventories.domain.dtos.CreateInventoryDto;
 import com.nmt.groceryfinder.modules.inventories.domain.dtos.InventoryDto;
 import com.nmt.groceryfinder.modules.inventories.domain.InventoryEntity;
 import com.nmt.groceryfinder.modules.inventories.domain.dtos.UpdateInventoryDto;
+import com.nmt.groceryfinder.modules.inventories.domain.dtos.UpdateQuantityInventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,18 @@ public class InventoryService
     public InventoryDto updateInventory(
             UUID id,
             UpdateInventoryDto data
+    ) throws ModuleException {
+        InventoryEntity inventory = this.inventoryRepository.findById(id)
+                .orElseThrow(() -> new ModuleException("Inventory not found for ID: " + id));
+        InventoryEntity setEntity = this.inventoryMapper.setEntity(inventory, data);
+        InventoryEntity updatedInventory = this.inventoryRepository.save(setEntity);
+        return inventoryMapper.toDto(updatedInventory);
+    }
+
+    @Override
+    public InventoryDto updateQuantityInventory(
+            UUID id,
+            UpdateQuantityInventoryDto data
     ) throws ModuleException {
         InventoryEntity inventory = this.inventoryRepository.findById(id)
                 .orElseThrow(() -> new ModuleException("Inventory not found for ID: " + id));

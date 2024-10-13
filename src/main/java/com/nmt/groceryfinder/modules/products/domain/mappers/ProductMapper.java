@@ -3,6 +3,7 @@ package com.nmt.groceryfinder.modules.products.domain.mappers;
 import com.nmt.groceryfinder.common.bases.AbstractModelMapper;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.*;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.BrandEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.CategoryEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntity;
@@ -61,10 +62,10 @@ public class ProductMapper
             SupplierEntity supplier
     ){
         ProductEntity product = new ProductEntity();
-        product.setIsDeleted(false);
-        product.setPrioritySort(1);
-        product.setStatus(true);
         product.setSlug(SlugUtil.createSlug(data.productName()));
+        product.setIsDeleted(data.isDeleted());
+        product.setPrioritySort(data.prioritySort());
+        product.setStatus(data.status());
         product.setProductName(data.productName());
         product.setProductLine(data.productLine());
         product.setDescription(data.description());
@@ -75,8 +76,23 @@ public class ProductMapper
         return product;
     }
 
+//    public ProductEntity updateEntity(
+//            ProductEntity productCreated,
+//            UpdateProductDto data
+//    ){
+//
+//        productCreated.setIsDeleted(data.isDeleted());
+//        productCreated.setPrioritySort(data.prioritySort());
+//        productCreated.setStatus(data.status());
+//        productCreated.setProductName(data.productName());
+//        productCreated.setProductLine(data.productLine());
+//        productCreated.setDescription(data.description());
+//        productCreated.setProductSpecs(data.productSpecs());
+//        return productCreated;
+//    }
+
     public ProductDocument toDocument(ProductDto dto){
-        ProductDocument productDocument = new ProductDocument(
+        return new ProductDocument(
                 dto.getId().toString(),
                 dto.getProductName(),
                 SlugUtil.createSlug(dto.getProductName()),
@@ -90,6 +106,5 @@ public class ProductMapper
                 dto.getCategory().getCategoryName(),
                 dto.getSupplier().getSupplierName()
         );
-        return productDocument;
     }
 }

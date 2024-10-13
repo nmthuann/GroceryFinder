@@ -83,7 +83,15 @@ public class SpringSecurityConfig {
                                 "/v1/inventories/**",
                                 "/v1/skus/**"
                         ).hasRole("ADMIN")
-                        .requestMatchers( HttpMethod.PUT,"/v1/orders/**").hasRole("ADMIN")
+                        .requestMatchers(
+                                HttpMethod.PUT,
+                                "/v1/products/**",
+                                "/v1/brands/**",
+                                "/v1/categories/**",
+                                "/v1/suppliers/**",
+                                "/v1/inventories/**",
+                                "/v1/skus/**"
+                        ).hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/v1/orders/**"
                         ).hasAnyRole("ADMIN", "USER")
                 )
