@@ -11,6 +11,7 @@ import com.nmt.groceryfinder.modules.products.services.IProductSkuService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class ProductSkuController {
     @LoggingInterceptor
     public ResponseEntity<?> createInventoryById(
             @Parameter(description = "Product details to create", required = true)
-            @RequestBody CreateInventoryDto data,
+            @Valid @RequestBody CreateInventoryDto data,
             @PathVariable Integer id
     ) throws ModuleException {
         Optional<InventoryDto> inventoryDto = this.productSkuService.createInventoryById(id, data);
@@ -101,9 +102,14 @@ public class ProductSkuController {
     @GetMapping("/{id}/prices")
     @LoggingInterceptor
     public ResponseEntity<?> getPricesBySkuId(
-            @PathVariable Integer id
-    ) {
+            @PathVariable Integer id,
+            @RequestParam(required = false, defaultValue = "false") Boolean isTop2
+    ) throws ModuleException {
+        if(isTop2){
+            List<PriceDto> prices = this.productSkuService.getTop2PricesByProductSkuId(id);
+            return new ResponseEntity<>(prices, HttpStatus.OK);
+        }
        List<PriceDto> prices = this.productSkuService.getPricesByProductSkuId(id);
-        return new ResponseEntity<>(prices, HttpStatus.OK);
+       return new ResponseEntity<>(prices, HttpStatus.OK);
     }
 }

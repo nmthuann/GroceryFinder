@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -25,5 +26,7 @@ public interface IProductRepository extends JpaRepository<ProductEntity, UUID> {
 
     Page<ProductEntity> findAllByCategoryIdAndPrioritySort(Integer categoryId, Integer prioritySort, Pageable pageable);
     Page<ProductEntity> findAllByCategoryId(@Param("categoryId") Integer categoryId, Pageable pageable);
+    List<ProductEntity> findAllByCategoryId(@Param("categoryId") Integer categoryId);
+    Optional<ProductEntity> findBySlug(@Param("slug") String slug);
 }
 

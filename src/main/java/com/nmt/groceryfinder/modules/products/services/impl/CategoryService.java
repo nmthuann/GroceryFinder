@@ -66,7 +66,7 @@ public class CategoryService
     @Override
     public CategoryDto updateOneById(Integer id, UpdateCategoryDto data) throws ModuleException {
         Optional<CategoryEntity> findCategory = this.categoryRepository.findById(id);
-        if (!findCategory.isPresent()) {
+        if (findCategory.isEmpty()) {
             throw new ModuleException(ProductsModuleExceptionMessages.CATEGORY_NOT_FOUND.getMessage());
         }
         CategoryEntity updateCategory = findCategory.get();
@@ -104,7 +104,7 @@ public class CategoryService
     }
 
     @Override
-    public List<CategoryDto> getChildCategories() {
+    public List<CategoryDto> getGroceryCategories() {
         List<CategoryEntity> findCategories
                 = this.categoryRepository.findChildCategories(CategoryParentEnum.GROCERY_PARENT_ID.getCategoryId());
         return  findCategories.stream()

@@ -52,7 +52,7 @@ public interface ICategoryService extends IBaseService<Integer, CategoryDto> {
      *
      * @return A list of CategoryDto objects representing all child categories.
      */
-    List<CategoryDto> getChildCategories();
+    List<CategoryDto> getGroceryCategories();
 
     /**
      * Retrieves all categories that are leaf categories (those with no children).

@@ -7,6 +7,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.SpuSkuMappingDto
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.GetSkuDetailResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SpuSkuMappingResponse;
 import com.nmt.groceryfinder.modules.products.services.IProductService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
@@ -23,7 +24,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -44,7 +47,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     @LoggingInterceptor
-    public ResponseEntity<?> getOneById(
+    public ResponseEntity<?> getOneById (
             @PathVariable UUID id
     ) throws ModuleException {
         Optional<?> product = this.productService.getOneById(id);
@@ -106,17 +109,33 @@ public class ProductController {
     @GetMapping("")
     @LoggingInterceptor
     public ResponseEntity<?> getAllPaginated(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) Integer categoryId,
             @RequestParam(required = false) String option,
-            @Parameter(description = "Page number for pagination", example = "0")
-            @RequestParam(defaultValue = "0") int page,
-            @Parameter(description = "Number of products per page", example = "10")
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(required = false, defaultValue = "true") Boolean isPagination,
+            @RequestParam(required = false, defaultValue = "") String slug
     ) throws ModuleException {
-        PageRequest pageable = PageRequest.of(page, size, Sort.by("prioritySort").ascending());
-        // getCache
-        Page<?> products = this.productService.getAllPaginated(categoryId,  option, pageable);
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        try{
+            if(isPagination){
+                PageRequest pageable = PageRequest.of(page, size, Sort.by("prioritySort").ascending());
+                // getCache
+                Page<?> products = this.productService.getAllPaginated(categoryId, option, pageable);
+                return new ResponseEntity<>(products, HttpStatus.OK);
+            }
+            else {
+                if (!slug.isEmpty()) {
+                    Optional<ProductDto> findProduct = this.productService.getOneBySlug(slug);
+                    return findProduct
+                            .map(product -> new ResponseEntity<>(product, HttpStatus.OK))
+                            .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+                }
+                List<ProductDto> products = this.productService.getProductsByCategoryId(categoryId);
+                return new ResponseEntity<>(products, HttpStatus.OK);
+            }
+        }catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).build();
+        }
     }
 
     @Operation(
@@ -168,8 +187,13 @@ public class ProductController {
     @LoggingInterceptor
     public ResponseEntity<?> getSkusById(
             @Parameter(description = "ID of the product to retrieve SKUs for", required = true)
-            @PathVariable UUID id
+            @PathVariable UUID id,
+            @RequestParam(required = false, defaultValue = "false") Boolean isDetail
     ) throws ModuleException {
+        if(isDetail){
+            List<GetSkuDetailResponse> skuDetailResponses = this.productService.getSkuDetailsById(id);
+            return new ResponseEntity<>(skuDetailResponses, HttpStatus.OK);
+        }
         List<ProductSkuDto> findSpuSkuMappingDtoList = this.productService.getProductSkusById(id);
         return new ResponseEntity<>(findSpuSkuMappingDtoList, HttpStatus.OK);
     }

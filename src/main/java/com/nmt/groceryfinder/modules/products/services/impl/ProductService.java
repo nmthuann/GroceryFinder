@@ -3,23 +3,22 @@ package com.nmt.groceryfinder.modules.products.services.impl;
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
 import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.exceptions.messages.ProductsModuleExceptionMessages;
+import com.nmt.groceryfinder.modules.inventories.domain.dtos.InventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.mappers.*;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.*;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.GetProductDetailResponse;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.GetSkuDetailResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 import com.nmt.groceryfinder.modules.products.repositories.IProductRepository;
 import com.nmt.groceryfinder.modules.products.services.*;
 import com.nmt.groceryfinder.shared.elasticsearch.sync.SyncData;
 import com.nmt.groceryfinder.utils.UrlUtil;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.web.util.UrlUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
@@ -130,6 +129,12 @@ public class ProductService
     }
 
     @Override
+    public Optional<ProductDto> getOneBySlug (String slug) {
+        Optional<ProductEntity> product = this.productRepository.findBySlug(slug);
+        return product.map(this.productMapper::toDto);
+    }
+
+    @Override
     public Optional<ProductDto> updateOneById(UUID id, UpdateProductDto data) throws ModuleException {
         return Optional.empty();
     }
@@ -156,34 +161,62 @@ public class ProductService
                 .orElseThrow(() -> new ModuleException(
                         ProductsModuleExceptionMessages.GET_PRODUCT_NOT_FOUND.getMessage()
                 ));
+
         List<SpuSkuMappingDto> spuSkuMappingDtoList =
                 this.spuSkuMappingService.getSkusByProductId(productEntity.getId());
 
         List<ProductSkuDto> productSkuDtoList = new ArrayList<>();
-        for(SpuSkuMappingDto spuSkuMappingDto: spuSkuMappingDtoList){
+
+        for (SpuSkuMappingDto spuSkuMappingDto : spuSkuMappingDtoList) {
             Optional<ProductSkuDto> productSkuDto =
                     this.productSkuService.getOneById(spuSkuMappingDto.getProductSku().getId());
-            productSkuDtoList.add(productSkuDto.get());
+
+            productSkuDto.ifPresent(productSkuDtoList::add);
         }
         return productSkuDtoList;
     }
 
     @Override
-    public GetProductDetailResponse getProductDetail(String identifier) throws ModuleException {
-        return null;
+    public List<GetSkuDetailResponse> getSkuDetailsById(UUID id) throws ModuleException {
+        List<ProductSkuDto> productSkuDtoList = this.getProductSkusById(id);
+        List<GetSkuDetailResponse> skuDetailResponses = new ArrayList<>();
+        for(ProductSkuDto productSkuDto: productSkuDtoList){
+            InventoryDto findInventoryDto =
+                    this.productSkuService.getInventoryBySkuId(productSkuDto.getId())
+                            .orElseThrow(() ->
+                                    new ModuleException("Inventory not found for SKU: " + productSkuDto.getId())
+                            );
+            List<PriceDto> findTop2Prices =
+                    this.productSkuService.getTop2PricesByProductSkuId(productSkuDto.getId());
+            GetSkuDetailResponse skuDetailResponse = new GetSkuDetailResponse(
+                    productSkuDto,
+                    findTop2Prices,
+                    findInventoryDto
+            );
+            skuDetailResponses.add(skuDetailResponse);
+        }
+        return skuDetailResponses;
     }
+
+    @Override
+    public List<ProductDto> getProductsByCategoryId(Integer categoryId) {
+        List<ProductEntity> productEntities = this.productRepository.findAllByCategoryId(categoryId);
+        return productEntities
+                .stream()
+                .map(this.productMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
 
     @Override
     public Page<ProductDto> getAllPaginated(Integer categoryId, String option, Pageable pageable) throws ModuleException {
         if (categoryId != null) {
-            switch (option) {
-                case "TopSale":
-                    return this.productRepository.findAllByCategoryIdAndPrioritySort(categoryId, 1, pageable)
-                            .map(this.productMapper::toDto);
-                default:
-                    return this.productRepository.findAllByCategoryId(categoryId, pageable)
+            if ("TopSale".equals(option)) {
+                return this.productRepository.findAllByCategoryIdAndPrioritySort(categoryId, 1, pageable)
                         .map(this.productMapper::toDto);
             }
+            return this.productRepository.findAllByCategoryId(categoryId, pageable)
+                    .map(this.productMapper::toDto);
         }
 
         if (option == null) {

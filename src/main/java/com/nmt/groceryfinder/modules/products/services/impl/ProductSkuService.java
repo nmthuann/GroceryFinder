@@ -71,6 +71,12 @@ public class ProductSkuService
         return this.priceService.getPricesByProductSkuId(id);
     }
 
+    @Override
+    public List<PriceDto> getTop2PricesByProductSkuId(Integer id) throws ModuleException  {
+        ProductSkuEntity productSkuCreated = this.findProductSkuById(id);
+        return this.priceService.getTop2ByProductSku(productSkuCreated);
+    }
+
     @Transactional
     @Override
     public Optional<ProductSkuDto> createOne(CreateProductSkuDto data) {
