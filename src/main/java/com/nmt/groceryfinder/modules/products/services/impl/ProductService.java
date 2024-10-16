@@ -14,7 +14,6 @@ import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntit
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 import com.nmt.groceryfinder.modules.products.repositories.IProductRepository;
 import com.nmt.groceryfinder.modules.products.services.*;
-import com.nmt.groceryfinder.shared.elasticsearch.sync.SyncData;
 import com.nmt.groceryfinder.utils.UrlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -111,7 +110,6 @@ public class ProductService
 
     @Override
     @Transactional
-    @SyncData
     public Optional<ProductDto> createOne(CreateProductDto data) throws ModuleException {
         CategoryDto findCategory = findCategoryById(data.categoryId());
         BrandDto findBrand = findBrandById(data.brandId());
