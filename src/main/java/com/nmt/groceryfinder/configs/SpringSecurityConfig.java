@@ -92,8 +92,10 @@ public class SpringSecurityConfig {
                                 "/v1/inventories/**",
                                 "/v1/skus/**"
                         ).hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/v1/orders/**"
-                        ).hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/v1/users/**").hasRole("USER")
+                        .requestMatchers("/v2/employees/**").hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.POST, "/v1/orders/**").hasAnyRole("ADMIN", "USER")
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

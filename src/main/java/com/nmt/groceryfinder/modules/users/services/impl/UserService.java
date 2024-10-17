@@ -6,6 +6,7 @@ import com.nmt.groceryfinder.common.enums.RoleEnum;
 import com.nmt.groceryfinder.modules.auth.dtos.requests.CreateUserDto;
 import com.nmt.groceryfinder.modules.users.domain.mappers.UserMapper;
 import com.nmt.groceryfinder.modules.users.domain.model.dtos.AccountDto;
+import com.nmt.groceryfinder.modules.users.domain.model.dtos.ProfileDto;
 import com.nmt.groceryfinder.modules.users.domain.model.dtos.UserDto;
 import com.nmt.groceryfinder.modules.users.domain.model.entities.UserEntity;
 import com.nmt.groceryfinder.modules.users.repositories.IUserRepository;
@@ -42,16 +43,21 @@ public class UserService
     }
 
     @Override
-    public Optional<UserDto> getCustomerByEmail(String email) {
+    public Optional<ProfileDto> getProfileByEmail(String email) {
         return this.userRepository.findByEmail(email)
-                .map(this.userMapper::toDto);
+                .map(user -> new ProfileDto(
+                        user.getEmail(),
+                        user.getFirstName(),
+                        user.getLastName(),
+                        user.getAvatarURL(),
+                        user.getGender(),
+                        user.getBirthday(),
+                        user.getAddress(),
+                        user.getPhone()
+                ));
     }
 
-    @Override
-    public Optional<UserDto> getCustomerByPhone(String phone) {
-        return this.userRepository.findByPhone(phone)
-                .map(this.userMapper::toDto);
-    }
+
 
     @Override
     public UserDto createOne(CreateUserDto data) {
