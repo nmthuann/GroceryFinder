@@ -78,8 +78,9 @@ public class AuthController {
         }
     }
 
-    @LoggingInterceptor
+
     @PostMapping("/verify-email")
+    @LoggingInterceptor
     public ResponseEntity<AuthenticationResponseDto> verifyEmail(@RequestBody VerifyEmailRequestDto data) {
         try {
             AuthenticationResponseDto response = authService.verifyEmail(data);
@@ -104,8 +105,9 @@ public class AuthController {
         }
     }
 
-    @LoggingInterceptor
+
     @PostMapping("/check-otp")
+    @LoggingInterceptor
     public ResponseEntity<AuthenticationResponseDto> checkOtp(@RequestBody CheckOtpRequestDto data) {
         try {
             AuthenticationResponseDto response = authService.checkOtp(data);
@@ -115,6 +117,18 @@ public class AuthController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new AuthenticationResponseDto(false, e.getMessage()));
             }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new AuthenticationResponseDto(false, e.getMessage()));
+        }
+    }
+
+    @PostMapping("/resend-otp")
+    @LoggingInterceptor
+    public ResponseEntity<AuthenticationResponseDto> resendOtp(@RequestBody ResendOtpRequestDto data) {
+        try {
+            AuthenticationResponseDto response = authService.resendOtp(data);
+            return ResponseEntity.ok(response);
+        } catch (MessagingException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new AuthenticationResponseDto(false, e.getMessage()));
         }

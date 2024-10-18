@@ -18,13 +18,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 
 import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/v1/users")
 public class UserController {
     private final IUserService userService;
 
@@ -43,10 +44,11 @@ public class UserController {
 
     @GetMapping("/me")
     @LoggingInterceptor
-    public ResponseEntity<Optional<ProfileDto>> getOneByAccessToken(
+    public ResponseEntity<ProfileDto> getOneByAccessToken(
             @AuthenticationPrincipal UserDetails userDetails
     ) {
-        Optional<ProfileDto> profileDto = this.userService.getProfileByEmail(userDetails.getUsername());
+        ProfileDto profileDto = this.userService.getProfileByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Profile not found"));
         return new ResponseEntity<>(profileDto, HttpStatus.OK);
     }
 
@@ -54,7 +56,7 @@ public class UserController {
     @GetMapping("")
     @LoggingInterceptor
 //    @RolesAllowed("ADMIN")
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllPaginated (
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size

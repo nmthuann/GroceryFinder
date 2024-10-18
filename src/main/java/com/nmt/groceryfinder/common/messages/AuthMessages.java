@@ -11,7 +11,8 @@ import lombok.Getter;
 public enum AuthMessages {
     RESET_PASSWORD_SUCCESS("Reset Password Thành Công!"),
     VERIFY_EMAIL_SUCCESS("Verify email success."),
-    OTP_VALID("OTP verified successful..")
+    OTP_VALID("OTP verified successful."),
+    RESEND_OTP_SUCCESS("OTP resend successfully.")
     ;
      private final String message;
 

@@ -73,7 +73,7 @@ public class UserService
     private RoleEnum getRoleById(Integer roleId) {
         return switch (roleId) {
             case 1 -> RoleEnum.ADMIN;
-            case 2 -> RoleEnum.CUSTOMER;
+            case 2 -> RoleEnum.USER;
             case 3 -> RoleEnum.MANAGER;
             default -> throw new IllegalArgumentException("Invalid roleId: " + roleId);
         };

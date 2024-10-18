@@ -177,6 +177,20 @@ public class AuthService implements IAuthService {
     }
 
     @Override
+    public AuthenticationResponseDto resendOtp(ResendOtpRequestDto data) throws MessagingException {
+        String otpCode = this.passwordUtil.randomPassword(6, BASE_STRING_NUMERIC);
+        String subject = SubjectMailEnum.RESEND_OTP_SUBJECT.getSubject();
+        String htmlContent = this.mailServiceUtil.generateVerificationEmailContent(data.email(), otpCode);
+        String key = "user:" + data.email() + ":otp";
+        redisService.setCacheWithExpiration(key, otpCode,5);
+        this.mailServiceUtil.sendHtmlEmail(data.email(), subject, htmlContent);
+        return new AuthenticationResponseDto(
+                true,
+                AuthMessages.RESEND_OTP_SUCCESS.getMessage()
+        );
+    }
+
+    @Override
     public AuthenticationResponseDto resetPassword(String email) {
         try {
             Optional<AccountDto> getAccount = userService.getAccountUserByEmail(email);

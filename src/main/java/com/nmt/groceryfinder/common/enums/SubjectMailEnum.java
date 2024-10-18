@@ -12,6 +12,7 @@ public enum SubjectMailEnum {
     REGISTER_ADMIN_SUBJECT("MẬT KHẨU CỦA BẠN"),
     VERIFY_EMAIL_SUBJECT("XÁC NHẬN EMAIL THÀNH CÔNG"),
     RESET_PASSWORD_SUBJECT("RESTSET PASSWORD"),
+    RESEND_OTP_SUBJECT("GỬI LẠI MÃ OTP")
     ;
 
     private final String subject;

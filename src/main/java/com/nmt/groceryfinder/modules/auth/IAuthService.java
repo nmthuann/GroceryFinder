@@ -18,6 +18,7 @@ public interface IAuthService {
     )throws AuthException, ModuleException, MessagingException;
     AuthenticationResponseDto  verifyEmail(VerifyEmailRequestDto data) throws ModuleException;
     AuthenticationResponseDto checkOtp(CheckOtpRequestDto data) throws ModuleException;
+    AuthenticationResponseDto resendOtp(ResendOtpRequestDto data) throws MessagingException;
     AuthenticationResponseDto resetPassword(String email);
     AuthenticationResponseDto changePassword(String email);
     AuthenticationResponseDto forgetPassword(String email);
