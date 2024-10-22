@@ -11,6 +11,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateC
 import com.nmt.groceryfinder.modules.products.domain.model.entities.CategoryEntity;
 import com.nmt.groceryfinder.modules.products.repositories.ICategoryRepository;
 import com.nmt.groceryfinder.modules.products.services.ICategoryService;
+import com.nmt.groceryfinder.utils.UrlUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -119,6 +120,19 @@ public class CategoryService
                 .stream()
                 .map(categoryMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CategoryDto> searchCategoriesByKey(String key) {
+        String decodedKey = UrlUtil.decodeUrl(key);
+        List<CategoryDto> categories = this.getGroceryCategories();
+        return categories
+                .stream()
+                .filter(categoryDto -> categoryDto
+                        .getCategoryName()
+                        .toLowerCase()
+                        .contains(decodedKey.toLowerCase())
+                ).toList();
     }
 
     @Override

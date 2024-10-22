@@ -55,7 +55,6 @@ public class UserController {
 
     @GetMapping("")
     @LoggingInterceptor
-//    @RolesAllowed("ADMIN")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllPaginated (
             @RequestParam(defaultValue = "0") int page,

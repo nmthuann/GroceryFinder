@@ -225,10 +225,6 @@ public class ProductService
         return Page.empty();
     }
 
-    private Page<?> getProductsTopSale(Integer categoryId, Pageable pageable){
-        return this.productRepository.findAllByCategoryIdAndPrioritySort(categoryId, 1, pageable);
-    }
-
     @Override
     public List<String> searchProductsByKey(String key) {
         String decodedKey = UrlUtil.decodeUrl(key);

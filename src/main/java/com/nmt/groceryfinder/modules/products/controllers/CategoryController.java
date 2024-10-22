@@ -116,4 +116,12 @@ public class CategoryController {
             return ResponseEntity.status(e.getStatusCode()).build();
         }
     }
+
+
+    @GetMapping("/search")
+    @LoggingInterceptor
+    public ResponseEntity<?> searchProducts(@RequestParam String key){
+        List<CategoryDto> categories = this.categoryService.searchCategoriesByKey(key);
+        return ResponseEntity.ok(categories);
+    }
 }

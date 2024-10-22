@@ -62,4 +62,6 @@ public interface ICategoryService extends IBaseService<Integer, CategoryDto> {
     Iterable<CategoryDto> getLeafCategories();
 
 
+    List<CategoryDto> searchCategoriesByKey(String key);
+
 }

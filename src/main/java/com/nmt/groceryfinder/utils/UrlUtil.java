@@ -13,7 +13,6 @@ public class UrlUtil {
         try {
             return URLDecoder.decode(encodedUrl, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            // Xử lý ngoại lệ nếu cần
             throw new RuntimeException("Failed to decode URL", e);
         }
     }
