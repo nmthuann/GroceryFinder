@@ -22,7 +22,7 @@ public interface IProductRepository extends JpaRepository<ProductEntity, UUID> {
             "LIKE LOWER(CONCAT('%', :productName, '%')) " +
             "ORDER BY p.prioritySort ASC"
     )
-    List<ProductEntity> findByProductNameContainingIgnoreCase(@Param("productName") String productName);
+    List<ProductEntity> findTop5ByProductNameContainingIgnoreCase(@Param("productName") String productName);
 
     Page<ProductEntity> findAllByCategoryIdAndPrioritySort(Integer categoryId, Integer prioritySort, Pageable pageable);
     Page<ProductEntity> findAllByCategoryId(@Param("categoryId") Integer categoryId, Pageable pageable);

@@ -9,6 +9,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateP
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.GetSkuDetailResponse;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductInfoToSearch;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -25,5 +26,5 @@ public interface  IProductService extends IBaseService<UUID, ProductDto> {
     List<GetSkuDetailResponse> getSkuDetailsById(UUID id) throws ModuleException;
     List<ProductDto> getProductsByCategoryId(Integer id);
     Page<?> getAllPaginated(Integer categoryId, String option, Pageable pageable) throws ModuleException;
-    List<String> searchProductsByKey(String key);
+    List<ProductInfoToSearch> searchProductsByKey(String key);
 }

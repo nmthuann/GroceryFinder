@@ -8,6 +8,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateP
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.GetSkuDetailResponse;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductInfoToSearch;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SpuSkuMappingResponse;
 import com.nmt.groceryfinder.modules.products.services.IProductService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
@@ -201,7 +202,7 @@ public class ProductController {
     @GetMapping("/search")
     @LoggingInterceptor
     public ResponseEntity<?> searchProducts(@RequestParam String key){
-        List<String> productNames = this.productService.searchProductsByKey(key);
+        List<ProductInfoToSearch> productNames = this.productService.searchProductsByKey(key);
         return ResponseEntity.ok(productNames);
     }
 }

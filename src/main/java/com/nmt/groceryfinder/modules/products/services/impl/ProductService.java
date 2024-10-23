@@ -10,6 +10,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateP
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.GetSkuDetailResponse;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductInfoToSearch;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 import com.nmt.groceryfinder.modules.products.repositories.IProductRepository;
@@ -226,12 +227,18 @@ public class ProductService
     }
 
     @Override
-    public List<String> searchProductsByKey(String key) {
+    public List<ProductInfoToSearch> searchProductsByKey(String key) {
         String decodedKey = UrlUtil.decodeUrl(key);
         List<ProductEntity> productEntities =
-                this.productRepository.findByProductNameContainingIgnoreCase(decodedKey);
+                this.productRepository.findTop5ByProductNameContainingIgnoreCase(decodedKey);
+
         return productEntities.stream()
-                .map(ProductEntity::getProductName)
+                .map(product -> new ProductInfoToSearch(
+                        product.getId(),
+                        product.getSlug(),
+                        product.getProductName(),
+                        product.getCategory().getCategoryUrl()
+                ))
                 .collect(Collectors.toList());
     }
 }
