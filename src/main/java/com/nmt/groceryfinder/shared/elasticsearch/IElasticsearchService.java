@@ -1,9 +1,6 @@
 package com.nmt.groceryfinder.shared.elasticsearch;
 
 import co.elastic.clients.elasticsearch._types.Result;
-import co.elastic.clients.elasticsearch.cluster.HealthResponse;
-import com.nmt.groceryfinder.shared.elasticsearch.documents.ProductDocument;
-
 import java.io.IOException;
 import java.util.List;
 

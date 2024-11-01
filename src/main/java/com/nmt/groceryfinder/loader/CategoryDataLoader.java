@@ -4,7 +4,6 @@ import aj.org.objectweb.asm.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.CategoryEntity;
 import com.nmt.groceryfinder.modules.products.repositories.ICategoryRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import java.io.InputStream;
 import java.util.List;
