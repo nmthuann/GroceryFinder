@@ -17,22 +17,22 @@
 <div align="center">
   <div class="social-icons">
     <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/36fda1085cffacaebc7613ab8f227351.png" target="_blank">
-      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/36fda1085cffacaebc7613ab8f227351.png" alt="springboot"  width="50" />
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/36fda1085cffacaebc7613ab8f227351.png" alt="springboot" width="50" />
     </a>
 
     <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/postgresql-icon-1987x2048-v2fkmdaw.png" target="_blank">
-      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/postgresql-icon-1987x2048-v2fkmdaw.png" alt="postgresql"  width="50"  />
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/postgresql-icon-1987x2048-v2fkmdaw.png" alt="postgresql" width="50" />
     </a>
 
-    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/ddocs/images/icons/docker-icon.png" target="_blank">
-      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/docker-icon.png" alt="docker"  width="50"  />
+    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/docker-icon.png" target="_blank">
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/docker-icon.png" alt="docker" width="50" />
     </a>
+    
     <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/1100px_Redis_Logo_01.png" target="_blank">
-      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/1100px_Redis_Logo_01.png" alt="redis"  width="50"  />
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/1100px_Redis_Logo_01.png" alt="redis" width="50" />
     </a>
   </div>
 </div>
-
 <br>
 
 ---
