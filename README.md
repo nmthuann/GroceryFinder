@@ -31,7 +31,8 @@
     <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/1100px_Redis_Logo_01.png" target="_blank">
       <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/1100px_Redis_Logo_01.png" alt="redis" width="50" />
     </a>
-  </div>
+    </div>
+
 </div>
 <br>
 
