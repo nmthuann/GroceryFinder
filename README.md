@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://spring.io/" target="blank"><img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/36fda1085cffacaebc7613ab8f227351.png" width="200" alt="Spring Boot Logo" /></a>
+  <a href="https://spring.io/" target="blank"><img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/36fda1085cffacaebc7613ab8f227351.png" width="200" alt="Spring Boot Logo" /></a>
 </p>
 
 <p align="center">Đây là mini project <a href="https://spring.io/" target="_blank">Java Spring Boot</a> framework cho việc tìm kiếm nhanh sản phẩm tạp hóa có hỗ trợ truy xuất thông tin nguồn hàng và số lượng tồn kho qua SKU (Stock Keeping Unit).</p>
@@ -16,34 +16,18 @@
 <br>
 <div align="center">
   <div class="social-icons">
-    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/36fda1085cffacaebc7613ab8f227351.png" target="_blank">
-      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/36fda1085cffacaebc7613ab8f227351.png" alt="springboot"  width="50" />
+    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/36fda1085cffacaebc7613ab8f227351.png" target="_blank">
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/36fda1085cffacaebc7613ab8f227351.png" alt="springboot"  width="50" />
     </a>
-    <a href="https://www.linkedin.com/in/nmthuann" target="_blank">
-      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/debezium.png" alt="debezium"  width="50" />
+
+    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/postgresql-icon-1987x2048-v2fkmdaw.png" target="_blank">
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/postgresql-icon-1987x2048-v2fkmdaw.png" alt="postgresql"  width="50"  />
     </a>
-    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/postgresql-icon-1987x2048-v2fkmdaw.png" target="_blank">
-      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/postgresql-icon-1987x2048-v2fkmdaw.png" alt="postgresql"  width="50"  />
+
+    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/ddocs/images/icons/docker-icon.png" target="_blank">
+      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/docker-icon.png" alt="docker"  width="50"  />
     </a>
-    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/elasticsearch-icon-1839x2048-s0i8mk51.png" target="_blank">
-      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/elasticsearch-icon-1839x2048-s0i8mk51.png" alt="elasticsearch"  width="50" />
-    </a>
-    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/image_processing20210616-28548-1y1p6zh.png" target="_blank">
-      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/image_processing20210616-28548-1y1p6zh.png" alt="kafka"  width="50" />
-    </a>
-    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/kafka-ui-logo.png" target="_blank">
-      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/kafka-ui-logo.png" alt="kafka-ui"  width="50"  />
-    </a>
-    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/R.png" target="_blank">
-      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/R.png" alt="kibana" width="50"  />
-    </a>
-    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/zookeeper-icon.png" target="_blank">
-      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/zookeeper-icon.png" alt="zookeeper"  width="50" />
-    </a>
-    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/docker-icon.png" target="_blank">
-      <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/docker-icon.png" alt="docker"  width="50"  />
-    </a>
-    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/1100px_Redis_Logo_01.png" target="_blank">
+    <a href="https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/icons/1100px_Redis_Logo_01.png" target="_blank">
       <img src="https://github.com/nmthuann/GroceryFinder/blob/master/docs/1100px_Redis_Logo_01.png" alt="redis"  width="50"  />
     </a>
   </div>
@@ -100,10 +84,10 @@ Nested Set Model là một kỹ thuật để lưu trữ dữ liệu dạng cây
         right_value INT NOT NULL
   );
 ```
-![Mô tả ảnh](https://example.com/path/to/image.jpg)
+![Mô tả ảnh](https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/web/nested-set-model-categories-table.png)
 ### [**3.2 API phân quyền với Spring Security**](#api-authen-author)
 Spring Security cung cấp các tính năng xác thực và phân quyền cho API. Bạn có thể phân quyền các endpoint theo vai trò.
-![Mô tả ảnh](https://example.com/path/to/image.jpg)
+![Mô tả ảnh](https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/web/api-authen-author.png)
 ### [**3.5 Áp dựng Strategy Pattern cho tính năng Passport**](#spu-sku)
 ![Mô tả ảnh](https://example.com/path/to/image.jpg)
 ### [**3.3 API VERSION**](#api-version)
@@ -427,7 +411,8 @@ API Versioning giúp hỗ trợ nhiều phiên bản API mà không ảnh hưở
                      └─ PasswordUtilTest.java
 ```
 > ©generated by [Project Tree Generator](https://woochanleee.github.io/project-tree-generator)
-
+## [**5. Lược đồ ERD**](#erd)
+![Mô tả ảnh](https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/web/ERD-grocery-db.png)
 ## [**6. Installation**](#installation)
 ### [**6.1 Quick Start**](#quick-start)
 - Open a terminal and use it to start ZooKeeper in a container.
