@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class SpuSkuMappingService
@@ -50,9 +49,18 @@ public class SpuSkuMappingService
     }
 
     @Override
-    public List<SpuSkuMappingDto> getSkusByProductId(UUID id) {
+    public List<SpuSkuMappingDto> getSkusBySpuId(UUID id) {
         return this.spuSkuMappingRepository.findAllByProductId(id).stream()
                 .map(this.spuSkuMappingMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<SpuSkuMappingDto> getSpuBySkuId(Integer skuId) {
+        return Optional.ofNullable(
+                this.spuSkuMappingMapper.toDto(
+                        this.spuSkuMappingRepository.findByProductSkuId(skuId)
+                )
+        );
     }
 }

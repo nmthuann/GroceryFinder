@@ -10,11 +10,6 @@ import jakarta.validation.constraints.Size;
  * @date 10/13/2024
  */
 public record UpdateProductSkuDto(
-        @NotNull(message = "SKU number is required")
-        @NotEmpty(message = "SKU number cannot be empty")
-        @Size(max = 32, message = "SKU number must be less than or equal to 32 characters")
-        String skuNo,
-
         @NotNull(message = "Barcode is required")
         @NotEmpty(message = "Barcode cannot be empty")
         @Size(max = 32, message = "Barcode must be less than or equal to 32 characters")

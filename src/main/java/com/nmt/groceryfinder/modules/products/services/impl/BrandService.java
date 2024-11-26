@@ -1,6 +1,5 @@
 package com.nmt.groceryfinder.modules.products.services.impl;
 
-
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
 import com.nmt.groceryfinder.modules.products.domain.mappers.BrandMapper;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.BrandDto;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class BrandService

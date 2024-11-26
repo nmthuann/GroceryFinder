@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "product_skus",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"sku_no"})})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"slug"})})
 @Getter
 @Setter
 public class ProductSkuEntity {
@@ -21,17 +21,14 @@ public class ProductSkuEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "sku_no", nullable = false, unique = true, length = 32)
-    private String skuNo;
+    @Column(name = "slug", nullable = false, unique = true)
+    private String slug;
 
     @Column(name = "barcode", nullable = false, length = 32)
     private String barcode;
 
     @Column(name = "sku_name", nullable = false)
     private String skuName;
-
-    @Column(name = "sku_description", columnDefinition = "text")
-    private String skuDescription;
 
     @Column(name = "image", nullable = false)
     private String image;
@@ -42,7 +39,6 @@ public class ProductSkuEntity {
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "sku_attributes", columnDefinition = "jsonb")
     private String skuAttributes;
-
 
     @OneToOne(mappedBy = "productSku", cascade = CascadeType.ALL)
     @JsonIgnore

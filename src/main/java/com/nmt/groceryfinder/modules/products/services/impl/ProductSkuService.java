@@ -2,7 +2,6 @@ package com.nmt.groceryfinder.modules.products.services.impl;
 
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
 import com.nmt.groceryfinder.exceptions.ModuleException;
-import com.nmt.groceryfinder.exceptions.messages.ProductsModuleExceptionMessages;
 import com.nmt.groceryfinder.modules.inventories.domain.dtos.InventoryDto;
 import com.nmt.groceryfinder.modules.inventories.domain.dtos.CreateInventoryDto;
 import com.nmt.groceryfinder.modules.inventories.IInventoryService;
@@ -11,16 +10,23 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreatePriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductCardResponse;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SearchProductResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 import com.nmt.groceryfinder.modules.products.repositories.IProductSkuRepository;
 import com.nmt.groceryfinder.modules.products.services.IPriceService;
 import com.nmt.groceryfinder.modules.products.services.IProductSkuService;
+import com.nmt.groceryfinder.utils.UrlUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductSkuService
@@ -48,21 +54,31 @@ public class ProductSkuService
         this.inventoryService = inventoryService;
     }
 
+    private ProductSkuEntity findProductSkuOrThrow(Integer id) throws ModuleException {
+        return productSkuRepository.findById(id)
+                .orElseThrow(() -> new ModuleException("Product SKU not found with id: " + id));
+    }
+
+    private InventoryDto getInventoryOrThrow(Integer skuId) throws ModuleException {
+        return getInventoryBySkuId(skuId)
+                .orElseThrow(() -> new ModuleException("Inventory not found for SKU id: " + skuId));
+    }
+
 
     @Override
     public Optional<InventoryDto> createInventoryById(Integer id, CreateInventoryDto data) throws ModuleException {
-        ProductSkuEntity productSku = findProductSkuById(id);
+        ProductSkuEntity productSku = findProductSkuOrThrow(id);
         return inventoryService.createOne(productSku, data);
     }
 
     @Override
     public Optional<PriceDto> createPriceById(Integer id, CreatePriceDto data) throws ModuleException {
-        ProductSkuEntity productSku = findProductSkuById(id);
-        return priceService.createOne(productSku, data);
+        ProductSkuEntity productSkuCreated = this.findProductSkuOrThrow(id);
+        return priceService.createOne(productSkuCreated, data);
     }
 
     @Override
-    public Optional<InventoryDto> getInventoryBySkuId(Integer id) throws ModuleException {
+    public Optional<InventoryDto> getInventoryBySkuId(Integer id) {
         return this.inventoryService.getOneByProductSkuId(id);
     }
 
@@ -72,9 +88,50 @@ public class ProductSkuService
     }
 
     @Override
-    public List<PriceDto> getTop2PricesByProductSkuId(Integer id) throws ModuleException  {
-        ProductSkuEntity productSkuCreated = this.findProductSkuById(id);
+    public List<PriceDto> getTop2PricesByProductSkuId(Integer id) throws ModuleException {
+        ProductSkuEntity productSkuCreated = this.findProductSkuOrThrow(id);
         return this.priceService.getTop2ByProductSku(productSkuCreated);
+    }
+
+    @Override
+    public ProductCardResponse getProductCardBySkuId(UUID spuId, Integer skuId) throws ModuleException {
+        ProductSkuEntity productSkuCreated = this.findProductSkuOrThrow(skuId);
+        InventoryDto inventory = this.getInventoryOrThrow(skuId);
+        List<PriceDto> prices = this.getTop2PricesByProductSkuId(skuId);
+        Double latestPrice = prices.get(0).getUnitPrice();
+        Double oldPrice = latestPrice;
+
+        if(prices.size() == 2){
+            latestPrice = prices.get(0).getUnitPrice();
+            oldPrice = prices.get(1).getUnitPrice();
+        }
+
+        return new ProductCardResponse (
+                productSkuCreated.getId(),
+                spuId,
+                productSkuCreated.getSlug(),
+                productSkuCreated.getSkuName(),
+                productSkuCreated.getImage(),
+                productSkuCreated.getStatus(),
+                inventory.getSold(),
+                latestPrice,
+                oldPrice
+        );
+    }
+
+    @Override
+    public List<SearchProductResponse> searchSkusByName(String skuName) {
+        Pageable pageable = PageRequest.of(0, 5);
+        String decodedKey = UrlUtil.decodeUrl(skuName);
+        Page<ProductSkuEntity> productSkuDtoList =
+                this.productSkuRepository.findBySkuNameContainingIgnoreCase(decodedKey, pageable);
+        return productSkuDtoList.stream()
+                .map(sku -> new SearchProductResponse(
+                        sku.getId(),
+                        sku.getSkuName(),
+                        sku.getSlug()
+                ))
+                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -83,12 +140,5 @@ public class ProductSkuService
         ProductSkuEntity newProductSku = productSkuMapper.generateProductSku(data);
         ProductSkuEntity productSkuCreated = productSkuRepository.save(newProductSku);
         return Optional.ofNullable(productSkuMapper.toDto(productSkuCreated));
-    }
-
-    private ProductSkuEntity findProductSkuById(Integer id) throws ModuleException {
-        return productSkuRepository.findById(id)
-                .orElseThrow(() -> new ModuleException(
-                        ProductsModuleExceptionMessages.GET_PRODUCT_SKU_NOT_FOUND.getMessage() + " " + id
-                ));
     }
 }

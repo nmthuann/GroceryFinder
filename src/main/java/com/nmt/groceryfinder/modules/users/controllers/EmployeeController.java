@@ -1,12 +1,9 @@
 package com.nmt.groceryfinder.modules.users.controllers;
 
-import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.modules.users.domain.model.dtos.EmployeeDto;
 import com.nmt.groceryfinder.modules.users.services.IEmployeeService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

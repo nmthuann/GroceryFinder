@@ -22,6 +22,4 @@ public class SpuSkuMappingEntity {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sku_id", foreignKey = @ForeignKey(name = "fk_spu_sku_mapping_product_sku"))
     private ProductSkuEntity productSku;
-
-
 }

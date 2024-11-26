@@ -14,21 +14,11 @@ import java.util.List;
 @Getter
 @Setter
 public class ProductDto extends AbstractBaseDto implements Serializable {
-    String slug;
-
-    @NotNull(message = "Product name is required")
-    @NotEmpty(message = "Product name cannot be empty")
-    @Size(max = 255, message = "Product name must be less than or equal to 255 characters")
     private String productName;
 
-    @NotNull(message = "Product line is required")
-    @NotEmpty(message = "Product line cannot be empty")
     private String productLine;
 
     private String description;
-
-    @NotNull(message = "Status is required")
-    private Boolean status;
 
     private Boolean isDeleted;
 

@@ -1,5 +1,6 @@
 package com.nmt.groceryfinder.modules.products.domain.model.dtos.requests;
 
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.URL;
 
 /**
@@ -9,9 +10,11 @@ import org.hibernate.validator.constraints.URL;
  */
 public record UpdateCategoryDto (
 
+        @NotNull
         String categoryName,
         @URL
         String categoryUrl,
+        @NotNull
         String description
 ){
 }
