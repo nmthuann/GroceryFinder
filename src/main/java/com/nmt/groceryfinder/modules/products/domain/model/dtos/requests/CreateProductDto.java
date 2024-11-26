@@ -29,15 +29,11 @@ public record CreateProductDto(
         Integer brandId,
         @NotNull(message = "Supplier ID is required")
         Integer supplierId,
-        @NotNull(message = "Status is required")
-        Boolean status,
         @NotNull(message = "Deleted is required")
         Boolean isDeleted,
         @NotNull(message = "Category ID is required")
         Integer prioritySort,
         @NotNull(message = "Images is required")
         List<CreateImageDto> images
-
-
 ) {
 }

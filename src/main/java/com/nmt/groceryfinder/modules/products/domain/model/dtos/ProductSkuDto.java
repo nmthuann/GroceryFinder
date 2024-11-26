@@ -14,10 +14,8 @@ import java.util.Date;
 @Setter
 public class ProductSkuDto implements Serializable {
     private Integer id;
-    @NotNull(message = "SKU number is required")
-    @NotEmpty(message = "SKU number cannot be empty")
-    @Size(max = 32, message = "SKU number must be less than or equal to 32 characters")
-    private String skuNo;
+
+    private String slug;
 
     @NotNull(message = "Barcode is required")
     @NotEmpty(message = "Barcode cannot be empty")
@@ -28,8 +26,6 @@ public class ProductSkuDto implements Serializable {
     @NotEmpty(message = "SKU model name cannot be empty")
     @Size(max = 50, message = "SKU model name must be less than or equal to 50 characters")
     private String skuName;
-
-    private String skuDescription;
 
     private String image;
 

@@ -7,6 +7,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreatePriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductSkuDto;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SearchProductResponse;
 import com.nmt.groceryfinder.modules.products.services.IProductSkuService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -112,4 +113,18 @@ public class ProductSkuController {
        List<PriceDto> prices = this.productSkuService.getPricesByProductSkuId(id);
        return new ResponseEntity<>(prices, HttpStatus.OK);
     }
+
+    @GetMapping("/search")
+    @LoggingInterceptor
+    public ResponseEntity<?> searchProducts(@RequestParam String key){
+        List<SearchProductResponse> productNames = this.productSkuService.searchSkusByName(key);
+        return ResponseEntity.ok(productNames);
+    }
 }
+
+//if (!slug.isEmpty()) {
+//        Optional<ProductDto> findProduct = this.productService.getOneBySlug(slug);
+//        return findProduct
+//        .map(product -> new ResponseEntity<>(product, HttpStatus.OK))
+//        .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+//        }

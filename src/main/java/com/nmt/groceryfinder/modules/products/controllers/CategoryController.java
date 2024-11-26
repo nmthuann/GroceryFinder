@@ -1,7 +1,6 @@
 package com.nmt.groceryfinder.modules.products.controllers;
 
 import com.nmt.groceryfinder.exceptions.ModuleException;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.BrandDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.CategoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateCategoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateCategoryDto;

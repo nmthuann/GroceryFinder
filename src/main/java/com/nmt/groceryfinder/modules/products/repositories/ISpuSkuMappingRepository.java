@@ -14,6 +14,7 @@ import java.util.UUID;
 @Repository
 public interface ISpuSkuMappingRepository extends JpaRepository<SpuSkuMappingEntity, Integer> {
     List<SpuSkuMappingEntity> findAllByProductId(UUID productId);
+    SpuSkuMappingEntity findByProductSkuId(Integer productSkuId);
     SpuSkuMappingEntity findByProductSku(ProductSkuEntity productSku);
     @Query("SELECT s.product FROM SpuSkuMappingEntity s WHERE s.productSku.id = :skuId")
     ProductEntity findProductBySkuId(@Param("skuId") Integer skuId);

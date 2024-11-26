@@ -28,11 +28,9 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final IAuthService authService;
 
-
     @Autowired
     public AuthController(IAuthService authService) {
         this.authService = authService;
-
     }
 
     @LoggingInterceptor

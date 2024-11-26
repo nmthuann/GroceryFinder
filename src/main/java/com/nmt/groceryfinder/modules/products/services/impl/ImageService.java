@@ -1,6 +1,5 @@
 package com.nmt.groceryfinder.modules.products.services.impl;
 
-
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
 import com.nmt.groceryfinder.modules.products.domain.mappers.ImageMapper;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ImageDto;
@@ -76,14 +75,3 @@ public class ImageService
 
     }
 }
-
-
-//    List<ImageEntity> images = new ArrayList<>();
-//        for (CreateImageDto createImageDto : data) {
-//    ImageEntity newImage = this.imageMapper.generateImage(createImageDto, productCreated);
-//    images.add(imageRepository.save(newImage));
-//}
-//        return  images.stream()
-//                .map(imageMapper::toDto)
-//                .collect(Collectors.toList());
-//}

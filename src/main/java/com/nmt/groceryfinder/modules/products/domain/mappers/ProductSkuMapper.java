@@ -4,6 +4,7 @@ import com.nmt.groceryfinder.common.bases.AbstractModelMapper;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
+import com.nmt.groceryfinder.utils.SlugUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,10 +19,9 @@ public class ProductSkuMapper  extends AbstractModelMapper<ProductSkuEntity, Int
 
     public ProductSkuEntity generateProductSku(CreateProductSkuDto data){
         ProductSkuEntity productSkuEntity = new ProductSkuEntity();
-        productSkuEntity.setSkuNo(data.skuNo());
+        productSkuEntity.setSlug(SlugUtil.createSlug(data.skuName()));
         productSkuEntity.setBarcode(data.barcode());
         productSkuEntity.setSkuName(data.skuName());
-        productSkuEntity.setSkuDescription(data.skuDescription());
         productSkuEntity.setSkuAttributes(data.skuAttributes());
         productSkuEntity.setStatus(true);
         productSkuEntity.setImage(data.image());

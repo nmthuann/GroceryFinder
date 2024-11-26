@@ -1,8 +1,6 @@
 package com.nmt.groceryfinder.modules.users.domain.mappers;
 
 import com.nmt.groceryfinder.common.bases.AbstractModelMapper;
-import com.nmt.groceryfinder.common.enums.AuthMethodEnum;
-import com.nmt.groceryfinder.common.enums.RoleEnum;
 import com.nmt.groceryfinder.modules.auth.dtos.requests.CreateUserDto;
 import com.nmt.groceryfinder.modules.users.domain.model.dtos.AccountDto;
 import com.nmt.groceryfinder.modules.users.domain.model.dtos.UserDto;

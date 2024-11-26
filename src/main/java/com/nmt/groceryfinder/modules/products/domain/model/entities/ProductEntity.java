@@ -18,17 +18,11 @@ public class ProductEntity extends AuditableEntity {
     @Column(name = "product_name", nullable = false, unique = true)
     private String productName;
 
-    @Column(name = "slug", nullable = false, unique = true)
-    private String slug;
-
     @Column(name = "product_line", nullable = false)
     private String productLine;
 
     @Column(columnDefinition = "TEXT")
     private String description;
-
-    @Column(nullable = false)
-    private Boolean status;
 
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted = false;

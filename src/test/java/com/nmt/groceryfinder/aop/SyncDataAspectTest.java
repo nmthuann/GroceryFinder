@@ -3,7 +3,6 @@ package com.nmt.groceryfinder.aop;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nmt.groceryfinder.modules.products.domain.mappers.ProductMapper;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductDto;
-import com.nmt.groceryfinder.shared.elasticsearch.ElasticsearchService;
 import com.nmt.groceryfinder.shared.elasticsearch.documents.ProductDocument;
 import com.nmt.groceryfinder.shared.elasticsearch.sync.SyncDataAspect;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -13,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.File;
 import java.io.IOException;

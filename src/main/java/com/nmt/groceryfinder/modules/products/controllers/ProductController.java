@@ -7,8 +7,6 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.SpuSkuMappingDto
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.GetSkuDetailResponse;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductInfoToSearch;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SpuSkuMappingResponse;
 import com.nmt.groceryfinder.modules.products.services.IProductService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
@@ -27,7 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Iterator;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,7 +35,6 @@ import java.util.UUID;
 @RequestMapping("/v1/products")
 @Tag(name = "Products")
 public class ProductController {
-
     private final IProductService productService;
 
     @Autowired
@@ -84,7 +81,7 @@ public class ProductController {
     }
 
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     @LoggingInterceptor
     public ResponseEntity<ProductDto> updateOneById(
             @PathVariable UUID id,
@@ -114,24 +111,16 @@ public class ProductController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) Integer categoryId,
             @RequestParam(required = false) String option,
-            @RequestParam(required = false, defaultValue = "true") Boolean isPagination,
-            @RequestParam(required = false, defaultValue = "") String slug
+            @RequestParam(required = false, defaultValue = "true") Boolean isPagination
     ) throws ModuleException {
         try{
             if(isPagination){
                 PageRequest pageable = PageRequest.of(page, size, Sort.by("prioritySort").ascending());
-                // getCache
-                Page<?> products = this.productService.getAllPaginated(categoryId, option, pageable);
+                Page<?> products = this.productService.getAllPaginated(option, pageable);
                 return new ResponseEntity<>(products, HttpStatus.OK);
             }
             else {
-                if (!slug.isEmpty()) {
-                    Optional<ProductDto> findProduct = this.productService.getOneBySlug(slug);
-                    return findProduct
-                            .map(product -> new ResponseEntity<>(product, HttpStatus.OK))
-                            .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-                }
-                List<ProductDto> products = this.productService.getProductsByCategoryId(categoryId);
+                List<ProductDto> products = this.productService.getAllByCategoryId(categoryId);
                 return new ResponseEntity<>(products, HttpStatus.OK);
             }
         }catch (ResponseStatusException e) {
@@ -163,7 +152,7 @@ public class ProductController {
             @Parameter(description = "ID of the product to which SKUs will be added", required = true)
             @PathVariable UUID id
     ) throws ModuleException {
-        Optional<SpuSkuMappingDto> productSkuCreated = this.productService.createProductSkuById(id, data);
+        Optional<SpuSkuMappingDto> productSkuCreated = this.productService.createSkuById(id, data);
         return productSkuCreated.map(spuSkuDto -> new ResponseEntity<>(spuSkuDto, HttpStatus.CREATED))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
@@ -188,21 +177,11 @@ public class ProductController {
     @LoggingInterceptor
     public ResponseEntity<?> getSkusById(
             @Parameter(description = "ID of the product to retrieve SKUs for", required = true)
-            @PathVariable UUID id,
-            @RequestParam(required = false, defaultValue = "false") Boolean isDetail
+            @PathVariable UUID id
     ) throws ModuleException {
-        if(isDetail){
-            List<GetSkuDetailResponse> skuDetailResponses = this.productService.getSkuDetailsById(id);
-            return new ResponseEntity<>(skuDetailResponses, HttpStatus.OK);
-        }
-        List<ProductSkuDto> findSpuSkuMappingDtoList = this.productService.getProductSkusById(id);
-        return new ResponseEntity<>(findSpuSkuMappingDtoList, HttpStatus.OK);
+        List<ProductSkuDto> skuDetailResponses = this.productService.getSkusById(id);
+        return new ResponseEntity<>(skuDetailResponses, HttpStatus.OK);
     }
 
-    @GetMapping("/search")
-    @LoggingInterceptor
-    public ResponseEntity<?> searchProducts(@RequestParam String key){
-        List<ProductInfoToSearch> productNames = this.productService.searchProductsByKey(key);
-        return ResponseEntity.ok(productNames);
-    }
+
 }

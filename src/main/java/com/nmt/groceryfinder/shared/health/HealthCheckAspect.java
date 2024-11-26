@@ -19,15 +19,12 @@ import reactor.core.publisher.Mono;
 public class HealthCheckAspect {
 
     private final HealthCheckService healthCheckService;
-    private final ElasticsearchHealthCheck elasticsearchHealthCheck;;
 
     @Autowired
     public HealthCheckAspect(
-            HealthCheckService healthCheckService,
-            ElasticsearchHealthCheck elasticsearchHealthCheck
+            HealthCheckService healthCheckService
     ) {
         this.healthCheckService = healthCheckService;
-        this.elasticsearchHealthCheck = elasticsearchHealthCheck;
     }
 
     @Around("@annotation(healthCheckInterceptor)")
@@ -35,16 +32,12 @@ public class HealthCheckAspect {
             ProceedingJoinPoint joinPoint,
             HealthCheckInterceptor healthCheckInterceptor
     ) throws Throwable {
-        switch (healthCheckInterceptor.healthCheckType()) {
-            case SERVER:
-                return handleServerHealthCheck(joinPoint, healthCheckInterceptor);
-            case ELASTICSEARCH:
-                return handleElasticsearchHealthCheck(joinPoint);
-            default:
-                throw new IllegalArgumentException(
-                        "Unknown health check type: " + healthCheckInterceptor.healthCheckType()
-                );
+        if (healthCheckInterceptor.healthCheckType() == HealthCheckType.SERVER) {
+            return handleServerHealthCheck(joinPoint, healthCheckInterceptor);
         }
+        throw new IllegalArgumentException(
+                "Unknown health check type: " + healthCheckInterceptor.healthCheckType()
+        );
     }
 
     private Object handleServerHealthCheck(
@@ -64,42 +57,4 @@ public class HealthCheckAspect {
         }
         return joinPoint.proceed();
     }
-
-    private Object handleElasticsearchHealthCheck(ProceedingJoinPoint joinPoint) throws Throwable {
-        String healthStatus = elasticsearchHealthCheck.checkClusterHealth();
-        if (healthStatus.contains("red")) {
-            log.error("Elasticsearch cluster is unhealthy.");
-            throw new RuntimeException("Elasticsearch cluster is unhealthy.");
-        }
-        return joinPoint.proceed();
-    }
-
-
 }
-
-
-//    @Around("@annotation(healthCheckInterceptor)")
-//    public Object check(
-//            ProceedingJoinPoint joinPoint,
-//            HealthCheckInterceptor healthCheckInterceptor
-//    ) throws Throwable {
-//
-//        String serviceUrl = healthCheckInterceptor.serviceUrl();
-//        boolean retry = healthCheckInterceptor.retry();
-//        int maxRetries = 3;
-//        long retryDelay = 2000L;
-//
-//        Mono<Boolean> isHealthy;
-//        if (retry) {
-//            isHealthy = this.healthCheckService.ping(serviceUrl, maxRetries, retryDelay);
-//        } else {
-//            isHealthy = this.healthCheckService.ping(serviceUrl, 0, 0);
-//        }
-//
-//        if (Boolean.FALSE.equals(isHealthy.block())) {
-//            log.error("{} is unavailable.", serviceUrl);
-//            throw new RuntimeException(serviceUrl + " is unavailable.");
-//        }
-//
-//        return joinPoint.proceed();
-//    }

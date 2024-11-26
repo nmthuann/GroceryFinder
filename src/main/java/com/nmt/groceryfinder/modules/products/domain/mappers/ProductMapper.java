@@ -3,13 +3,10 @@ package com.nmt.groceryfinder.modules.products.domain.mappers;
 import com.nmt.groceryfinder.common.bases.AbstractModelMapper;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.*;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.BrandEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.CategoryEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.SupplierEntity;
-import com.nmt.groceryfinder.shared.elasticsearch.documents.ProductDocument;
-import com.nmt.groceryfinder.utils.SlugUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -44,7 +41,6 @@ public class ProductMapper
         productDto.setBrand(brand);
         productDto.setCategory(category);
         productDto.setSupplier(supplier);
-        productDto.setStatus(productCreated.getStatus());
         productDto.setIsDeleted(productCreated.getIsDeleted());
         productDto.setPrioritySort(productCreated.getPrioritySort());
         productDto.setCreatedAt(productCreated.getCreatedAt());
@@ -62,10 +58,8 @@ public class ProductMapper
             SupplierEntity supplier
     ){
         ProductEntity product = new ProductEntity();
-        product.setSlug(SlugUtil.createSlug(data.productName()));
         product.setIsDeleted(data.isDeleted());
         product.setPrioritySort(data.prioritySort());
-        product.setStatus(data.status());
         product.setProductName(data.productName());
         product.setProductLine(data.productLine());
         product.setDescription(data.description());
@@ -74,37 +68,5 @@ public class ProductMapper
         product.setCategory(category);
         product.setSupplier(supplier);
         return product;
-    }
-
-//    public ProductEntity updateEntity(
-//            ProductEntity productCreated,
-//            UpdateProductDto data
-//    ){
-//
-//        productCreated.setIsDeleted(data.isDeleted());
-//        productCreated.setPrioritySort(data.prioritySort());
-//        productCreated.setStatus(data.status());
-//        productCreated.setProductName(data.productName());
-//        productCreated.setProductLine(data.productLine());
-//        productCreated.setDescription(data.description());
-//        productCreated.setProductSpecs(data.productSpecs());
-//        return productCreated;
-//    }
-
-    public ProductDocument toDocument(ProductDto dto){
-        return new ProductDocument(
-                dto.getId().toString(),
-                dto.getProductName(),
-                SlugUtil.createSlug(dto.getProductName()),
-                dto.getProductLine(),
-                dto.getProductSpecs(),
-                dto.getDescription(),
-                dto.getStatus(),
-                dto.getIsDeleted(),
-                dto.getPrioritySort(),
-                dto.getBrand().getName(),
-                dto.getCategory().getCategoryName(),
-                dto.getSupplier().getSupplierName()
-        );
     }
 }

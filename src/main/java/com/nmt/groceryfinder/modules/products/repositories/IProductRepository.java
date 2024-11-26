@@ -15,18 +15,9 @@ import java.util.UUID;
 @Repository
 public interface IProductRepository extends JpaRepository<ProductEntity, UUID> {
     Page<ProductEntity> findByCategory(CategoryEntity category, Pageable pageable);
-    @Query("" +
-            "SELECT p " +
-            "FROM ProductEntity p " +
-            "WHERE LOWER(p.productName) " +
-            "LIKE LOWER(CONCAT('%', :productName, '%')) " +
-            "ORDER BY p.prioritySort ASC"
-    )
-    List<ProductEntity> findTop5ByProductNameContainingIgnoreCase(@Param("productName") String productName);
 
     Page<ProductEntity> findAllByCategoryIdAndPrioritySort(Integer categoryId, Integer prioritySort, Pageable pageable);
     Page<ProductEntity> findAllByCategoryId(@Param("categoryId") Integer categoryId, Pageable pageable);
     List<ProductEntity> findAllByCategoryId(@Param("categoryId") Integer categoryId);
-    Optional<ProductEntity> findBySlug(@Param("slug") String slug);
 }
 
