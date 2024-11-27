@@ -1,0 +1,227 @@
+[
+  {
+    "productName": "Dầu Ăn Cái Lân",
+    "productLine": "Dầu Thực Vật",
+    "productSpecs": "{\"Loại dầu\": \"Dầu Thực Vật\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Dầu thực vật tinh luyện Cái Lân chai 1 lít được làm từ dầu Olein cọ, dầu đậu nành tinh luyện,...giúp tăng hương vị cho các món ăn.",
+    "categoryId": 4,
+    "brandId": 5,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+  {
+    "productName": "Dầu thực vật Tường An",
+    "productLine": "Dầu Thực Vật",
+    "productSpecs": "{\"Loại dầu\": \"Dầu Thực Vật\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Dầu thực vật Tường An có công thức đặc biệt, kết hợp từ dầu đậu nành, dầu hạt cải và dầu olein.",
+    "categoryId": 4,
+    "brandId": 6,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+  {
+    "productName": "Dầu đậu nành nguyên chất Simply",
+    "productLine": "Dầu đậu nành",
+    "productSpecs": "{\"Loại dầu\": \"Dầu Đậu Nành\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Dầu đậu nành nguyên chất Simply sử dụng nguyên liệu chọn lọc, không chứa chất bảo quản, chất tạo màu hay cholesterol, hoàn toàn thân thiện cho sức khỏe.",
+    "categoryId": 4,
+    "brandId": 7,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+  {
+    "productName": "Nước Mắm Cá Cơm Nam Ngư",
+    "productLine": "Nước Mắm Cá Cơm",
+    "productSpecs": "{\"Độ đạm\": \"12 độ đạm\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Nước mắm Nam Ngư đem đến cho người tiêu dùng Việt Nam những giọt nước mắm thơm ngon, sự lựa chọn hàng đầu của người Việt.",
+    "categoryId": 5,
+    "brandId": 21,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+  {
+    "productName": "Nước mắm Barona Đại Nhất",
+    "productLine": "Nước mắm cá cơm",
+    "productSpecs": "{\"Độ đạm\": \"12 độ đạm\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Snack Swing mang đến trải nghiệm vị giác bùng nổ.",
+    "categoryId": 5,
+    "brandId": 20,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+
+  {
+    "productName": "Snack Khoai tây Lays Max 42g",
+    "productLine": "Lays Max",
+    "productSpecs": "{\"Loại bánh\": \"Khoai tây\", \"Hương hiệu\": \"Lays\", \"Khối lượng\": \"42g\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "LAY'S MAX MỚI - MAX UỐN LƯỢN, GIÒN CỰC ĐÃ!",
+    "categoryId": 8,
+    "brandId": 20,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+  {
+    "productName": "Snack Khoai tây Lays Tự Nhiên 42g",
+    "productLine": "Lays Tự Nhiên",
+    "productSpecs": "{\"Loại bánh\": \"Khoai tây\", \"Hương hiệu\": \"Lays\", \"Khối lượng\": \"42g\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Snack Lay's là thương hiệu có đa dạng sản phẩm với hương vị thơm ngon, gia vị đậm đà.",
+    "categoryId": 8,
+    "brandId": 20,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+
+  {
+    "productName": "Kẹo dẻo 3d gói 60g",
+    "productLine": "Kẹo dẻo 3d",
+    "productSpecs": "{\"Loại kẹo\": \"Kẹo dẻo\", \"Phù hợp\": \"Dùng cho bé từ 3 tuổi trở lên\", \"Khối lượng\": \"60g\", \"Sản xuất tại\": \"Trung Quốc\"}",
+    "description": "Kẹo dẻo 3d Cokoc gói 60g là loại kẹo dẻo thơm ngon với thành phần từ 50% nước ép trái cây, kẹo dẻo Cokoc không chứa chất béo, hương thơm, an toàn cho sức khỏe người sử dụng.",
+    "categoryId": 9,
+    "brandId": 25,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+
+  {
+    "productName": "Bia Sài Gòn Lager 330ml",
+    "productLine": "Bia Sài Gòn Lager",
+    "productSpecs": "{\"Độ Cồn\": \"4.3%\", \"Thể tích\": \"330ml\", \"Số lượng\": \"Thùng 24 lon\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Thùng 24 lon bia Sài Gòn Lager 330ml có hương vị đậm đà, thơm ngon, cùng hương thơm ngũ cốc dễ chịu.",
+    "categoryId": 13,
+    "brandId": 15,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+
+  {
+    "productName": "Bia Tiger 330ml",
+    "productLine": "Bia Tiger Nâu 330ml",
+    "productSpecs": "{\"Độ Cồn\": \"5%\", \"Thể tích\": \"330ml\", \"Số lượng\": \"Thùng 24 lon\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Bia Tiger nâu lon cao 330ml độc đáo và rất riêng của bia Tiger, đậm đà, cho bạn cảm giác uống sảng khoái.",
+    "categoryId": 13,
+    "brandId": 16,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+
+  {
+    "productName": "Bia Tiger 250ml",
+    "productLine": "Bia Tiger Nâu 250ml",
+    "productSpecs": "{\"Độ Cồn\": \"5%\", \"Thể tích\": \"250ml\", \"Số lượng\": \"Thùng 24 lon\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Bia Tiger nâu lon 250ml độc đáo, mới lạ nhưng vẫn giữ được nét truyền thống.",
+    "categoryId": 13,
+    "brandId": 16,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+
+  {
+    "productName": "Bia Tiger Bạc 330ml",
+    "productLine": "Bia Tiger Bạc",
+    "productSpecs": "{\"Độ Cồn\": \"4.6%\", \"Thể tích\": \"330ml\", \"Số lượng\": \"Thùng 24 lon\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Thùng 24 lon bia Tiger Bạc 330ml với hoa bia được tinh chế đặc biệt, giữ trọn vẹn hương vị tuyệt hảo của bia.",
+    "categoryId": 13,
+    "brandId": 16,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+
+  {
+    "productName": "Bia Heineken 330ml",
+    "productLine": "Bia Heineken Xanh",
+    "productSpecs": "{\"Độ Cồn\": \"5%\", \"Thể tích\": \"330ml\", \"Số lượng\": \"Thùng 24 lon\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Bia chất lượng từ thương hiệu được ưa chuộng tại hơn 192 quốc gia trên thế giới đến từ Hà Lan - Bia Heineken.",
+    "categoryId": 13,
+    "brandId": 17,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+  {
+    "productName": "Bia Heineken Bạc 330ml",
+    "productLine": "Bia Heineken Bạc",
+    "productSpecs": "{\"Độ Cồn\": \"4%\", \"Thể tích\": \"330ml\", \"Số lượng\": \"Thùng 24 lon\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Bia chất lượng từ thương hiệu được ưa chuộng tại hơn 192 quốc gia trên thế giới đến từ Hà Lan - Bia Heineken.",
+    "categoryId": 13,
+    "brandId": 17,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+
+
+  {
+    "productName": "Nước ngọt có ga 7 Up vị chanh 320ml",
+    "productLine": "7 Up vị chanh",
+    "productSpecs": "{\"Hương vị\": \"vị chanh\", \"Thể tích\": \"320ml\", \"Số lượng\": \"Thùng 24 lon\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Nước ngọt 7 Up hương chanh lon 320ml có vị ngọt vừa phải và hương vị gas the mát.",
+    "categoryId": 14,
+    "brandId": 26,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+  {
+    "productName": "Nước ngọt có gas Pepsi Cola 320ml",
+    "productLine": "Pepsi Cola",
+    "productSpecs": "{\"Hương vị\": \"vị Cola\", \"Thể tích\": \"320ml\", \"Số lượng\": \"Thùng 24 lon\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Sản phẩm từ thương hiệu nước ngọt Pepsi nổi tiếng toàn cầu với mùi vị thơm ngon với hỗn hợp hương tự nhiên cùng chất tạo ngọt tổng hợp, giúp xua tan cơn khát và cảm giác mệt mỏi.",
+    "categoryId": 14,
+    "brandId": 11,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+  {
+    "productName": "Nước Ngọt Có Gas Pepsi Vị Chanh Không Calo 320ml",
+    "productLine": "Pepsi Vị Chanh Không Calo",
+    "productSpecs": "{\"Hương vị\": \"vị Chanh\", \"Lượng đường\": \"Không Đường\", \"Thể tích\": \"320ml\", \"Số lượng\": \"Thùng 24 lon\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Sản phẩm từ thương hiệu nước ngọt Pepsi nổi tiếng toàn cầu với mùi vị thơm ngon với hỗn hợp hương tự nhiên cùng chất tạo ngọt tổng hợp, giúp xua tan cơn khát và cảm giác mệt mỏi.",
+    "categoryId": 14,
+    "brandId": 11,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+  {
+    "productName": "Nước Ngọt Có Gas Coca Cola Nguyên Bản 320ml",
+    "productLine": "Coca Cola Nguyên Bản",
+    "productSpecs": "{\"Hương vị\": \"vị Nguyên Bản\", \"Thể tích\": \"320ml\", \"Số lượng\": \"Thùng 24 lon\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Là loại nước ngọt được nhiều người yêu thích với hương vị thơm ngon, sảng khoái.",
+    "categoryId": 14,
+    "brandId": 12,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+
+
+
+  {
+    "productName": "Trà ô long Tea Plus 450ml",
+    "productLine": "Trà ô long",
+    "productSpecs": "{\"Loại trà\": \"Oolong\", \"Thể tích\": \"450ml\", \"Số lượng\": \"Thùng 24 chai\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Trà ô long Tea Plus giúp làm lắng nhẹ những cơn ưu tư mang đến cảm giác nhẹ nhàng.",
+    "categoryId": 15,
+    "brandId": 27,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+  {
+    "productName": "Trà Xanh C2 Hương Chanh 455ml",
+    "productLine": "Trà Xanh C2 Hương Chanh",
+    "productSpecs": "{\"Loại Trà\": \"Trà xanh hương Chanh\", \"Thể tích\": \"455ml\", \"Số lượng\": \"Thùng 24 chai\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Trà C2 Sản xuất từ những lá trà xanh tự nhiên hòa quyện cùng hương chanh tươi mát cho bạn một thức uống giải khát tuyệt vời.",
+    "categoryId": 15,
+    "brandId": 28,
+    "supplierId": 1,
+    "prioritySort": 1
+  },
+
+  {
+    "productName": "Trà Xanh Không Độ Vị Chanh 455ml",
+    "productLine": "Trà Xanh Không Độ",
+    "productSpecs": "{\"Loại trà\": \"Trà xanh vị chanh\", \"Thể tích\": \"455ml\", \"Số lượng\": \"Thùng 24 chai\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Trà xanh Không độ là sự kết hợp hài hòa, tươi mát giữa vị trà xanh chát dịu từ vùng đất Thái Nguyên.",
+    "categoryId": 15,
+    "brandId": 13,
+    "supplierId": 1,
+    "prioritySort": 1
+  }
+
+
+]

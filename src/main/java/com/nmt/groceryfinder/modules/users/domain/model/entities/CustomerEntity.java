@@ -11,7 +11,6 @@ public class CustomerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(nullable = false)
     private Integer aov = 0; // Average Order Value - AOV
 

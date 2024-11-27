@@ -13,7 +13,6 @@ public record RegisterAdminResponseDto(
         String avatarUrl,
         String address,
         String accessToken,
-        String refreshToken,
-        String position
+        String refreshToken
 ) {
 }

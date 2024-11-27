@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.nmt.groceryfinder.common.bases.AuditableEntity;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
@@ -64,8 +63,4 @@ public class UserEntity extends AuditableEntity {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private CustomerEntity customer;
-
-    @OneToOne(mappedBy = "user")
-    @JsonIgnore
-    private EmployeeEntity employee;
 }

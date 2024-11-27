@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: nmthuann
+      changes:
+        - loadData:
+            file: classpath:db/inits/suppliers.csv
+            tableName: suppliers
+            columns:
+              - column:
+                  name: address
+                  type: string
+              - column:
+                  name: contact_person
+                  type: string
+              - column:
+                  name: description
+                  type: string
+              - column:
+                  name: email
+                  type: string
+              - column:
+                  name: phone_number
+                  type: string
+              - column:
+                  name: supplier_name
+                  type: string

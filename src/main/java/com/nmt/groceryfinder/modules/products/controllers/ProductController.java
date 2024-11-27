@@ -71,7 +71,7 @@ public class ProductController {
     )
     @PostMapping("")
     @LoggingInterceptor
-    public ResponseEntity<ProductDto> createOne(
+    public ResponseEntity<?> createOne(
             @Parameter(description = "Product details to create", required = true)
             @RequestBody CreateProductDto data
     ) throws ModuleException {

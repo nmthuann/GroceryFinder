@@ -2,9 +2,6 @@ package com.nmt.groceryfinder.modules.products.services.impl;
 
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
 import com.nmt.groceryfinder.exceptions.ModuleException;
-import com.nmt.groceryfinder.modules.inventories.domain.dtos.InventoryDto;
-import com.nmt.groceryfinder.modules.inventories.domain.dtos.CreateInventoryDto;
-import com.nmt.groceryfinder.modules.inventories.IInventoryService;
 import com.nmt.groceryfinder.modules.products.domain.mappers.ProductSkuMapper;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
@@ -36,39 +33,24 @@ public class ProductSkuService
     private final IProductSkuRepository productSkuRepository;
     private final ProductSkuMapper productSkuMapper;
     private final IPriceService priceService;
-    private final IInventoryService inventoryService;
 
 
     @Autowired
     public ProductSkuService(
             IProductSkuRepository productSkuRepository,
             ProductSkuMapper productSkuMapper,
-            IPriceService priceService,
-            IInventoryService inventoryService
+            IPriceService priceService
 
     ) {
         super(productSkuRepository, productSkuMapper);
         this.productSkuRepository = productSkuRepository;
         this.productSkuMapper = productSkuMapper;
         this.priceService = priceService;
-        this.inventoryService = inventoryService;
     }
 
     private ProductSkuEntity findProductSkuOrThrow(Integer id) throws ModuleException {
         return productSkuRepository.findById(id)
                 .orElseThrow(() -> new ModuleException("Product SKU not found with id: " + id));
-    }
-
-    private InventoryDto getInventoryOrThrow(Integer skuId) throws ModuleException {
-        return getInventoryBySkuId(skuId)
-                .orElseThrow(() -> new ModuleException("Inventory not found for SKU id: " + skuId));
-    }
-
-
-    @Override
-    public Optional<InventoryDto> createInventoryById(Integer id, CreateInventoryDto data) throws ModuleException {
-        ProductSkuEntity productSku = findProductSkuOrThrow(id);
-        return inventoryService.createOne(productSku, data);
     }
 
     @Override
@@ -77,10 +59,6 @@ public class ProductSkuService
         return priceService.createOne(productSkuCreated, data);
     }
 
-    @Override
-    public Optional<InventoryDto> getInventoryBySkuId(Integer id) {
-        return this.inventoryService.getOneByProductSkuId(id);
-    }
 
     @Override
     public List<PriceDto> getPricesByProductSkuId(Integer id) {
@@ -96,7 +74,6 @@ public class ProductSkuService
     @Override
     public ProductCardResponse getProductCardBySkuId(UUID spuId, Integer skuId) throws ModuleException {
         ProductSkuEntity productSkuCreated = this.findProductSkuOrThrow(skuId);
-        InventoryDto inventory = this.getInventoryOrThrow(skuId);
         List<PriceDto> prices = this.getTop2PricesByProductSkuId(skuId);
         Double latestPrice = prices.get(0).getUnitPrice();
         Double oldPrice = latestPrice;
@@ -113,7 +90,7 @@ public class ProductSkuService
                 productSkuCreated.getSkuName(),
                 productSkuCreated.getImage(),
                 productSkuCreated.getStatus(),
-                inventory.getSold(),
+                productSkuCreated.getSold(),
                 latestPrice,
                 oldPrice
         );

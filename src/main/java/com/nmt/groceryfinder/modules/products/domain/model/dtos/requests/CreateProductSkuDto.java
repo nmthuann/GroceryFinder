@@ -1,8 +1,9 @@
 package com.nmt.groceryfinder.modules.products.domain.model.dtos.requests;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.*;
+
+import java.util.Date;
 
 /**
  * @author LENOVO
@@ -21,6 +22,20 @@ public record CreateProductSkuDto (
     @NotEmpty(message = "Sku Attributes cannot be empty")
     String skuAttributes,
     @NotEmpty(message = "Sku image cannot be empty")
-    String image
+    String image,
+    @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    Date checkAt,
+    @NotNull
+    @Min(1)
+    Integer stock,
+    @NotNull
+    @Min(0)
+    Integer defective,
+    @NotNull
+    @Min(0)
+    Integer sold,
+    @NotBlank
+    String unit
 ) {
 }

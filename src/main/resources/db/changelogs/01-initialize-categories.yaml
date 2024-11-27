@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: nmthuann
+      changes:
+        - loadData:
+            file: classpath:db/inits/categories.csv
+            tableName: categories
+            columns:
+              - column:
+                  name: category_name
+                  type: string
+              - column:
+                  name: category_url
+                  type: string
+              - column:
+                  name: description
+                  type: string
+              - column:
+                  name: left_value
+                  type: integer
+              - column:
+                  name: parent_id
+                  type: string
+              - column:
+                  name: right_value
+                  type: integer

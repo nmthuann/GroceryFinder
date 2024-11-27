@@ -15,9 +15,7 @@ import com.nmt.groceryfinder.modules.auth.dtos.responses.RegisterAdminResponseDt
 import com.nmt.groceryfinder.modules.auth.dtos.responses.RegisterResponseDto;
 import com.nmt.groceryfinder.modules.users.domain.mappers.UserMapper;
 import com.nmt.groceryfinder.modules.users.domain.model.dtos.AccountDto;
-import com.nmt.groceryfinder.modules.users.domain.model.dtos.EmployeeDto;
 import com.nmt.groceryfinder.modules.users.domain.model.dtos.UserDto;
-import com.nmt.groceryfinder.modules.users.services.IEmployeeService;
 import com.nmt.groceryfinder.modules.users.services.IUserService;
 import com.nmt.groceryfinder.shared.passport.impl.PassportContext;
 import com.nmt.groceryfinder.shared.redis.RedisService;
@@ -46,7 +44,6 @@ public class AuthService implements IAuthService {
     private final IUserService userService;
     private final UserMapper userMapper;
     private final RedisService redisService;
-    private final IEmployeeService employeeService;
 
 
     @Autowired
@@ -57,8 +54,7 @@ public class AuthService implements IAuthService {
             JwtServiceUtil jwtServiceUtil,
             PasswordUtil passwordUtil,
             MailServiceUtil mailServiceUtil,
-            RedisService redisService,
-            IEmployeeService employeeService
+            RedisService redisService
             ) {
         this.passportContext = passportContext;
         this.userMapper = userMapper;
@@ -67,7 +63,6 @@ public class AuthService implements IAuthService {
         this.mailServiceUtil = mailServiceUtil;
         this.userService = userService;
         this.redisService = redisService;
-        this.employeeService = employeeService;
     }
 
 
@@ -230,7 +225,7 @@ public class AuthService implements IAuthService {
     @Transactional
     public RegisterAdminResponseDto registerAdmin (
             RegisterAdminRequestDto data
-    ) throws AuthException, ModuleException, MessagingException {
+    ) throws AuthException, MessagingException {
         Optional<AccountDto> findAccount = this.userService.getAccountUserByEmail(data.email());
         if (findAccount.isPresent()) {
             throw new AuthException(AuthExceptionMessages.EMAIL_EXIST.getMessage());
@@ -261,15 +256,6 @@ public class AuthService implements IAuthService {
                         data.email(),
                         RoleEnum.ADMIN.name()
                 ));
-        CreateEmployeeDto createEmployee = new CreateEmployeeDto(
-                data.cccd(),
-                data.salary(),
-                data.position()
-        );
-        EmployeeDto employeeCreated = this.employeeService.createOne(
-                this.userMapper.toEntity(userCreated),
-                createEmployee
-        );
         return new RegisterAdminResponseDto (
                 userCreated.getEmail(),
                 userCreated.getFirstName(),
@@ -277,8 +263,7 @@ public class AuthService implements IAuthService {
                 userCreated.getAvatarURL(),
                 userCreated.getAddress(),
                 tokens.accessToken(),
-                tokens.refreshToken(),
-                employeeCreated.getPosition()
+                tokens.refreshToken()
         );
     }
 }

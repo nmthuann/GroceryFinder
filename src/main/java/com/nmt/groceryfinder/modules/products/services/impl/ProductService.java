@@ -38,7 +38,6 @@ public class ProductService
     private final BrandMapper brandMapper;
     private final ISupplierService supplierService;
     private final SupplierMapper supplierMapper;
-    private final IImageService imageService;
     private final ISpuSkuMappingService spuSkuMappingService;
     private final IProductSkuService productSkuService;
     private final ProductSkuMapper productSkuMapper;
@@ -53,7 +52,6 @@ public class ProductService
             BrandMapper brandMapper,
             ISupplierService supplierService,
             SupplierMapper supplierMapper,
-            IImageService imageService,
             ISpuSkuMappingService spuSkuMappingService,
             IProductSkuService productSkuService,
             ProductSkuMapper productSkuMapper
@@ -67,7 +65,6 @@ public class ProductService
         this.brandMapper = brandMapper;
         this.supplierService = supplierService;
         this.supplierMapper = supplierMapper;
-        this.imageService = imageService;
         this.spuSkuMappingService = spuSkuMappingService;
         this.productSkuService = productSkuService;
         this.productSkuMapper = productSkuMapper;
@@ -119,15 +116,13 @@ public class ProductService
         CategoryDto findCategory = findCategoryById(data.categoryId());
         BrandDto findBrand = findBrandById(data.brandId());
         SupplierDto findSupplier = findSupplierById(data.supplierId());
-        ProductEntity newProduct = createProductEntity(data, findBrand, findCategory, findSupplier);
+        ProductEntity newProduct = this.createProductEntity(data, findBrand, findCategory, findSupplier);
         ProductEntity productCreated = this.productRepository.save(newProduct);
-        List<ImageDto> imagesCreated = this.imageService.createImages(productCreated, data.images());
         return Optional.ofNullable(this.productMapper.mapForeignKeyToDto(
                 productCreated,
                 findBrand,
                 findCategory,
-                findSupplier,
-                imagesCreated
+                findSupplier
         ));
     }
 

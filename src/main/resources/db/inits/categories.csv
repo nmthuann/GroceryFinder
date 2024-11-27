@@ -1,0 +1,35 @@
+"id","category_name","category_url","description","left_value","parent_id","right_value"
+1,"ROOT","localhost","Node Root",1,"0",68
+2,"Thực Phẩm và Đồ Uống","localhost","Thực Phẩm và Đồ Uống",2,"1",61
+3,"DẦU ĂN, NƯỚC CHẤM, GIA VỊ","/dau-an-nuoc-cham-gia-vi","DẦU ĂN, NƯỚC CHẤM, GIA VỊ",3,"2",8
+4,"Dầu ăn","/dau-an","Dầu ăn",4,"3",5
+5,"Nước Mắm","/nuoc-mam","Các sản phẩm Nước Mắm",6,"3",7
+6,"Linh Kiện, Điện Tử","/linh-kien-dien-tu","Linh Kiện, Điện Tử",62,"1",67
+7,"BÁNH KẸO CÁC LOẠI","/banh-keo-cac-loai","BÁNH KẸO CÁC LOẠI",9,"2",14
+8,"Snack","/snack","Snack",10,"7",11
+9,"Kẹo Dẻo","/keo-deo","Kẹo Dẻo",12,"7",13
+10,"Thiết bị di động","/dien-thoai","Điện Thoại",63,"6",66
+11,"Điện thoại","/may-tinh-laptop","Máy Tính, Laptop",64,"10",65
+12,"BIA, ĐỒ UỐNG NƯỚC GIẢI KHÁT","/bia-do-uong-nuoc-gia-khat","Cửa hàng tạp hóa hàng đầu Tân Hiệp.",15,"2",22
+13,"Bia, đồ uống có cồn","/bia","Uống rượu bia không được phép lái xe.",16,"12",17
+14,"Nước ngọt có gas","/nuoc-ngot","Nước ngọt có gas.",18,"12",19
+15,"Nước Trà","/nuoc-tra","Cửa hàng tạp hóa hàng đầu Tân Hiệp.",20,"12",21
+16,"SỮA CÁC LOẠI","/sua-cac-loai","Các Loại Sữa.",23,"2",30
+17,"Sữa tươi","/sua-tuoi","Các Loại Sữa Tươi.",24,"16",25
+18,"Sữa chua","/sua-chua","Các Loại Sữa Chua.",26,"16",27
+19,"Sữa ca cao, lúa mạch","/sua-ca-cao-lua-mach","Các Loại Sữa Ca Cao, Lúa Mạch.",28,"16",29
+20,"MÌ, MIẾN, CHÁO, PHỞ","/mi-mien-chao-pho","Các Loại Mì Miến Cháo Phở.",31,"2",40
+21,"CHĂM SÓC CÁ NHÂN","/cham-soc-ca-nhan","Các Loại Sản phẩm chăm sóc cá nhân.",41,"2",50
+22,"Mì ăn liền","/mi-an-lien","Các Loại Mì Ăn Liền.",32,"20",33
+23,"Hủ Tiếu, Miến","/hu-tieu-mien","Các Loại Hủ Tiếu, Miến.",34,"20",35
+24,"Phở, Bún ăn liền","/pho-bun-an-lien","Các Loại Phở, Bún ăn liền.",36,"20",37
+25,"Cháo gói","/chao-goi","Các Loại Cháo Gói.",38,"20",39
+26,"Dầu Gội","/dau-goi","Các Loại sản phẩm dầu gội.",42,"21",43
+27,"Dầu Xả, Kem ủ","/dau-xa-kem-u","Các Loại sản phẩm Dầu xả kem ủ.",44,"21",45
+28,"Sữa Tắm","/sua-tam","Các Loại sản phẩm Sữa tắm.",46,"21",47
+29,"Kem đánh răng","/kem-danh-rang","Các Loại sản phẩm Kem đánh răng.",48,"21",49
+30,"VỆ SINH NHÀ CỬA","/ve-sinh-nha-cua","Các Loại sản phẩm vệ sinh nhà cửa.",51,"2",60
+31,"Nước Giặt","/nuoc-giat","Các Loại sản phẩm nước giặt.",52,"30",53
+32,"Nước Rửa Chén","/nuoc-rua-chen","Các Loại sản phẩm Nước Rửa Chén.",54,"30",55
+33,"Nước Lau Nhà","/nuoc-lau-nha","Các Loại sản phẩm Nước Lau Nhà.",56,"30",57
+34,"Nước Xả","/nuoc-xa","Các Loại sản phẩm Nước Xả.",58,"30",59

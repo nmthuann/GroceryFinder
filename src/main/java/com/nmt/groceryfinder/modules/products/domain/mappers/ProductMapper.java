@@ -11,7 +11,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -29,8 +28,7 @@ public class ProductMapper
             ProductEntity productCreated,
             BrandDto brand,
             CategoryDto category,
-            SupplierDto supplier,
-            List<ImageDto> images
+            SupplierDto supplier
     ){
         ProductDto productDto = new ProductDto();
         productDto.setId(productCreated.getId());
@@ -47,7 +45,6 @@ public class ProductMapper
         productDto.setUpdatedAt(productCreated.getUpdatedAt());
         productDto.setCreatedBy(productCreated.getCreatedBy());
         productDto.setModifiedBy(productCreated.getModifiedBy());
-        productDto.setImages(images);
         return productDto;
     }
 
@@ -58,7 +55,7 @@ public class ProductMapper
             SupplierEntity supplier
     ){
         ProductEntity product = new ProductEntity();
-        product.setIsDeleted(data.isDeleted());
+        product.setIsDeleted(false);
         product.setPrioritySort(data.prioritySort());
         product.setProductName(data.productName());
         product.setProductLine(data.productLine());

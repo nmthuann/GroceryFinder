@@ -56,9 +56,6 @@ public class ProductEntity extends AuditableEntity {
     private SupplierEntity supplier;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<ImageEntity> images;
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<SpuSkuMappingEntity> spuSkuMappings;
 }

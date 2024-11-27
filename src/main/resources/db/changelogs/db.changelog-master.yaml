@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: db/changelogs/01-initialize-brands.yaml
+  - include:
+      file: db/changelogs/01-initialize-categories.yaml
+  - include:
+      file: db/changelogs/01-initialize-suppliers.yaml
+  - include:
+      file: db/changelogs/01-initialize-users.yaml

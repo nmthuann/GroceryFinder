@@ -1,7 +1,6 @@
 package com.nmt.groceryfinder.modules.products.domain.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.nmt.groceryfinder.modules.inventories.domain.InventoryEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,13 +39,25 @@ public class ProductSkuEntity {
     @Column(name = "sku_attributes", columnDefinition = "jsonb")
     private String skuAttributes;
 
+    @Column( nullable = false, columnDefinition = "integer default 0")
+    private Integer  stock  = 0; // available quantity
+
+    @Column(nullable = false, columnDefinition = "integer default 0")
+    private Integer sold = 0;
+
+    @Column(name = "check_at", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date checkAt;
+
+    @Column(nullable = false)
+    private String unit;
+
+    @Column(nullable = false, columnDefinition = "integer default 0")
+    private Integer defective = 0;
+
     @OneToOne(mappedBy = "productSku", cascade = CascadeType.ALL)
     @JsonIgnore
     private SpuSkuMappingEntity spuSkuMapping;
-
-    @OneToOne(mappedBy = "productSku")
-    @JsonIgnore
-    private InventoryEntity inventory;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)

@@ -34,8 +34,6 @@ public record UpdateProductDto(
         @NotNull(message = "Deleted is required")
         Boolean isDeleted,
         @NotNull(message = "Category ID is required")
-        Integer prioritySort,
-        @NotNull(message = "Images is required")
-        List<CreateImageDto> images
+        Integer prioritySort
 ) {
 }

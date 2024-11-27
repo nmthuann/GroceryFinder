@@ -31,6 +31,4 @@ public class ProductDto extends AbstractBaseDto implements Serializable {
     private BrandDto brand;
 
     private SupplierDto supplier;
-
-    private List<ImageDto> images;
 }

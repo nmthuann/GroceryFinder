@@ -25,6 +25,11 @@ public class ProductSkuMapper  extends AbstractModelMapper<ProductSkuEntity, Int
         productSkuEntity.setSkuAttributes(data.skuAttributes());
         productSkuEntity.setStatus(true);
         productSkuEntity.setImage(data.image());
+        productSkuEntity.setStock(data.stock());
+        productSkuEntity.setDefective(data.defective());
+        productSkuEntity.setSold(data.sold());
+        productSkuEntity.setUnit(data.unit());
+        productSkuEntity.setCheckAt(data.checkAt());
         return productSkuEntity;
     }
 }
