@@ -45,6 +45,6 @@ public class UserMapper extends AbstractModelMapper<UserEntity, UUID, UserDto> {
         userEntity.setAvatarURL(createUserDto.avatarUrl());
         userEntity.setRole(roleName);
         userEntity.setAuthMethod(authMethodName);
-        return  userEntity;
+        return userEntity;
     }
 }

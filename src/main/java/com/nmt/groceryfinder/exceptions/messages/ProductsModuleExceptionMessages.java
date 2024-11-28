@@ -19,6 +19,9 @@ public enum ProductsModuleExceptionMessages {
     CATEGORY_NOT_FOUND("CATEGORY_NOT_FOUND."),
     CATEGORY_NOT_DELETE("CATEGORY_NOT_DELETE is product fk reference."),
     GET_PRODUCT_SKU_NOT_FOUND("GET_PRODUCT_SKU_NOT_FOUND."),
+    SKU_CREATION_FAILED("SKU Creation Failed."),
+    SKU_CREATION_FAILED_DETAIL("Unable to create SKU for the given product."),
+    SKU_CREATION_BAD_REQUEST("Bad Request");
     ;
 
 

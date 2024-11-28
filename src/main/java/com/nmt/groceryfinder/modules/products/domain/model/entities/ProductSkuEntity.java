@@ -8,6 +8,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "product_skus",
@@ -15,7 +16,6 @@ import java.util.Date;
 @Getter
 @Setter
 public class ProductSkuEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -39,25 +39,13 @@ public class ProductSkuEntity {
     @Column(name = "sku_attributes", columnDefinition = "jsonb")
     private String skuAttributes;
 
-    @Column( nullable = false, columnDefinition = "integer default 0")
-    private Integer  stock  = 0; // available quantity
-
-    @Column(nullable = false, columnDefinition = "integer default 0")
-    private Integer sold = 0;
-
-    @Column(name = "check_at", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date checkAt;
-
-    @Column(nullable = false)
-    private String unit;
-
-    @Column(nullable = false, columnDefinition = "integer default 0")
-    private Integer defective = 0;
-
     @OneToOne(mappedBy = "productSku", cascade = CascadeType.ALL)
     @JsonIgnore
     private SpuSkuMappingEntity spuSkuMapping;
+
+    @OneToMany(mappedBy = "productSku")
+    @JsonIgnore
+    private List<InventoryEntity> inventories;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)

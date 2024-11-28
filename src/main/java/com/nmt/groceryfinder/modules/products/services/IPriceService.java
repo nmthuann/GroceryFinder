@@ -1,6 +1,7 @@
 package com.nmt.groceryfinder.modules.products.services;
 
 import com.nmt.groceryfinder.common.bases.IBaseService;
+import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreatePriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.PriceIdEntity;
@@ -18,7 +19,7 @@ public interface IPriceService extends IBaseService<PriceIdEntity, PriceDto> {
      * @param data DTO containing the details of the price to be created.
      * @return An Optional containing the created PriceDto, or empty if the creation failed.
      */
-    Optional<PriceDto> createOne(ProductSkuEntity productSkuCreated, CreatePriceDto data);
+    Optional<PriceDto> createOne(ProductSkuEntity productSkuCreated, CreatePriceDto data) throws ModuleException;
 
     /**
      * Retrieves all price entries associated with a given product SKU.

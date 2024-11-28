@@ -1,8 +1,10 @@
 package com.nmt.groceryfinder.modules.products.controllers;
 
 import com.nmt.groceryfinder.exceptions.ModuleException;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.InventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateInventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreatePriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SearchProductResponse;
 import com.nmt.groceryfinder.modules.products.services.IProductSkuService;
@@ -34,7 +36,6 @@ public class ProductSkuController {
         this.productSkuService = productSkuService;
     }
 
-
     @PostMapping("/{id}/prices")
     @LoggingInterceptor
     public ResponseEntity<?> createPriceById(
@@ -45,6 +46,17 @@ public class ProductSkuController {
         Optional<PriceDto> priceDto = this.productSkuService.createPriceById(id, data);
         return priceDto.map(dto -> new ResponseEntity<>(dto, HttpStatus.CREATED))
                 .orElseThrow(() -> new ModuleException("Price creation failed"));
+    }
+
+    @PostMapping("/{id}/inventories")
+    @LoggingInterceptor
+    public ResponseEntity<?> createInventoryById(
+            @RequestBody CreateInventoryDto data,
+            @PathVariable Integer id
+    ) throws ModuleException {
+        Optional<InventoryDto> inventoryDto = this.productSkuService.createInventoryById(id, data);
+        return inventoryDto.map(dto -> new ResponseEntity<>(dto, HttpStatus.CREATED))
+                .orElseThrow(() -> new ModuleException("InventoryDto creation failed"));
     }
 
     @GetMapping("/{id}")
@@ -96,10 +108,3 @@ public class ProductSkuController {
         return ResponseEntity.ok(productNames);
     }
 }
-
-//if (!slug.isEmpty()) {
-//        Optional<ProductDto> findProduct = this.productService.getOneBySlug(slug);
-//        return findProduct
-//        .map(product -> new ResponseEntity<>(product, HttpStatus.OK))
-//        .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-//        }

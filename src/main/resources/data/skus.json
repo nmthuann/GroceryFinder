@@ -1,17 +1,18 @@
 [
   {
-    "productName": "Trà Xanh Không Độ Vị Chanh 455ml",
-    "productLine": "Trà Xanh Không Độ",
-    "productSpecs": "{\"Loại trà\": \"Trà xanh vị chanh\", \"Thể tích\": \"455ml\", \"Số lượng\": \"Thùng 24 chai\", \"Sản xuất tại\": \"Việt Nam\"}",
-    "description": "Trà xanh Không độ là sự kết hợp hài hòa, tươi mát giữa vị trà xanh chát dịu từ vùng đất Thái Nguyên.",
-    "categoryId": 15,
-    "brandId": 13,
-    "supplierId": 1
+    "productName": "Dầu Ăn Cái Lân",
+    "productLine": "Dầu Thực Vật",
+    "productSpecs": "{\"Loại dầu\": \"Dầu Thực Vật\", \"Sản xuất tại\": \"Việt Nam\"}",
+    "description": "Dầu thực vật tinh luyện Cái Lân chai 1 lít được làm từ dầu Olein cọ, dầu đậu nành tinh luyện,...giúp tăng hương vị cho các món ăn.",
+    "categoryId": 4,
+    "brandId": 5,
+    "supplierId": 1,
+    "prioritySort": 1
   },
   {
-    "barcode": "s",
-    "skuName": "d",
-    "skuAttributes": "",
-    "image": ""
+    "barcode": "8934988030020",
+    "skuName": "Chai Dầu Ăn Cái Lân 1L",
+    "skuAttributes": "{\"Dung tích\": \"1L\"}",
+    "image": "https://res.cloudinary.com/ddyreawwf/image/upload/v1729744029/dau-an-cai-lan_x7mcwv.jpg"
   }
 ]

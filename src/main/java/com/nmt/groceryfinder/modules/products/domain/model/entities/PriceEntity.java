@@ -15,9 +15,6 @@ public class PriceEntity {
     @Column(name = "unit_price", nullable = false)
     private Double unitPrice;
 
-    @Column(name = "import_price", nullable = false)
-    private Double importPrice; // unit_price + vat + discount + ... => the price paid for one product
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;

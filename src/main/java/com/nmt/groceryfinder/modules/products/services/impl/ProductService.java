@@ -36,8 +36,6 @@ public class ProductService
     private final CategoryMapper categoryMapper;
     private final IBrandService brandService;
     private final BrandMapper brandMapper;
-    private final ISupplierService supplierService;
-    private final SupplierMapper supplierMapper;
     private final ISpuSkuMappingService spuSkuMappingService;
     private final IProductSkuService productSkuService;
     private final ProductSkuMapper productSkuMapper;
@@ -50,8 +48,6 @@ public class ProductService
             CategoryMapper categoryMapper,
             IBrandService brandService,
             BrandMapper brandMapper,
-            ISupplierService supplierService,
-            SupplierMapper supplierMapper,
             ISpuSkuMappingService spuSkuMappingService,
             IProductSkuService productSkuService,
             ProductSkuMapper productSkuMapper
@@ -63,8 +59,6 @@ public class ProductService
         this.categoryMapper = categoryMapper;
         this.brandService = brandService;
         this.brandMapper = brandMapper;
-        this.supplierService = supplierService;
-        this.supplierMapper = supplierMapper;
         this.spuSkuMappingService = spuSkuMappingService;
         this.productSkuService = productSkuService;
         this.productSkuMapper = productSkuMapper;
@@ -82,11 +76,6 @@ public class ProductService
                         ProductsModuleExceptionMessages.GET_BRAND_NOT_FOUND.getMessage()));
     }
 
-    private SupplierDto findSupplierById(Integer supplierId) throws ModuleException {
-        return this.supplierService.getOneById(supplierId)
-                .orElseThrow(() -> new ModuleException(
-                        ProductsModuleExceptionMessages.GET_SUPPLIER_NOT_FOUND.getMessage()));
-    }
 
     private ProductEntity findProductOrThrow(UUID id) throws ModuleException {
         return this.productRepository.findById(id)
@@ -98,14 +87,12 @@ public class ProductService
     private ProductEntity createProductEntity(
             CreateProductDto data,
             BrandDto brand,
-            CategoryDto category,
-            SupplierDto supplier
+            CategoryDto category
     ) {
         return this.productMapper.generateEntity(
                 data,
                 brandMapper.toEntity(brand),
-                categoryMapper.toEntity(category),
-                supplierMapper.toEntity(supplier)
+                categoryMapper.toEntity(category)
         );
     }
 
@@ -115,14 +102,13 @@ public class ProductService
     public Optional<ProductDto> createOne(CreateProductDto data) throws ModuleException {
         CategoryDto findCategory = findCategoryById(data.categoryId());
         BrandDto findBrand = findBrandById(data.brandId());
-        SupplierDto findSupplier = findSupplierById(data.supplierId());
-        ProductEntity newProduct = this.createProductEntity(data, findBrand, findCategory, findSupplier);
+        ProductEntity newProduct = this.createProductEntity(data, findBrand, findCategory);
         ProductEntity productCreated = this.productRepository.save(newProduct);
         return Optional.ofNullable(this.productMapper.mapForeignKeyToDto(
                 productCreated,
                 findBrand,
-                findCategory,
-                findSupplier
+                findCategory
+
         ));
     }
 
@@ -142,8 +128,11 @@ public class ProductService
     ) throws ModuleException {
         ProductEntity productCreated = this.findProductOrThrow(id);
         Optional<ProductSkuDto> productSkuCreated = this.productSkuService.createOne(data);
-        ProductSkuEntity productSkuEntity = this.productSkuMapper.toEntity(productSkuCreated.get());
-        return this.spuSkuMappingService.createOne(productCreated, productSkuEntity);
+        if (productSkuCreated.isPresent()) {
+            ProductSkuEntity productSkuEntity = this.productSkuMapper.toEntity(productSkuCreated.get());
+            return this.spuSkuMappingService.createOne(productCreated, productSkuEntity);
+        }
+        return Optional.empty();
     }
 
     @Override

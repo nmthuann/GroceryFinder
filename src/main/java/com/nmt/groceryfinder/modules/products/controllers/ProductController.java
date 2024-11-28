@@ -1,6 +1,9 @@
 package com.nmt.groceryfinder.modules.products.controllers;
 
+import com.nmt.groceryfinder.common.messages.ProductMessages;
 import com.nmt.groceryfinder.exceptions.ModuleException;
+import com.nmt.groceryfinder.exceptions.RestErrorResponse;
+import com.nmt.groceryfinder.exceptions.messages.ProductsModuleExceptionMessages;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.SpuSkuMappingDto;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -153,8 +157,19 @@ public class ProductController {
             @PathVariable UUID id
     ) throws ModuleException {
         Optional<SpuSkuMappingDto> productSkuCreated = this.productService.createSkuById(id, data);
-        return productSkuCreated.map(spuSkuDto -> new ResponseEntity<>(spuSkuDto, HttpStatus.CREATED))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+        if (productSkuCreated.isPresent()) {
+            return new ResponseEntity<>(productSkuCreated.get(), HttpStatus.CREATED);
+        }
+        RestErrorResponse errorResponse = new RestErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                ProductsModuleExceptionMessages.SKU_CREATION_BAD_REQUEST.getMessage(),
+                ProductsModuleExceptionMessages.SKU_CREATION_FAILED.getMessage(),
+                ProductsModuleExceptionMessages.SKU_CREATION_FAILED_DETAIL.getMessage(),
+                ProductMessages.SKU_CREATION_DETAIL_MESSAGE.getMessage(),
+                LocalDateTime.now(),
+                "/api/products/" + id + "/skus"
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @Operation(

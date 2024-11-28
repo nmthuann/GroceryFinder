@@ -6,7 +6,6 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateP
 import com.nmt.groceryfinder.modules.products.domain.model.entities.BrandEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.CategoryEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntity;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.SupplierEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,8 +26,7 @@ public class ProductMapper
     public ProductDto mapForeignKeyToDto(
             ProductEntity productCreated,
             BrandDto brand,
-            CategoryDto category,
-            SupplierDto supplier
+            CategoryDto category
     ){
         ProductDto productDto = new ProductDto();
         productDto.setId(productCreated.getId());
@@ -38,7 +36,6 @@ public class ProductMapper
         productDto.setProductSpecs(productCreated.getProductSpecs());
         productDto.setBrand(brand);
         productDto.setCategory(category);
-        productDto.setSupplier(supplier);
         productDto.setIsDeleted(productCreated.getIsDeleted());
         productDto.setPrioritySort(productCreated.getPrioritySort());
         productDto.setCreatedAt(productCreated.getCreatedAt());
@@ -51,8 +48,7 @@ public class ProductMapper
     public ProductEntity generateEntity(
             CreateProductDto data,
             BrandEntity brand,
-            CategoryEntity category,
-            SupplierEntity supplier
+            CategoryEntity category
     ){
         ProductEntity product = new ProductEntity();
         product.setIsDeleted(false);
@@ -63,7 +59,6 @@ public class ProductMapper
         product.setProductSpecs(data.productSpecs());
         product.setBrand(brand);
         product.setCategory(category);
-        product.setSupplier(supplier);
         return product;
     }
 }

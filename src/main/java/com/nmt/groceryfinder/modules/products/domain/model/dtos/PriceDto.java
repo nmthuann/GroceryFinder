@@ -26,11 +26,6 @@ public class PriceDto implements Serializable {
     @PositiveOrZero(message = "Unit Price must be zero or positive")
     private Double unitPrice;
 
-    @NotNull(message = "Import Price is required")
-    @DecimalMin(value = "0.0", inclusive = false, message = "Import Price must be greater than zero")
-    @PositiveOrZero(message = "Import price must be zero or positive")
-    private Double importPrice;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date createdAt;
 }

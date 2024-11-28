@@ -27,5 +27,5 @@ public interface IPriceRepository extends JpaRepository<PriceEntity, PriceIdEnti
     );
 
     List<PriceEntity> findAllByIdProductSkuId(@Param("productSkuId") Integer productSkuId);
-
+    Optional<PriceEntity> findById(PriceIdEntity id);
 }

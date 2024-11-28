@@ -2,15 +2,19 @@ package com.nmt.groceryfinder.modules.products.services.impl;
 
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
 import com.nmt.groceryfinder.exceptions.ModuleException;
+import com.nmt.groceryfinder.modules.products.domain.mappers.InventoryMapper;
 import com.nmt.groceryfinder.modules.products.domain.mappers.ProductSkuMapper;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.InventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateInventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreatePriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductCardResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SearchProductResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 import com.nmt.groceryfinder.modules.products.repositories.IProductSkuRepository;
+import com.nmt.groceryfinder.modules.products.services.IInventoryService;
 import com.nmt.groceryfinder.modules.products.services.IPriceService;
 import com.nmt.groceryfinder.modules.products.services.IProductSkuService;
 import com.nmt.groceryfinder.utils.UrlUtil;
@@ -33,19 +37,25 @@ public class ProductSkuService
     private final IProductSkuRepository productSkuRepository;
     private final ProductSkuMapper productSkuMapper;
     private final IPriceService priceService;
+    private final IInventoryService inventoryService;
+    private final InventoryMapper inventoryMapper;
 
 
     @Autowired
     public ProductSkuService(
             IProductSkuRepository productSkuRepository,
             ProductSkuMapper productSkuMapper,
-            IPriceService priceService
+            IPriceService priceService,
+            IInventoryService inventoryService,
+            InventoryMapper inventoryMapper
 
     ) {
         super(productSkuRepository, productSkuMapper);
         this.productSkuRepository = productSkuRepository;
         this.productSkuMapper = productSkuMapper;
         this.priceService = priceService;
+        this.inventoryService = inventoryService;
+        this.inventoryMapper = inventoryMapper;
     }
 
     private ProductSkuEntity findProductSkuOrThrow(Integer id) throws ModuleException {
@@ -53,10 +63,21 @@ public class ProductSkuService
                 .orElseThrow(() -> new ModuleException("Product SKU not found with id: " + id));
     }
 
+    private InventoryDto findInventoryOrThrow(Integer skuId) throws ModuleException {
+        return this.inventoryService.getOneBySkuId(skuId)
+                .orElseThrow(() -> new ModuleException("Product SKU not found with id: " + skuId));
+    }
+
     @Override
     public Optional<PriceDto> createPriceById(Integer id, CreatePriceDto data) throws ModuleException {
         ProductSkuEntity productSkuCreated = this.findProductSkuOrThrow(id);
         return priceService.createOne(productSkuCreated, data);
+    }
+
+    @Override
+    public Optional<InventoryDto> createInventoryById(Integer id, CreateInventoryDto data) throws ModuleException {
+        ProductSkuEntity productSkuCreated = this.findProductSkuOrThrow(id);
+        return this.inventoryService.createOne(productSkuCreated, data);
     }
 
 
@@ -90,7 +111,7 @@ public class ProductSkuService
                 productSkuCreated.getSkuName(),
                 productSkuCreated.getImage(),
                 productSkuCreated.getStatus(),
-                productSkuCreated.getSold(),
+                this.inventoryService.calculateTotalSoldBySkuId(skuId),
                 latestPrice,
                 oldPrice
         );

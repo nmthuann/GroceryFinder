@@ -48,12 +48,6 @@ public class ProductEntity extends AuditableEntity {
     )
     private BrandEntity brand;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(
-            name = "supplier_id",
-            foreignKey = @ForeignKey(name = "fk_product_supplier")
-    )
-    private SupplierEntity supplier;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonIgnore

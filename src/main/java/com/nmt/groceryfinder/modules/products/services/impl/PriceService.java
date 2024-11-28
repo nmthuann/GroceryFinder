@@ -1,6 +1,7 @@
 package com.nmt.groceryfinder.modules.products.services.impl;
 
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
+import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.modules.products.domain.mappers.PriceMapper;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreatePriceDto;
@@ -33,7 +34,14 @@ public class PriceService
     }
 
     @Override
-    public Optional<PriceDto> createOne(ProductSkuEntity productSkuCreated, CreatePriceDto data) {
+    public Optional<PriceDto> createOne(ProductSkuEntity productSkuCreated, CreatePriceDto data) throws ModuleException {
+        PriceIdEntity id = new PriceIdEntity();
+        id.setBeginAt(data.beginAt());
+        id.setProductSku(productSkuCreated);
+        Optional<PriceEntity> findById = this.priceRepository.findById(id);
+        if(findById.isPresent()) {
+            throw new ModuleException("Price entry already exists for the given SKU and start date");
+        }
         PriceEntity newPrice = this.priceMapper.generatePrice(data, productSkuCreated);
         return Optional.ofNullable(this.priceMapper.toDto(this.priceRepository.save(newPrice)));
     }

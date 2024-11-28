@@ -12,30 +12,14 @@ import java.util.Date;
  */
 public record CreateProductSkuDto (
     @NotNull(message = "Barcode is required")
-    @NotEmpty(message = "Barcode cannot be empty")
     @Size(max = 32, message = "Barcode must be less than or equal to 32 characters")
     String barcode,
-    @NotNull(message = "SKU model number is required")
-    @NotEmpty(message = "SKU model number cannot be empty")
-    @Size(max = 50, message = "SKU model number must be less than or equal to 50 characters")
+    @NotNull(message = "SKU Name is required")
     String skuName,
     @NotEmpty(message = "Sku Attributes cannot be empty")
     String skuAttributes,
     @NotEmpty(message = "Sku image cannot be empty")
-    String image,
-    @NotNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    Date checkAt,
-    @NotNull
-    @Min(1)
-    Integer stock,
-    @NotNull
-    @Min(0)
-    Integer defective,
-    @NotNull
-    @Min(0)
-    Integer sold,
-    @NotBlank
-    String unit
+    String image
+
 ) {
 }

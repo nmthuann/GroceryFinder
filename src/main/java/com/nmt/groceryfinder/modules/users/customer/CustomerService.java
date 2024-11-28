@@ -1,4 +1,4 @@
-package com.nmt.groceryfinder.modules.users.customer.impl;
+package com.nmt.groceryfinder.modules.users.customer;
 
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
 import com.nmt.groceryfinder.modules.users.customer.CustomerMapper;

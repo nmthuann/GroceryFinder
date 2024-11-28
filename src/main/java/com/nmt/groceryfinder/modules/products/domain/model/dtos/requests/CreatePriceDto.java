@@ -13,8 +13,6 @@ public record CreatePriceDto(
         @NotEmpty
         Date beginAt,
         @NotEmpty
-        Double unitPrice,
-        @NotEmpty
-        Double importPrice
+        Double unitPrice
 ) {
 }

@@ -37,7 +37,10 @@ public class SpuSkuMappingService
     }
 
     @Override
-    public Optional<SpuSkuMappingDto> createOne(ProductEntity productCreated, ProductSkuEntity productSkuCreated) {
+    public Optional<SpuSkuMappingDto> createOne(
+            ProductEntity productCreated,
+            ProductSkuEntity productSkuCreated
+    ) {
         SpuSkuMappingEntity spuSkuMappingEntity = new SpuSkuMappingEntity();
         spuSkuMappingEntity.setProduct(productCreated);
         spuSkuMappingEntity.setProductSku(productSkuCreated);
