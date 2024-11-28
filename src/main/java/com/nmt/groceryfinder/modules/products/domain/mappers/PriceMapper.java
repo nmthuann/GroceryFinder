@@ -30,10 +30,8 @@ public class PriceMapper extends AbstractModelMapper<PriceEntity, PriceIdEntity,
         PriceIdEntity newPriceId = new PriceIdEntity();
         newPriceId.setBeginAt(data.beginAt());
         newPriceId.setProductSku(productSkuCreated);
-
         PriceEntity priceEntity = new PriceEntity();
         priceEntity.setId(newPriceId);
-
         priceEntity.setImportPrice(data.importPrice());
         priceEntity.setUnitPrice(data.unitPrice());
         return priceEntity;

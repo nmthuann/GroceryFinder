@@ -1,4 +1,4 @@
-package com.nmt.groceryfinder.modules.users.domain.model.dtos;
+package com.nmt.groceryfinder.modules.users.user.dtos;
 
 
 import com.nmt.groceryfinder.common.bases.AbstractBaseDto;

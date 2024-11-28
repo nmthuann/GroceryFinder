@@ -1,11 +1,11 @@
-package com.nmt.groceryfinder.modules.users.services.impl;
+package com.nmt.groceryfinder.modules.users.customer.impl;
 
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
-import com.nmt.groceryfinder.modules.users.domain.mappers.CustomerMapper;
-import com.nmt.groceryfinder.modules.users.domain.model.dtos.CustomerDto;
-import com.nmt.groceryfinder.modules.users.domain.model.entities.CustomerEntity;
-import com.nmt.groceryfinder.modules.users.repositories.ICustomerRepository;
-import com.nmt.groceryfinder.modules.users.services.ICustomerService;
+import com.nmt.groceryfinder.modules.users.customer.CustomerMapper;
+import com.nmt.groceryfinder.modules.users.customer.CustomerDto;
+import com.nmt.groceryfinder.modules.users.customer.CustomerEntity;
+import com.nmt.groceryfinder.modules.users.customer.ICustomerRepository;
+import com.nmt.groceryfinder.modules.users.customer.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

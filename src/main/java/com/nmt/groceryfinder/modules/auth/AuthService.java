@@ -13,10 +13,10 @@ import com.nmt.groceryfinder.modules.auth.dtos.responses.AuthenticationResponseD
 import com.nmt.groceryfinder.modules.auth.dtos.responses.LoginResponseDto;
 import com.nmt.groceryfinder.modules.auth.dtos.responses.RegisterAdminResponseDto;
 import com.nmt.groceryfinder.modules.auth.dtos.responses.RegisterResponseDto;
-import com.nmt.groceryfinder.modules.users.domain.mappers.UserMapper;
-import com.nmt.groceryfinder.modules.users.domain.model.dtos.AccountDto;
-import com.nmt.groceryfinder.modules.users.domain.model.dtos.UserDto;
-import com.nmt.groceryfinder.modules.users.services.IUserService;
+import com.nmt.groceryfinder.modules.users.user.UserMapper;
+import com.nmt.groceryfinder.modules.users.user.dtos.AccountDto;
+import com.nmt.groceryfinder.modules.users.user.dtos.UserDto;
+import com.nmt.groceryfinder.modules.users.user.IUserService;
 import com.nmt.groceryfinder.shared.passport.impl.PassportContext;
 import com.nmt.groceryfinder.shared.redis.RedisService;
 import com.nmt.groceryfinder.utils.DefaultValueUtil;

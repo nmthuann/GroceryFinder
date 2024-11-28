@@ -1,16 +1,12 @@
-package com.nmt.groceryfinder.modules.users.services.impl;
+package com.nmt.groceryfinder.modules.users.user;
 
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
 import com.nmt.groceryfinder.common.enums.AuthMethodEnum;
 import com.nmt.groceryfinder.common.enums.RoleEnum;
 import com.nmt.groceryfinder.modules.auth.dtos.requests.CreateUserDto;
-import com.nmt.groceryfinder.modules.users.domain.mappers.UserMapper;
-import com.nmt.groceryfinder.modules.users.domain.model.dtos.AccountDto;
-import com.nmt.groceryfinder.modules.users.domain.model.dtos.ProfileDto;
-import com.nmt.groceryfinder.modules.users.domain.model.dtos.UserDto;
-import com.nmt.groceryfinder.modules.users.domain.model.entities.UserEntity;
-import com.nmt.groceryfinder.modules.users.repositories.IUserRepository;
-import com.nmt.groceryfinder.modules.users.services.IUserService;
+import com.nmt.groceryfinder.modules.users.user.dtos.AccountDto;
+import com.nmt.groceryfinder.modules.users.user.dtos.ProfileDto;
+import com.nmt.groceryfinder.modules.users.user.dtos.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

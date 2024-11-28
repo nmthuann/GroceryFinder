@@ -1,9 +1,8 @@
-package com.nmt.groceryfinder.modules.users.controllers;
+package com.nmt.groceryfinder.modules.users.user;
 
 
-import com.nmt.groceryfinder.modules.users.domain.model.dtos.ProfileDto;
-import com.nmt.groceryfinder.modules.users.domain.model.dtos.UserDto;
-import com.nmt.groceryfinder.modules.users.services.IUserService;
+import com.nmt.groceryfinder.modules.users.user.dtos.ProfileDto;
+import com.nmt.groceryfinder.modules.users.user.dtos.UserDto;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

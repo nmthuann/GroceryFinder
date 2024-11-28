@@ -1,5 +1,6 @@
-package com.nmt.groceryfinder.modules.users.domain.model.entities;
+package com.nmt.groceryfinder.modules.users.customer;
 
+import com.nmt.groceryfinder.modules.users.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 

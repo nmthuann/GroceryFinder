@@ -1,6 +1,5 @@
-package com.nmt.groceryfinder.modules.users.repositories;
+package com.nmt.groceryfinder.modules.users.user;
 
-import com.nmt.groceryfinder.modules.users.domain.model.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;

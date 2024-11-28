@@ -1,4 +1,4 @@
-package com.nmt.groceryfinder.modules.users.domain.model.dtos;
+package com.nmt.groceryfinder.modules.users.customer;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;

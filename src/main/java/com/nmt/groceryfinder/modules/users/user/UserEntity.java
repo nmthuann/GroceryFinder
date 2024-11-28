@@ -1,8 +1,9 @@
-package com.nmt.groceryfinder.modules.users.domain.model.entities;
+package com.nmt.groceryfinder.modules.users.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.nmt.groceryfinder.common.bases.AuditableEntity;
+import com.nmt.groceryfinder.modules.users.customer.CustomerEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

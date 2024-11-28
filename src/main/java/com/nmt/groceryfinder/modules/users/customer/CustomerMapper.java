@@ -1,8 +1,6 @@
-package com.nmt.groceryfinder.modules.users.domain.mappers;
+package com.nmt.groceryfinder.modules.users.customer;
 
 import com.nmt.groceryfinder.common.bases.AbstractModelMapper;
-import com.nmt.groceryfinder.modules.users.domain.model.dtos.CustomerDto;
-import com.nmt.groceryfinder.modules.users.domain.model.entities.CustomerEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

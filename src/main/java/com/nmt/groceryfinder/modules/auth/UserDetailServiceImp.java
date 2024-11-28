@@ -2,8 +2,8 @@ package com.nmt.groceryfinder.modules.auth;
 
 
 import com.nmt.groceryfinder.exceptions.messages.AuthExceptionMessages;
-import com.nmt.groceryfinder.modules.users.domain.model.dtos.AccountDto;
-import com.nmt.groceryfinder.modules.users.services.IUserService;
+import com.nmt.groceryfinder.modules.users.user.dtos.AccountDto;
+import com.nmt.groceryfinder.modules.users.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
