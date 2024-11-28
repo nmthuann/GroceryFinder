@@ -15,6 +15,7 @@ public record ProductCardResponse(
         String image,
         Boolean status,
         Integer sold,
+        Integer currentStock,
         Double latestPrice,
         Double oldPrice
 ) {

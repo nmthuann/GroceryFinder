@@ -104,6 +104,10 @@ public class ProductSkuService
             oldPrice = prices.get(1).getUnitPrice();
         }
 
+        Integer stock = this.inventoryService.getOneBySkuId(skuId)
+                .map(InventoryDto::getStock) // Inventory là class giả định đại diện cho kết quả trả về
+                .orElse(0);
+
         return new ProductCardResponse (
                 productSkuCreated.getId(),
                 spuId,
@@ -112,6 +116,7 @@ public class ProductSkuService
                 productSkuCreated.getImage(),
                 productSkuCreated.getStatus(),
                 this.inventoryService.calculateTotalSoldBySkuId(skuId),
+                stock,
                 latestPrice,
                 oldPrice
         );

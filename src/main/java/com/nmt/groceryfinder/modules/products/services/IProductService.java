@@ -9,6 +9,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateP
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductCardResponse;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SpuSkuMappingResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -22,7 +23,10 @@ public interface  IProductService extends IBaseService<UUID, ProductDto> {
     Optional<SpuSkuMappingDto> createSkuById(UUID id, CreateProductSkuDto data) throws ModuleException;
     List<ProductSkuDto> getSkusById(UUID id) throws ModuleException;
     List<ProductDto> getAllByCategoryId(Integer id);
-    List<ProductCardResponse> getProductCardsByCategoryId(Integer categoryId, Pageable pageable) throws ModuleException;
+    Page<ProductCardResponse> getProductCardsByCategoryId(Integer categoryId, Pageable pageable) throws ModuleException;
     Page<?> getAllPaginated(String option, Pageable pageable) throws ModuleException;
+    List<ProductCardResponse> getProductCardsBySpuId (UUID spuId) throws ModuleException;
+    SpuSkuMappingResponse getSpuSkuMapping(UUID spuId) throws ModuleException;
+
 
 }

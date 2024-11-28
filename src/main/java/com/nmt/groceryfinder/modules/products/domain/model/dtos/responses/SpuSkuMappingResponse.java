@@ -1,9 +1,8 @@
 package com.nmt.groceryfinder.modules.products.domain.model.dtos.responses;
 
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductDto;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author LENOVO
@@ -11,7 +10,7 @@ import java.util.UUID;
  * @date 7/31/2024
  */
 public record SpuSkuMappingResponse(
-        UUID id,
-        List<ProductSkuDto> productSkus
+        ProductDto spu,
+        List<ProductCardResponse> skus
 ) {
 }

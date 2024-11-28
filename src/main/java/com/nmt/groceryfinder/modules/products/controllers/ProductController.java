@@ -10,6 +10,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.SpuSkuMappingDto
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductCardResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SpuSkuMappingResponse;
 import com.nmt.groceryfinder.modules.products.services.IProductService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
@@ -120,6 +121,11 @@ public class ProductController {
         try{
             if(isPagination){
                 PageRequest pageable = PageRequest.of(page, size, Sort.by("prioritySort").ascending());
+                if(option == null) {
+                    Page<ProductCardResponse> cardResponseList =
+                            this.productService.getProductCardsByCategoryId(categoryId, pageable);
+                    return new ResponseEntity<>(cardResponseList, HttpStatus.OK);
+                }
                 Page<?> products = this.productService.getAllPaginated(option, pageable);
                 return new ResponseEntity<>(products, HttpStatus.OK);
             }
@@ -140,7 +146,7 @@ public class ProductController {
                             responseCode = "201",
                             description = "SKUs successfully created",
                             content = @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = SpuSkuMappingResponse.class))
+                                    schema = @Schema(implementation = SpuSkuMappingDto.class))
                     ),
                     @ApiResponse(
                             responseCode = "400",
@@ -172,31 +178,13 @@ public class ProductController {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @Operation(
-            summary = "Get SKUs by product ID",
-            description = "Retrieve SKUs associated with a specific product.",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "List of SKUs retrieved successfully",
-                            content = @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = List.class))
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Product not found or no SKUs available"
-                    )
-            }
-    )
     @GetMapping("/{id}/skus")
     @LoggingInterceptor
-    public ResponseEntity<?> getSkusById(
-            @Parameter(description = "ID of the product to retrieve SKUs for", required = true)
+    public ResponseEntity<?> getSpuSkuMapping(
             @PathVariable UUID id
     ) throws ModuleException {
-        List<ProductSkuDto> skuDetailResponses = this.productService.getSkusById(id);
+        SpuSkuMappingResponse skuDetailResponses = this.productService.getSpuSkuMapping(id);
         return new ResponseEntity<>(skuDetailResponses, HttpStatus.OK);
     }
-
 
 }

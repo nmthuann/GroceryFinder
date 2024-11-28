@@ -1,14 +1,10 @@
 package com.nmt.groceryfinder.modules.products.domain.model.dtos;
 
 import com.nmt.groceryfinder.common.bases.AbstractBaseDto;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.List;
 
 
 @Getter

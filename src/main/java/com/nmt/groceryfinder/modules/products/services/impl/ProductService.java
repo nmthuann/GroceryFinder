@@ -9,12 +9,14 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateP
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductCardResponse;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SpuSkuMappingResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 import com.nmt.groceryfinder.modules.products.repositories.IProductRepository;
 import com.nmt.groceryfinder.modules.products.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -149,28 +151,6 @@ public class ProductService
         return productSkuDtoList;
     }
 
-//    @Override
-//    public List<GetSkuDetailResponse> getSkuDetailsById(UUID id) throws ModuleException {
-//        List<ProductSkuDto> productSkuDtoList = this.getProductSkusById(id);
-//        List<GetSkuDetailResponse> skuDetailResponses = new ArrayList<>();
-//        for(ProductSkuDto productSkuDto: productSkuDtoList){
-//            InventoryDto findInventoryDto =
-//                    this.productSkuService.getInventoryBySkuId(productSkuDto.getId())
-//                            .orElseThrow(() ->
-//                                    new ModuleException("Inventory not found for SKU: " + productSkuDto.getId())
-//                            );
-//            List<PriceDto> findTop2Prices =
-//                    this.productSkuService.getTop2PricesByProductSkuId(productSkuDto.getId());
-//            GetSkuDetailResponse skuDetailResponse = new GetSkuDetailResponse(
-//                    productSkuDto,
-//                    findTop2Prices,
-//                    findInventoryDto
-//            );
-//            skuDetailResponses.add(skuDetailResponse);
-//        }
-//        return skuDetailResponses;
-//    }
-
     @Override
     public List<ProductDto> getAllByCategoryId(Integer categoryId) {
         List<ProductEntity> productEntities = this.productRepository.findAllByCategoryId(categoryId);
@@ -181,7 +161,7 @@ public class ProductService
     }
 
     @Override
-    public List<ProductCardResponse> getProductCardsByCategoryId (
+    public Page<ProductCardResponse> getProductCardsByCategoryId (
             Integer categoryId,
             Pageable pageable
     ) throws ModuleException {
@@ -197,7 +177,8 @@ public class ProductService
                 cardResponseList.add(cardResponse);
             }
         }
-        return cardResponseList;
+
+        return new PageImpl<>(cardResponseList, pageable, findProductsByPage.getTotalElements());
     }
 
 
@@ -216,5 +197,30 @@ public class ProductService
                     .map(this.productMapper::toDto);
         }
         return Page.empty();
+    }
+
+    @Override
+    public List<ProductCardResponse> getProductCardsBySpuId(UUID spuId) throws ModuleException {
+        ProductEntity findEntity = this.findProductOrThrow(spuId);
+        List<SpuSkuMappingDto> findSpuSkus = this.spuSkuMappingService.getSkusBySpuId(findEntity.getId());
+        List<ProductCardResponse> cardResponseList = new ArrayList<>();
+        for(SpuSkuMappingDto findSpuSku: findSpuSkus) {
+            ProductCardResponse cardResponse = this.productSkuService.getProductCardBySkuId(
+                    findSpuSku.getProduct().getId(),
+                    findSpuSku.getProductSku().getId()
+            );
+            cardResponseList.add(cardResponse);
+        }
+        return cardResponseList;
+    }
+
+    @Override
+    public SpuSkuMappingResponse getSpuSkuMapping(UUID spuId) throws ModuleException {
+        ProductEntity findEntity = this.findProductOrThrow(spuId);
+        List<ProductCardResponse> findSkus = this.getProductCardsBySpuId(spuId);
+        return new SpuSkuMappingResponse(
+                this.productMapper.toDto(findEntity),
+                findSkus
+        );
     }
 }
