@@ -4,6 +4,7 @@ import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.BrandDto;
 import com.nmt.groceryfinder.modules.products.services.IBrandService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
+import com.nmt.groceryfinder.shared.ratelimit.RateLimiter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class BrandController {
 
     @GetMapping("/{id}")
     @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<BrandDto> getOneById(@PathVariable Integer id) {
         Optional<BrandDto> brand = this.brandService.getOneById(id);
         return brand.map(brandDto -> new ResponseEntity<>(brandDto, HttpStatus.OK))
@@ -73,6 +75,7 @@ public class BrandController {
 
     @GetMapping("")
     @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<?> getAllPaginated(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,

@@ -2,6 +2,7 @@ package com.nmt.groceryfinder.exceptions.handler;
 
 import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.exceptions.RestErrorResponse;
+import com.nmt.groceryfinder.shared.ratelimit.RateLimitExceededException;
 import io.jsonwebtoken.JwtException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.ServletException;
@@ -307,6 +308,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 request.getRequestURI()
         );
         return new ResponseEntity<>(re, statusCode);
+    }
+
+    @ExceptionHandler(RateLimitExceededException.class)
+    public ResponseEntity<RestErrorResponse> handleRateLimitExceeded(RateLimitExceededException ex, WebRequest request) {
+        RestErrorResponse response = new RestErrorResponse(
+                HttpStatus.TOO_MANY_REQUESTS.value(),  // Mã lỗi 429
+                HttpStatus.TOO_MANY_REQUESTS.getReasonPhrase(),
+                "Rate limit exceeded",
+                ex.getMessage(),
+                "Rate limit exceeded. Please try again later.",
+                LocalDateTime.now(),
+                request.getContextPath()
+        );
+        return new ResponseEntity<>(response, HttpStatus.TOO_MANY_REQUESTS);  // Trả về status 429
     }
 }
 

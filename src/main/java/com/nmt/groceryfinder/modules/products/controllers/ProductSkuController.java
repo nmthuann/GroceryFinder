@@ -10,6 +10,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.Produc
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SearchProductResponse;
 import com.nmt.groceryfinder.modules.products.services.IProductSkuService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
+import com.nmt.groceryfinder.shared.ratelimit.RateLimiter;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,7 @@ public class ProductSkuController {
 
     @GetMapping("/{id}")
     @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<?> getOneById(
             @PathVariable Integer id
     ) {
@@ -74,6 +76,7 @@ public class ProductSkuController {
 
     @GetMapping("")
     @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<?> getSkus(
             @RequestParam String barcode
     ) {
@@ -101,6 +104,7 @@ public class ProductSkuController {
 
     @GetMapping("/{id}/prices")
     @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<?> getPricesBySkuId(
             @PathVariable Integer id,
             @RequestParam(required = false, defaultValue = "false") Boolean isTop2
@@ -115,6 +119,7 @@ public class ProductSkuController {
 
     @GetMapping("/search")
     @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<?> searchProducts(@RequestParam String key){
         List<SearchProductResponse> productNames = this.productSkuService.searchSkusByName(key);
         return ResponseEntity.ok(productNames);

@@ -14,6 +14,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.Produc
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SpuSkuMappingResponse;
 import com.nmt.groceryfinder.modules.products.services.IProductService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
+import com.nmt.groceryfinder.shared.ratelimit.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -50,6 +51,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<?> getOneById (
             @PathVariable UUID id
     ) throws ModuleException {
@@ -111,6 +113,7 @@ public class ProductController {
     )
     @GetMapping("")
     @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<?> getAllPaginated(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -156,6 +159,7 @@ public class ProductController {
     )
     @PostMapping("/{id}/skus")
     @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<?> createSkuById(
             @Parameter(description = "List of SKUs to add", required = true)
             @RequestBody CreateProductSkuDto data,
@@ -180,6 +184,7 @@ public class ProductController {
 
     @GetMapping("/{id}/skus")
     @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<?> getSpuSkuMapping(
             @PathVariable UUID id
     ) throws ModuleException {

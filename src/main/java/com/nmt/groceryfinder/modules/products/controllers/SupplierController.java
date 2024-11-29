@@ -3,6 +3,7 @@ package com.nmt.groceryfinder.modules.products.controllers;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.SupplierDto;
 import com.nmt.groceryfinder.modules.products.services.ISupplierService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
+import com.nmt.groceryfinder.shared.ratelimit.RateLimiter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,7 @@ public class SupplierController {
 
     @GetMapping("/{id}")
     @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<?> getOneById(@PathVariable Integer id) {
         Optional<SupplierDto> supplier = this.supplierService.getOneById(id);
         return supplier.map(supplierDto -> new ResponseEntity<>(supplierDto, HttpStatus.OK))
@@ -47,6 +49,7 @@ public class SupplierController {
 
     @GetMapping("")
     @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<?> getAll()  {
         Iterable<SupplierDto> suppliers = this.supplierService.getAll();
         return new ResponseEntity<>(suppliers, HttpStatus.OK);

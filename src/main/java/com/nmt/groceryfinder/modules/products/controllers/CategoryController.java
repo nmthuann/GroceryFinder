@@ -6,6 +6,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateC
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateCategoryDto;
 import com.nmt.groceryfinder.modules.products.services.ICategoryService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
+import com.nmt.groceryfinder.shared.ratelimit.RateLimiter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,6 +40,8 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
+    @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<?> getOneById(@PathVariable Integer id) {
         Optional<CategoryDto> category = this.categoryService.getOneById(id);
         return category.map(categoryDto -> new ResponseEntity<>(categoryDto, HttpStatus.OK))
@@ -68,6 +71,7 @@ public class CategoryController {
 
     @GetMapping("")
     @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<?> getCategories(
             @RequestParam(required = false) String parentId,
             @RequestParam(defaultValue = "0") int page,
@@ -119,6 +123,7 @@ public class CategoryController {
 
     @GetMapping("/search")
     @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<?> searchProducts(@RequestParam String key){
         List<CategoryDto> categories = this.categoryService.searchCategoriesByKey(key);
         return ResponseEntity.ok(categories);
