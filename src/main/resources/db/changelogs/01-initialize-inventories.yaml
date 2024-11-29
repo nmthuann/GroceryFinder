@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 7
+      author: nmthuann
+      changes:
+        - loadData:
+            file: classpath:db/inits/inventories.csv
+            tableName: inventories
+            columns:
+              - column:
+                  name: id
+                  type: integer
+              - column:
+                  name: check_at
+                  type: date
+              - column:
+                  name: created_at
+                  type: timestamp
+              - column:
+                  name: defective
+                  type: integer
+              - column:
+                  name: import_price
+                  type: double
+              - column:
+                  name: sold
+                  type: integer
+              - column:
+                  name: stock
+                  type: integer
+              - column:
+                  name: unit
+                  type: string
+              - column:
+                  name: updated_at
+                  type: timestamp
+              - column:
+                  name: sku_id
+                  type: integer
+              - column:
+                  name: supplier_id
+                  type: integer
+

@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: nmthuann
+      changes:
+        - loadData:
+            file: classpath:db/inits/spu_sku_mapping.csv
+            tableName: spu_sku_mapping
+            columns:
+              - column:
+                  name: id
+                  type: integer
+              - column:
+                  name: spu_id
+                  type: uuid
+              - column:
+                  name: sku_id
+                  type: integer

@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: nmthuann
+      changes:
+        - loadData:
+            file: classpath:db/inits/product_skus.csv
+            tableName: product_skus
+            columns:
+              - column:
+                  name: id
+                  type: integer
+              - column:
+                  name: barcode
+                  type: string
+              - column:
+                  name: created_at
+                  type: timestamp
+              - column:
+                  name: image
+                  type: string
+              - column:
+                  name: sku_attributes
+                  type: jsonb
+              - column:
+                  name: sku_name
+                  type: string
+              - column:
+                  name: slug
+                  type: string
+              - column:
+                  name: status
+                  type: boolean
+              - column:
+                  name: updated_at
+                  type: timestamp
+
+
+
+

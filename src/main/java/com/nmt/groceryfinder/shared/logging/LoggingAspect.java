@@ -35,7 +35,7 @@ public class LoggingAspect {
         long startTime = System.currentTimeMillis();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String author = "PUBLIC"; // Default value
+        String author = "PUBLIC";
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             author = ((UserDetails) authentication.getPrincipal()).getUsername();
         }

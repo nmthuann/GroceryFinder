@@ -1,22 +1,28 @@
-brand_business,description,name
-GROCERY,Sản phẩm mì ăn liền nổi tiếng tại Việt Nam,Hảo Hảo
-GROCERY,Mì ăn liền đa dạng hương vị,3 Miền
-GROCERY,Mì ăn liền cho mọi gia đình,OMachi
-GROCERY,Thương hiệu bánh kẹo nổi tiếng tại Việt Nam,Kinh Đô
-GROCERY,Sản phẩm dầu ăn nổi tiếng tại Việt Nam,Cái Lân
-GROCERY,Sản phẩm dầu ăn nổi tiếng tại Việt Nam,Trường An
-GROCERY,Sản phẩm dầu ăn nổi tiếng tại Việt Nam,Simply
-GROCERY,Sản phẩm sữa nổi tiếng tại Việt Nam,TH True Milk
-GROCERY,Sản phẩm sữa nổi tiếng tại Việt Nam,Vinamilk
-GROCERY,Sản phẩm sữa nổi tiếng,Milo
-GROCERY,Sản phẩm đồ uống đóng chai,Pepsi
-GROCERY,Sản phẩm đồ uống đóng chai,Coca Cola
-GROCERY,Sản phẩm đồ uống đóng chai,Tân Hiệp Phát
-GROCERY,Sản phẩm đồ uống đóng chai,Aquafina
-GROCERY,Sản phẩm bia nổi tiếng,Saigon
-GROCERY,Sản phẩm bia nổi tiếng,Tiger
-GROCERY,Sản phẩm bia nổi tiếng,Heineken
-GROCERY,Sản phẩm bia nổi tiếng,Bia Việt
-GROCERY,Sản phẩm bia nổi tiếng,Huda
-
-
+"id","brand_business","description","name"
+1,"GROCERY","Sản phẩm mì ăn liền nổi tiếng tại Việt Nam","Hảo Hảo"
+2,"GROCERY","Mì ăn liền đa dạng hương vị","3 Miền"
+3,"GROCERY","Mì ăn liền cho mọi gia đình","OMachi"
+4,"GROCERY","Thương hiệu bánh kẹo nổi tiếng tại Việt Nam","Kinh Đô"
+5,"GROCERY","Sản phẩm dầu ăn nổi tiếng tại Việt Nam","Cái Lân"
+6,"GROCERY","Sản phẩm dầu ăn nổi tiếng tại Việt Nam","Trường An"
+7,"GROCERY","Sản phẩm dầu ăn nổi tiếng tại Việt Nam","Simply"
+8,"GROCERY","Sản phẩm sữa nổi tiếng tại Việt Nam","TH True Milk"
+9,"GROCERY","Sản phẩm sữa nổi tiếng tại Việt Nam","Vinamilk"
+10,"GROCERY","Sản phẩm sữa nổi tiếng","Milo"
+11,"GROCERY","Sản phẩm đồ uống nổi tiếng trên thế giới.","Pepsi"
+12,"GROCERY","Sản phẩm đồ uống nổi tiếng trên thế giới.","Coca Cola"
+13,"GROCERY","Sản phẩm đồ uống đóng chai","Tân Hiệp Phát"
+14,"GROCERY","Sản phẩm đồ uống đóng chai","Aquafina"
+15,"GROCERY","Sản phẩm bia nổi tiếng","Saigon (Thái Lan)"
+16,"GROCERY","Sản phẩm bia nổi tiếng","Tiger (Singapore)"
+17,"GROCERY","Sản phẩm bia nổi tiếng","Heineken"
+18,"GROCERY","Sản phẩm bia nổi tiếng","Bia Việt"
+20,"GROCERY","Sản phẩm nước mắm nổi tiếng tại Việt Nam","Barona"
+21,"GROCERY","Sản phẩm nước mắm nổi tiếng tại Việt Nam","Nam Ngư"
+22,"GROCERY","Sản phẩm snack khoai tây toàn thế giới.","Lay's (Mỹ)"
+23,"GROCERY","Sản phẩm snack khoai tây toàn thế giới.","Swing (Hàn Quốc)"
+24,"GROCERY","Sản phẩm snack khoai tây toàn thế giới.","O'Star (Hàn Quốc)"
+25,"GROCERY","Sản phẩm kẹo dẻo thơm ngon.","Cokoc (Trung Quốc)"
+26,"GROCERY","Sản phẩm đồ uống nổi tiếng trên thế giới.","7 Up (Mỹ)"
+27,"GROCERY","Sản phẩm đóng chai bán chạy.","Tea Plus"
+28,"GROCERY","Sản phẩm đóng chai bán chạy.","C2"

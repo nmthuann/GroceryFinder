@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: 8
+      author: nmthuann
+      changes:
+        - loadData:
+            file: classpath:db/inits/prices.csv
+            tableName: prices
+            columns:
+              - column:
+                  name: begin_at
+                  type: timestamp
+              - column:
+                  name: created_at
+                  type: timestamp
+              - column:
+                  name: unit_price
+                  type: double
+              - column:
+                  name: product_sku_id
+                  type: integer
+
