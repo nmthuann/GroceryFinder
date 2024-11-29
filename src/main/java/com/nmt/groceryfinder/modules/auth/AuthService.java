@@ -13,7 +13,6 @@ import com.nmt.groceryfinder.modules.auth.dtos.responses.AuthenticationResponseD
 import com.nmt.groceryfinder.modules.auth.dtos.responses.LoginResponseDto;
 import com.nmt.groceryfinder.modules.auth.dtos.responses.RegisterAdminResponseDto;
 import com.nmt.groceryfinder.modules.auth.dtos.responses.RegisterResponseDto;
-import com.nmt.groceryfinder.modules.users.user.UserMapper;
 import com.nmt.groceryfinder.modules.users.user.dtos.AccountDto;
 import com.nmt.groceryfinder.modules.users.user.dtos.UserDto;
 import com.nmt.groceryfinder.modules.users.user.IUserService;
@@ -42,14 +41,12 @@ public class AuthService implements IAuthService {
     private final PasswordUtil passwordUtil;
     private final MailServiceUtil mailServiceUtil;
     private final IUserService userService;
-    private final UserMapper userMapper;
     private final RedisService redisService;
 
 
     @Autowired
     public AuthService(
             IUserService userService,
-            UserMapper userMapper,
             PassportContext passportContext,
             JwtServiceUtil jwtServiceUtil,
             PasswordUtil passwordUtil,
@@ -57,7 +54,6 @@ public class AuthService implements IAuthService {
             RedisService redisService
             ) {
         this.passportContext = passportContext;
-        this.userMapper = userMapper;
         this.jwtServiceUtil = jwtServiceUtil;
         this.passwordUtil = passwordUtil;
         this.mailServiceUtil = mailServiceUtil;

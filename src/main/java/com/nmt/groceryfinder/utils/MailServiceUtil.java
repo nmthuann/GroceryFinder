@@ -82,4 +82,17 @@ public class MailServiceUtil {
         return "Default Password " + ": " + defaultPassword;
     }
 
+    public String generateCleanEmailContent(String email, Integer logFileNumber) {
+        return "Chào bạn " + email + ",<br><br>" +
+                "Chúng tôi đã dọn dẹp tổng cộng "+ logFileNumber + " file log." +
+                "<br>" +
+                "Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi qua email " +
+                "<a href=\"mailto:nmt.m10.2862001@gmail.com\">nmt.m10.2862001@gmail.com</a>." +
+                "<br><br>" +
+                "Cảm ơn bạn đã chọn <strong>Tiệm tạp hóa Tân Hiệp</strong>." +
+                "<br><br>" +
+                "Trân trọng," +
+                "<p><strong>Tiệm tạp hóa Tân Hiệp</strong></p>";
+    }
+
 }

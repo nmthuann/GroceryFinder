@@ -45,13 +45,15 @@ public class LoggingAspect {
                 (HttpServletRequest) requestAttributes.resolveReference(RequestAttributes.REFERENCE_REQUEST) : null;
         String requestURI = request != null ? request.getRequestURI() : "unknown";
         String methodType = request != null ? request.getMethod() : "unknown";
+        String clientIp = request != null ? request.getRemoteAddr() : "unknown";
 
         Object result = joinPoint.proceed();
 
         long endTime = System.currentTimeMillis();
         long executeTime = endTime - startTime;
 
-        log.info("{} {} {} in {}ms", author, methodType, requestURI, executeTime);
+        log.info("Author: {}, Method: {}, URI: {}, IP: {}, Execution time: {}ms",
+                author, methodType, requestURI, clientIp, executeTime);
         return result;
     }
 
