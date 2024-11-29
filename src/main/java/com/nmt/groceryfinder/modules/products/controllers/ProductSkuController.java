@@ -6,6 +6,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateInventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreatePriceDto;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductSkuResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SearchProductResponse;
 import com.nmt.groceryfinder.modules.products.services.IProductSkuService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
@@ -64,11 +65,23 @@ public class ProductSkuController {
     public ResponseEntity<?> getOneById(
             @PathVariable Integer id
     ) {
-        Optional<ProductSkuDto> productSkuDto = this.productSkuService.getOneById(id);
-        if (productSkuDto.isPresent()) {
-            return new ResponseEntity<>(productSkuDto.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Product SKU not found", HttpStatus.NOT_FOUND);
+        return this.productSkuService.getOneById(id)
+                .<ResponseEntity<?>>map(
+                        productSkuDto -> new ResponseEntity<>(productSkuDto, HttpStatus.OK)
+                )
+                .orElseGet(() -> new ResponseEntity<>("Product SKU not found", HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("")
+    @LoggingInterceptor
+    public ResponseEntity<?> getSkus(
+            @RequestParam String barcode
+    ) {
+        try {
+            ProductSkuResponse productSkuResponse = this.productSkuService.getOneByBarcode(barcode);
+            return new ResponseEntity<>(productSkuResponse, HttpStatus.OK);
+        } catch (ModuleException e) {
+            return new ResponseEntity<>("Product SKU not found: " + e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -77,7 +90,6 @@ public class ProductSkuController {
     public ResponseEntity<?> updateById(
             @PathVariable Integer id,
             @RequestBody ProductSkuDto data
-
     ) {
         Optional<ProductSkuDto> productSkuDto = Optional.ofNullable(this.productSkuService.updateOneById(id, data));
         if (productSkuDto.isPresent()) {

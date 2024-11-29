@@ -15,6 +15,7 @@ import java.util.Optional;
 @Repository
 public interface IProductSkuRepository extends JpaRepository<ProductSkuEntity, Integer> {
     Optional<ProductEntity> findBySlug(@Param("slug") String slug);
+    Optional<ProductSkuEntity> findByBarcode(@Param("barcode") String barcode);
     @Query("" +
             "SELECT sku " +
             "FROM ProductSkuEntity sku " +

@@ -11,6 +11,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateI
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreatePriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductCardResponse;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductSkuResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SearchProductResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 import com.nmt.groceryfinder.modules.products.repositories.IProductSkuRepository;
@@ -20,6 +21,8 @@ import com.nmt.groceryfinder.modules.products.services.IProductSkuService;
 import com.nmt.groceryfinder.utils.UrlUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,7 +41,6 @@ public class ProductSkuService
     private final ProductSkuMapper productSkuMapper;
     private final IPriceService priceService;
     private final IInventoryService inventoryService;
-    private final InventoryMapper inventoryMapper;
 
 
     @Autowired
@@ -46,16 +48,13 @@ public class ProductSkuService
             IProductSkuRepository productSkuRepository,
             ProductSkuMapper productSkuMapper,
             IPriceService priceService,
-            IInventoryService inventoryService,
-            InventoryMapper inventoryMapper
-
+            IInventoryService inventoryService
     ) {
         super(productSkuRepository, productSkuMapper);
         this.productSkuRepository = productSkuRepository;
         this.productSkuMapper = productSkuMapper;
         this.priceService = priceService;
         this.inventoryService = inventoryService;
-        this.inventoryMapper = inventoryMapper;
     }
 
     private ProductSkuEntity findProductSkuOrThrow(Integer id) throws ModuleException {
@@ -69,6 +68,8 @@ public class ProductSkuService
     }
 
     @Override
+//    @Cacheable(value = "productSkuCache", key = "#barcode")
+//    @CacheEvict(cacheNames = "product", key = "#id", beforeInvocation = true)
     public Optional<PriceDto> createPriceById(Integer id, CreatePriceDto data) throws ModuleException {
         ProductSkuEntity productSkuCreated = this.findProductSkuOrThrow(id);
         return priceService.createOne(productSkuCreated, data);
@@ -136,6 +137,36 @@ public class ProductSkuService
                 ))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public ProductSkuResponse getOneByBarcode(String barcode) throws ModuleException {
+        ProductSkuEntity skuEntity = this.productSkuRepository.findByBarcode(barcode)
+                .orElseThrow(() -> new ModuleException("Product SKU not found for barcode: " + barcode));
+
+        InventoryDto inventoryDto = this.findInventoryOrThrow(skuEntity.getId());
+        List<PriceDto> priceDtoList = this.getTop2PricesByProductSkuId(skuEntity.getId());
+        Double latestPrice = priceDtoList.get(0).getUnitPrice();
+        Double oldPrice = latestPrice;
+
+        if(priceDtoList.size() == 2){
+            latestPrice = priceDtoList.get(0).getUnitPrice();
+            oldPrice = priceDtoList.get(1).getUnitPrice();
+        }
+        return new ProductSkuResponse(
+                skuEntity.getId(),
+                skuEntity.getSlug(),
+                skuEntity.getBarcode(),
+                skuEntity.getSkuName(),
+                skuEntity.getImage(),
+                skuEntity.getStatus(),
+                skuEntity.getSkuAttributes(),
+                inventoryDto.getStock(),
+                latestPrice,
+                oldPrice
+        );
+    }
+
+
 
     @Transactional
     @Override
