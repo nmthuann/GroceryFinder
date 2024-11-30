@@ -188,7 +188,7 @@ public class ProductController {
     public ResponseEntity<?> getSpuSkuMapping(
             @PathVariable UUID id
     ) throws ModuleException {
-        SpuSkuMappingResponse skuDetailResponses = this.productService.getSpuSkuMapping(id);
+        List<ProductCardResponse> skuDetailResponses = this.productService.getProductCardsBySpuId(id);
         return new ResponseEntity<>(skuDetailResponses, HttpStatus.OK);
     }
 
