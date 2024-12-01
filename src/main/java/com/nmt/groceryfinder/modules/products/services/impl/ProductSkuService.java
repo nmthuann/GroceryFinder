@@ -2,7 +2,6 @@ package com.nmt.groceryfinder.modules.products.services.impl;
 
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
 import com.nmt.groceryfinder.exceptions.ModuleException;
-import com.nmt.groceryfinder.modules.products.domain.mappers.InventoryMapper;
 import com.nmt.groceryfinder.modules.products.domain.mappers.ProductSkuMapper;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.InventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
@@ -21,8 +20,6 @@ import com.nmt.groceryfinder.modules.products.services.IProductSkuService;
 import com.nmt.groceryfinder.utils.UrlUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -67,6 +64,44 @@ public class ProductSkuService
                 .orElseThrow(() -> new ModuleException("Product SKU not found with id: " + skuId));
     }
 
+    private ProductSkuEntity findProductSkuByBarcode(String barcode) throws ModuleException {
+        return this.productSkuRepository.findByBarcode(barcode)
+                .orElseThrow(() -> new ModuleException("Product SKU not found for barcode: " + barcode));
+    }
+
+
+    private ProductSkuEntity findProductSkuBySlug(String slug) throws ModuleException {
+        return this.productSkuRepository.findBySlug(slug)
+                .orElseThrow(() -> new ModuleException("Product SKU not found for slug: " + slug));
+    }
+
+    private ProductSkuResponse getProductSkuResponse(ProductSkuEntity skuEntity) throws ModuleException {
+        InventoryDto inventoryDto = this.findInventoryOrThrow(skuEntity.getId());
+        List<PriceDto> priceDtoList = this.getTop2PricesByProductSkuId(skuEntity.getId());
+
+        Double latestPrice = priceDtoList.get(0).getUnitPrice();
+        Double oldPrice = latestPrice;
+
+        if (priceDtoList.size() == 2) {
+            latestPrice = priceDtoList.get(0).getUnitPrice();
+            oldPrice = priceDtoList.get(1).getUnitPrice();
+        }
+
+        return new ProductSkuResponse(
+                skuEntity.getId(),
+                skuEntity.getSlug(),
+                skuEntity.getBarcode(),
+                skuEntity.getSkuName(),
+                skuEntity.getImage(),
+                skuEntity.getStatus(),
+                skuEntity.getSkuAttributes(),
+                inventoryDto.getStock(),
+                latestPrice,
+                oldPrice,
+                inventoryDto.getUnit()
+        );
+    }
+
     @Override
 //    @Cacheable(value = "productSkuCache", key = "#barcode")
 //    @CacheEvict(cacheNames = "product", key = "#id", beforeInvocation = true)
@@ -105,21 +140,21 @@ public class ProductSkuService
             oldPrice = prices.get(1).getUnitPrice();
         }
 
-        Integer stock = this.inventoryService.getOneBySkuId(skuId)
-                .map(InventoryDto::getStock) // Inventory là class giả định đại diện cho kết quả trả về
-                .orElse(0);
+        InventoryDto inventoryDto = this.findInventoryOrThrow(skuId);
 
         return new ProductCardResponse (
                 productSkuCreated.getId(),
                 spuId,
                 productSkuCreated.getSlug(),
                 productSkuCreated.getSkuName(),
+                productSkuCreated.getSkuAttributes(),
                 productSkuCreated.getImage(),
                 productSkuCreated.getStatus(),
                 this.inventoryService.calculateTotalSoldBySkuId(skuId),
-                stock,
+                inventoryDto.getStock(),
                 latestPrice,
-                oldPrice
+                oldPrice,
+                inventoryDto.getUnit()
         );
     }
 
@@ -140,30 +175,14 @@ public class ProductSkuService
 
     @Override
     public ProductSkuResponse getOneByBarcode(String barcode) throws ModuleException {
-        ProductSkuEntity skuEntity = this.productSkuRepository.findByBarcode(barcode)
-                .orElseThrow(() -> new ModuleException("Product SKU not found for barcode: " + barcode));
+        ProductSkuEntity skuEntity = findProductSkuByBarcode(barcode);
+        return getProductSkuResponse(skuEntity);
+    }
 
-        InventoryDto inventoryDto = this.findInventoryOrThrow(skuEntity.getId());
-        List<PriceDto> priceDtoList = this.getTop2PricesByProductSkuId(skuEntity.getId());
-        Double latestPrice = priceDtoList.get(0).getUnitPrice();
-        Double oldPrice = latestPrice;
-
-        if(priceDtoList.size() == 2){
-            latestPrice = priceDtoList.get(0).getUnitPrice();
-            oldPrice = priceDtoList.get(1).getUnitPrice();
-        }
-        return new ProductSkuResponse(
-                skuEntity.getId(),
-                skuEntity.getSlug(),
-                skuEntity.getBarcode(),
-                skuEntity.getSkuName(),
-                skuEntity.getImage(),
-                skuEntity.getStatus(),
-                skuEntity.getSkuAttributes(),
-                inventoryDto.getStock(),
-                latestPrice,
-                oldPrice
-        );
+    @Override
+    public ProductSkuResponse getOneBySlug(String slug) throws ModuleException {
+        ProductSkuEntity skuEntity = findProductSkuBySlug(slug);
+        return getProductSkuResponse(skuEntity);
     }
 
 

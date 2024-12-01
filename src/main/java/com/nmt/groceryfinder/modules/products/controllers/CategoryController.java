@@ -78,7 +78,8 @@ public class CategoryController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "true") Boolean isPagination,
             @RequestParam(required = false,  defaultValue = "false") Boolean isChild,
-            @RequestParam(required = false,  defaultValue = "true") Boolean isGrocery
+            @RequestParam(required = false,  defaultValue = "true") Boolean isGrocery,
+            @RequestParam(required = false) String categoryUrl
     ) throws ModuleException{
         try {
             if (!isPagination) {
@@ -90,6 +91,10 @@ public class CategoryController {
                     List<CategoryDto> childCategoriesByParent =
                             this.categoryService.getChildCategoriesByParentId(parentId);
                     return new ResponseEntity<>(childCategoriesByParent, HttpStatus.OK);
+                }
+                if (categoryUrl != null && !categoryUrl.isEmpty()) {
+                    CategoryDto categoryDto = this.categoryService.getOneByCategoryUrl(categoryUrl);
+                    return new ResponseEntity<>(categoryDto, HttpStatus.OK);
                 }
                 if (isGrocery) {
                     List<CategoryDto> childCategoriesByParent =

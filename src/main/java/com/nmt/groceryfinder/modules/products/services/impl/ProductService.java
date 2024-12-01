@@ -9,6 +9,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateP
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductCardResponse;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductSkuResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SpuSkuMappingResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
@@ -66,25 +67,35 @@ public class ProductService
         this.productSkuMapper = productSkuMapper;
     }
 
-    private CategoryDto findCategoryById(Integer categoryId) throws ModuleException {
+    private CategoryDto findCategoryByIdOrElseThrow(Integer categoryId) throws ModuleException {
         return this.categoryService.getOneById(categoryId)
                 .orElseThrow(() -> new ModuleException(
                         ProductsModuleExceptionMessages.GET_CATEGORY_NOT_FOUND.getMessage()));
     }
 
-    private BrandDto findBrandById(Integer brandId) throws ModuleException {
+    private BrandDto findBrandByIdOrElseThrow(Integer brandId) throws ModuleException {
         return this.brandService.getOneById(brandId)
                 .orElseThrow(() -> new ModuleException(
                         ProductsModuleExceptionMessages.GET_BRAND_NOT_FOUND.getMessage()));
     }
 
+    private ProductSkuDto findSkuByIdOrElseThrow(Integer skuId) throws ModuleException {
+        return this.productSkuService.getOneById(skuId)
+                .orElseThrow(() -> new ModuleException("Product SKU not found for SKU ID: " + skuId));
+    }
 
-    private ProductEntity findProductOrThrow(UUID id) throws ModuleException {
+    private SpuSkuMappingDto findSpuBySkuIdOrElseThrow(Integer skuId) throws ModuleException {
+        return this.spuSkuMappingService.getSpuBySkuId(skuId)
+                .orElseThrow(() -> new ModuleException("Product SKU not found for SKU ID: " + skuId));
+    }
+
+    private ProductEntity findOneByIdOrElseThrow(UUID id) throws ModuleException {
         return this.productRepository.findById(id)
                 .orElseThrow(() -> new ModuleException(
                         ProductsModuleExceptionMessages.GET_PRODUCT_NOT_FOUND.getMessage())
                 );
     }
+
 
     private ProductEntity createProductEntity(
             CreateProductDto data,
@@ -102,8 +113,8 @@ public class ProductService
     @Override
     @Transactional
     public Optional<ProductDto> createOne(CreateProductDto data) throws ModuleException {
-        CategoryDto findCategory = findCategoryById(data.categoryId());
-        BrandDto findBrand = findBrandById(data.brandId());
+        CategoryDto findCategory = findCategoryByIdOrElseThrow(data.categoryId());
+        BrandDto findBrand = findBrandByIdOrElseThrow(data.brandId());
         ProductEntity newProduct = this.createProductEntity(data, findBrand, findCategory);
         ProductEntity productCreated = this.productRepository.save(newProduct);
         return Optional.ofNullable(this.productMapper.mapForeignKeyToDto(
@@ -128,7 +139,7 @@ public class ProductService
             UUID id,
             CreateProductSkuDto data
     ) throws ModuleException {
-        ProductEntity productCreated = this.findProductOrThrow(id);
+        ProductEntity productCreated = this.findOneByIdOrElseThrow(id);
         Optional<ProductSkuDto> productSkuCreated = this.productSkuService.createOne(data);
         if (productSkuCreated.isPresent()) {
             ProductSkuEntity productSkuEntity = this.productSkuMapper.toEntity(productSkuCreated.get());
@@ -139,7 +150,7 @@ public class ProductService
 
     @Override
     public List<ProductSkuDto> getSkusById(UUID id) throws ModuleException  {
-        ProductEntity productEntity = this.findProductOrThrow(id);
+        ProductEntity productEntity = this.findOneByIdOrElseThrow(id);
         List<SpuSkuMappingDto> spuSkuMappingDtoList =
                 this.spuSkuMappingService.getSkusBySpuId(productEntity.getId());
         List<ProductSkuDto> productSkuDtoList = new ArrayList<>();
@@ -201,7 +212,7 @@ public class ProductService
 
     @Override
     public List<ProductCardResponse> getProductCardsBySpuId(UUID spuId) throws ModuleException {
-        ProductEntity findEntity = this.findProductOrThrow(spuId);
+        ProductEntity findEntity = this.findOneByIdOrElseThrow(spuId);
         List<SpuSkuMappingDto> findSpuSkus = this.spuSkuMappingService.getSkusBySpuId(findEntity.getId());
         List<ProductCardResponse> cardResponseList = new ArrayList<>();
         for(SpuSkuMappingDto findSpuSku: findSpuSkus) {
@@ -215,9 +226,10 @@ public class ProductService
     }
 
     @Override
-    public SpuSkuMappingResponse getSpuSkuMapping(UUID spuId) throws ModuleException {
-        ProductEntity findEntity = this.findProductOrThrow(spuId);
-        List<ProductCardResponse> findSkus = this.getProductCardsBySpuId(spuId);
+    public SpuSkuMappingResponse getSpuSkuMappingBySkuId(Integer skuId)throws ModuleException {
+        SpuSkuMappingDto findSpu = this.findSpuBySkuIdOrElseThrow(skuId);
+        ProductEntity findEntity = this.findOneByIdOrElseThrow(findSpu.getProduct().getId());
+        List<ProductCardResponse> findSkus = this.getProductCardsBySpuId(findEntity.getId());
         return new SpuSkuMappingResponse(
                 this.productMapper.toDto(findEntity),
                 findSkus

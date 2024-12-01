@@ -120,6 +120,13 @@ public class CategoryService
     }
 
     @Override
+    public CategoryDto getOneByCategoryUrl(String categoryUrl) throws ModuleException {
+        CategoryEntity findCategoryEntity = this.categoryRepository.findByCategoryUrl(categoryUrl)
+                .orElseThrow(() -> new ModuleException(ProductsModuleExceptionMessages.CATEGORY_NOT_FOUND.getMessage()));
+        return this.categoryMapper.toDto(findCategoryEntity) ;
+    }
+
+    @Override
     public List<CategoryDto> searchCategoriesByKey(String key) {
         String decodedKey = UrlUtil.decodeUrl(key);
         List<CategoryDto> categories = this.getGroceryCategories();

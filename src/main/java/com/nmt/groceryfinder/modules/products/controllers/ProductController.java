@@ -119,6 +119,7 @@ public class ProductController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) Integer categoryId,
             @RequestParam(required = false) String option,
+            @RequestParam(required = false) Integer skuId,
             @RequestParam(required = false, defaultValue = "true") Boolean isPagination
     ) throws ModuleException {
         try{
@@ -133,6 +134,13 @@ public class ProductController {
                 return new ResponseEntity<>(products, HttpStatus.OK);
             }
             else {
+                if(skuId != null) {
+                    SpuSkuMappingResponse getSpuSkuMapping =
+                            this.productService.getSpuSkuMappingBySkuId(skuId);
+                    return new ResponseEntity<>(getSpuSkuMapping, HttpStatus.OK);
+
+                }
+
                 List<ProductDto> products = this.productService.getAllByCategoryId(categoryId);
                 return new ResponseEntity<>(products, HttpStatus.OK);
             }

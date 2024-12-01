@@ -12,11 +12,13 @@ public record ProductCardResponse(
         UUID spuId,
         String slug,
         String skuName,
+        String skuAttributes,
         String image,
         Boolean status,
         Integer sold,
         Integer currentStock,
         Double latestPrice,
-        Double oldPrice
+        Double oldPrice,
+        String unit
 ) {
 }

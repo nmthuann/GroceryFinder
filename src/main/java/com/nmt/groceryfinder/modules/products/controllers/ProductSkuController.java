@@ -78,10 +78,18 @@ public class ProductSkuController {
     @LoggingInterceptor
     @RateLimiter
     public ResponseEntity<?> getSkus(
-            @RequestParam String barcode
+            @RequestParam(required = false) String barcode,
+            @RequestParam(required = false) String slug
     ) {
         try {
-            ProductSkuResponse productSkuResponse = this.productSkuService.getOneByBarcode(barcode);
+            ProductSkuResponse productSkuResponse;
+            if (barcode != null && !barcode.isEmpty()) {
+                productSkuResponse = this.productSkuService.getOneByBarcode(barcode);
+            } else if (slug != null && !slug.isEmpty()) {
+                productSkuResponse = this.productSkuService.getOneBySlug(slug);
+            } else {
+                return new ResponseEntity<>("Either barcode or slug must be provided.", HttpStatus.BAD_REQUEST);
+            }
             return new ResponseEntity<>(productSkuResponse, HttpStatus.OK);
         } catch (ModuleException e) {
             return new ResponseEntity<>("Product SKU not found: " + e.getMessage(), HttpStatus.NOT_FOUND);

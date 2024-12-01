@@ -15,6 +15,7 @@ public record ProductSkuResponse(
     String skuAttributes,
     Integer stock,
     Double latestPrice,
-    Double oldPrice
+    Double oldPrice,
+    String unit
 ) {
 }

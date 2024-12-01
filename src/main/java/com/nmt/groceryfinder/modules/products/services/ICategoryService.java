@@ -61,6 +61,8 @@ public interface ICategoryService extends IBaseService<Integer, CategoryDto> {
      */
     Iterable<CategoryDto> getLeafCategories();
 
+    CategoryDto getOneByCategoryUrl(String categoryUrl) throws ModuleException;
+
 
     List<CategoryDto> searchCategoriesByKey(String key);
 

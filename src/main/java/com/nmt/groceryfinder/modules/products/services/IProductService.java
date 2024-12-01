@@ -26,7 +26,7 @@ public interface  IProductService extends IBaseService<UUID, ProductDto> {
     Page<ProductCardResponse> getProductCardsByCategoryId(Integer categoryId, Pageable pageable) throws ModuleException;
     Page<?> getAllPaginated(String option, Pageable pageable) throws ModuleException;
     List<ProductCardResponse> getProductCardsBySpuId (UUID spuId) throws ModuleException;
-    SpuSkuMappingResponse getSpuSkuMapping(UUID spuId) throws ModuleException;
+    SpuSkuMappingResponse getSpuSkuMappingBySkuId(Integer skuId) throws ModuleException;
 
 
 }

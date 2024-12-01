@@ -17,13 +17,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface IProductSkuService extends IBaseService<Integer, ProductSkuDto> {
-
     Optional<ProductSkuDto> createOne(CreateProductSkuDto data);
     Optional<PriceDto> createPriceById(Integer id, CreatePriceDto data)throws ModuleException;
     Optional<InventoryDto> createInventoryById(Integer id, CreateInventoryDto data)throws ModuleException;
     List<PriceDto> getPricesByProductSkuId(Integer id);
     List<PriceDto>  getTop2PricesByProductSkuId(Integer id) throws ModuleException;
-    ProductCardResponse getProductCardBySkuId(UUID spuId, Integer skuId) throws ModuleException;
     List<SearchProductResponse> searchSkusByName(String skuName);
+    ProductCardResponse getProductCardBySkuId(UUID spuId, Integer skuId) throws ModuleException;
     ProductSkuResponse  getOneByBarcode(String barcode) throws ModuleException;
+    ProductSkuResponse  getOneBySlug(String slug) throws ModuleException;
 }

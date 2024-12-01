@@ -1,6 +1,5 @@
 package com.nmt.groceryfinder.modules.products.repositories;
 
-import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface IProductSkuRepository extends JpaRepository<ProductSkuEntity, Integer> {
-    Optional<ProductEntity> findBySlug(@Param("slug") String slug);
+    Optional<ProductSkuEntity> findBySlug(@Param("slug") String slug);
     Optional<ProductSkuEntity> findByBarcode(@Param("barcode") String barcode);
     @Query("" +
             "SELECT sku " +
