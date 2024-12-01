@@ -159,18 +159,15 @@ public class ProductSkuService
     }
 
     @Override
-    public List<SearchProductResponse> searchSkusByName(String skuName) {
+    public List<ProductSkuDto> getSkusByName(String skuName) {
         Pageable pageable = PageRequest.of(0, 5);
         String decodedKey = UrlUtil.decodeUrl(skuName);
-        Page<ProductSkuEntity> productSkuDtoList =
+        Page<ProductSkuEntity> productSkuEntityPage =
                 this.productSkuRepository.findBySkuNameContainingIgnoreCase(decodedKey, pageable);
-        return productSkuDtoList.stream()
-                .map(sku -> new SearchProductResponse(
-                        sku.getId(),
-                        sku.getSkuName(),
-                        sku.getSlug()
-                ))
+        return productSkuEntityPage.getContent() .stream()
+                .map(productSkuMapper::toDto)
                 .collect(Collectors.toList());
+
     }
 
     @Override

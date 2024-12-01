@@ -10,6 +10,7 @@ import java.util.UUID;
 public record SearchProductResponse(
         Integer id,
         String skuName,
-        String slug
+        String slug,
+        String categoryUrl
 ) {
 }

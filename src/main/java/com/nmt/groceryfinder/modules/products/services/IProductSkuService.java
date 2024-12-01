@@ -22,8 +22,9 @@ public interface IProductSkuService extends IBaseService<Integer, ProductSkuDto>
     Optional<InventoryDto> createInventoryById(Integer id, CreateInventoryDto data)throws ModuleException;
     List<PriceDto> getPricesByProductSkuId(Integer id);
     List<PriceDto>  getTop2PricesByProductSkuId(Integer id) throws ModuleException;
-    List<SearchProductResponse> searchSkusByName(String skuName);
+
     ProductCardResponse getProductCardBySkuId(UUID spuId, Integer skuId) throws ModuleException;
     ProductSkuResponse  getOneByBarcode(String barcode) throws ModuleException;
     ProductSkuResponse  getOneBySlug(String slug) throws ModuleException;
+    List<ProductSkuDto> getSkusByName(String skuName);
 }

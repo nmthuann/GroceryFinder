@@ -124,12 +124,4 @@ public class ProductSkuController {
        List<PriceDto> prices = this.productSkuService.getPricesByProductSkuId(id);
        return new ResponseEntity<>(prices, HttpStatus.OK);
     }
-
-    @GetMapping("/search")
-    @LoggingInterceptor
-    @RateLimiter
-    public ResponseEntity<?> searchProducts(@RequestParam String key){
-        List<SearchProductResponse> productNames = this.productSkuService.searchSkusByName(key);
-        return ResponseEntity.ok(productNames);
-    }
 }

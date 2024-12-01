@@ -9,7 +9,7 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateP
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductCardResponse;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductSkuResponse;
+import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SearchProductResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SpuSkuMappingResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
@@ -21,10 +21,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -234,5 +232,21 @@ public class ProductService
                 this.productMapper.toDto(findEntity),
                 findSkus
         );
+    }
+
+    @Override
+    public List<SearchProductResponse> searchProductByKey(String key) {
+        List<ProductSkuDto> productSkuDtoList = this.productSkuService.getSkusByName(key);
+        return productSkuDtoList.stream()
+                .flatMap(skuDto -> this.spuSkuMappingService.getSpuBySkuId(skuDto.getId())
+                        .map(mappingDto -> new SearchProductResponse(
+                                skuDto.getId(),
+                                skuDto.getSkuName(),
+                                skuDto.getSlug(),
+                                mappingDto.getProduct().getCategory().getCategoryUrl()
+                        ))
+                        .stream() // Chuyển Optional thành Stream để xử lý chuỗi
+                )
+                .collect(Collectors.toList());
     }
 }
