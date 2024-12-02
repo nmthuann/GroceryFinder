@@ -10,7 +10,6 @@ import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEn
 import java.util.List;
 import java.util.Optional;
 
-
 public interface IPriceService extends IBaseService<PriceIdEntity, PriceDto> {
     /**
      * Creates a new price entry for a specified product SKU.

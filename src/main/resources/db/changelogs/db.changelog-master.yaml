@@ -1,5 +1,7 @@
 databaseChangeLog:
   - include:
+        file: db/changelogs/01-initialize-users.yaml
+  - include:
       file: db/changelogs/02-initialize-brands.yaml
   - include:
       file: db/changelogs/01-initialize-categories.yaml

@@ -1,7 +1,5 @@
 package com.nmt.groceryfinder.modules.products.domain.model.dtos.responses;
 
-import java.util.UUID;
-
 /**
  * @author LENOVO
  * @project GroceryFinder

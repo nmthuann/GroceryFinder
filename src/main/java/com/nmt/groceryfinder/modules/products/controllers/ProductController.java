@@ -5,7 +5,6 @@ import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.exceptions.RestErrorResponse;
 import com.nmt.groceryfinder.exceptions.messages.ProductsModuleExceptionMessages;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.SpuSkuMappingDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;

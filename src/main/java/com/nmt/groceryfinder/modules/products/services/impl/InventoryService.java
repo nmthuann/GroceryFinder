@@ -9,7 +9,6 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.InventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.SupplierDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateInventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.InventoryEntity;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.PriceEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.SupplierEntity;
 import com.nmt.groceryfinder.modules.products.repositories.IInventoryRepository;

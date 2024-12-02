@@ -1,9 +1,10 @@
 package com.nmt.groceryfinder.modules.users.user;
 
-
 import com.nmt.groceryfinder.modules.users.user.dtos.ProfileDto;
 import com.nmt.groceryfinder.modules.users.user.dtos.UserDto;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
+import com.nmt.groceryfinder.shared.ratelimit.RateLimiter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/users")
+@Tag(name = "Users")
 public class UserController {
     private final IUserService userService;
 
@@ -40,6 +42,7 @@ public class UserController {
 
     @GetMapping("/me")
     @LoggingInterceptor
+    @RateLimiter
     public ResponseEntity<ProfileDto> getOneByAccessToken(
             @AuthenticationPrincipal UserDetails userDetails
     ) {
@@ -52,6 +55,7 @@ public class UserController {
     @GetMapping("")
     @LoggingInterceptor
     @PreAuthorize("hasRole('ADMIN')")
+    @RateLimiter
     public ResponseEntity<?> getAllPaginated (
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size

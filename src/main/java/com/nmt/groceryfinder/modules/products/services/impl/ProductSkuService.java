@@ -11,7 +11,6 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateP
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductCardResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductSkuResponse;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SearchProductResponse;
 import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
 import com.nmt.groceryfinder.modules.products.repositories.IProductSkuRepository;
 import com.nmt.groceryfinder.modules.products.services.IInventoryService;
@@ -181,7 +180,6 @@ public class ProductSkuService
         ProductSkuEntity skuEntity = findProductSkuBySlug(slug);
         return getProductSkuResponse(skuEntity);
     }
-
 
 
     @Transactional

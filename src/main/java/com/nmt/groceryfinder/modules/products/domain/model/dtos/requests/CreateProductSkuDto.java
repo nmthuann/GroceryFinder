@@ -1,9 +1,6 @@
 package com.nmt.groceryfinder.modules.products.domain.model.dtos.requests;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
-
-import java.util.Date;
 
 /**
  * @author LENOVO

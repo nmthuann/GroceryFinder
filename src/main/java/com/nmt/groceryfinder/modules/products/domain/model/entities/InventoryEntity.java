@@ -1,12 +1,10 @@
 package com.nmt.groceryfinder.modules.products.domain.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author LENOVO

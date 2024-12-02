@@ -1,6 +1,5 @@
 package com.nmt.groceryfinder.configs;
 
-
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -27,7 +26,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
         ),
         servers = {
                 @Server(url = "http://localhost:3333", description = "Development server"),
-                @Server(url = "http://localhost:3333", description = "Production server")
+                @Server(url = "http://taphoatanhiep:3333", description = "Production server")
         }
 )
 @SecurityScheme(

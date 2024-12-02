@@ -7,7 +7,6 @@ import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateInventoryDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreatePriceDto;
 import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductSkuResponse;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SearchProductResponse;
 import com.nmt.groceryfinder.modules.products.services.IProductSkuService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
 import com.nmt.groceryfinder.shared.ratelimit.RateLimiter;
