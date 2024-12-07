@@ -58,7 +58,10 @@
 nhằm cung cấp một hệ thống tìm kiếm sản phẩm hiệu quả và nhanh chóng. 
 Hệ thống cho phép người dùng nhập từ khóa và tìm kiếm thông tin chi tiết của sản phẩm 
 như tên, giá, mô tả và danh mục trong cơ sở dữ liệu.
-
+- Home Page
+![Mô tả ảnh](https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/web/home.png)
+- Mobile Reponsive
+![Mô tả ảnh](https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/web/mobile.png) 
 ## [**2. Features**](#features)
 
 - **Tìm kiếm sản phẩm theo từ khóa**: Cho phép người dùng nhập từ khóa để tìm kiếm sản phẩm theo tên hoặc mô tả.
@@ -80,14 +83,14 @@ Nested Set Model là một kỹ thuật để lưu trữ dữ liệu dạng cây
   );
 ```
 ![Mô tả ảnh](https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/web/nested-set-model-categories-table.png)
+- Ví dụ áp dụng trên website
+![Mô tả ảnh](https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/web/category-example.png)
 ### [**3.2 API phân quyền với Spring Security**](#api-authen-author)
 Spring Security cung cấp các tính năng xác thực và phân quyền cho API. Bạn có thể phân quyền các endpoint theo vai trò.
 ![Mô tả ảnh](https://github.com/nmthuann/GroceryFinder/blob/master/docs/images/web/api-authen-author.png)
 ### [**3.5 Áp dựng Strategy Pattern cho tính năng Passport**](#spu-sku)
-![Mô tả ảnh](https://example.com/path/to/image.jpg)
 ### [**3.3 API VERSION**](#api-version)
 API Versioning giúp hỗ trợ nhiều phiên bản API mà không ảnh hưởng đến client cũ, có thể thực hiện qua URL, header, hoặc request parameter.
-![Mô tả ảnh](https://example.com/path/to/image.jpg)
 ### [**3.4 SPU & SKU**](#spu-sku)
 - SPU (Standard Product Unit): Sản phẩm chung dựa trên các thuộc tính giống nhau.
 - SKU (Stock Keeping Unit): Phiên bản cụ thể của SPU, khác nhau bởi các thuộc tính như màu sắc, kích thước.
@@ -180,22 +183,7 @@ API Versioning giúp hỗ trợ nhiều phiên bản API mà không ảnh hưở
    │  │           │  │  ├─ UserDetailServiceImp.java
    │  │           │  │  └─ dtos
    │  │           │  │     ├─ requests
-   │  │           │  │     │  ├─ CheckOtpRequestDto.java
-   │  │           │  │     │  ├─ CreateEmployeeDto.java
-   │  │           │  │     │  ├─ CreateUserDto.java
-   │  │           │  │     │  ├─ GetUserInformationDto.java
-   │  │           │  │     │  ├─ LoginAdminRequestDto.java
-   │  │           │  │     │  ├─ LoginRequestDto.java
-   │  │           │  │     │  ├─ PassportDto.java
-   │  │           │  │     │  ├─ RegisterAdminRequestDto.java
-   │  │           │  │     │  ├─ RegisterRequestDto.java
-   │  │           │  │     │  ├─ ResendOtpRequestDto.java
-   │  │           │  │     │  └─ VerifyEmailRequestDto.java
    │  │           │  │     └─ responses
-   │  │           │  │        ├─ AuthenticationResponseDto.java
-   │  │           │  │        ├─ LoginResponseDto.java
-   │  │           │  │        ├─ RegisterAdminResponseDto.java
-   │  │           │  │        └─ RegisterResponseDto.java
    │  │           │  ├─ inventories
    │  │           │  │  ├─ IInventoryRepository.java
    │  │           │  │  ├─ IInventoryService.java
@@ -228,29 +216,8 @@ API Versioning giúp hỗ trợ nhiều phiên bản API mà không ảnh hưở
    │  │           │  │  │  │  └─ SupplierMapper.java
    │  │           │  │  │  └─ model
    │  │           │  │  │     ├─ dtos
-   │  │           │  │  │     │  ├─ BrandDto.java
-   │  │           │  │  │     │  ├─ CategoryDto.java
-   │  │           │  │  │     │  ├─ ImageDto.java
-   │  │           │  │  │     │  ├─ PriceDto.java
-   │  │           │  │  │     │  ├─ ProductDto.java
-   │  │           │  │  │     │  ├─ ProductSkuDto.java
-   │  │           │  │  │     │  ├─ SpuSkuMappingDto.java
-   │  │           │  │  │     │  ├─ SupplierDto.java
    │  │           │  │  │     │  ├─ requests
-   │  │           │  │  │     │  │  ├─ CreateCategoryDto.java
-   │  │           │  │  │     │  │  ├─ CreateImageDto.java
-   │  │           │  │  │     │  │  ├─ CreatePriceDto.java
-   │  │           │  │  │     │  │  ├─ CreateProductDto.java
-   │  │           │  │  │     │  │  ├─ CreateProductSkuDto.java
-   │  │           │  │  │     │  │  ├─ CreateSpuSkuMappingDto.java
-   │  │           │  │  │     │  │  ├─ UpdateCategoryDto.java
-   │  │           │  │  │     │  │  ├─ UpdateProductDto.java
-   │  │           │  │  │     │  │  ├─ UpdateProductSkuDto.java
-   │  │           │  │  │     │  │  └─ UpdateSupplierDto.java
    │  │           │  │  │     │  └─ responses
-   │  │           │  │  │     │     ├─ GetSkuDetailResponse.java
-   │  │           │  │  │     │     ├─ ProductInfoToSearch.java
-   │  │           │  │  │     │     └─ SpuSkuMappingResponse.java
    │  │           │  │  │     └─ entities
    │  │           │  │  │        ├─ BrandEntity.java
    │  │           │  │  │        ├─ CategoryEntity.java
@@ -290,36 +257,14 @@ API Versioning giúp hỗ trợ nhiều phiên bản API mà không ảnh hưở
    │  │           │  │        └─ SupplierService.java
    │  │           │  └─ users
    │  │           │     ├─ controllers
-   │  │           │     │  ├─ EmployeeController.java
-   │  │           │     │  └─ UserController.java
    │  │           │     ├─ domain
    │  │           │     │  ├─ mappers
-   │  │           │     │  │  ├─ CustomerMapper.java
-   │  │           │     │  │  ├─ EmployeeMapper.java
-   │  │           │     │  │  └─ UserMapper.java
    │  │           │     │  └─ model
    │  │           │     │     ├─ dtos
-   │  │           │     │     │  ├─ AccountDto.java
-   │  │           │     │     │  ├─ CustomerDto.java
-   │  │           │     │     │  ├─ EmployeeDto.java
-   │  │           │     │     │  ├─ ProfileDto.java
-   │  │           │     │     │  └─ UserDto.java
    │  │           │     │     └─ entities
-   │  │           │     │        ├─ CustomerEntity.java
-   │  │           │     │        ├─ EmployeeEntity.java
-   │  │           │     │        └─ UserEntity.java
    │  │           │     ├─ repositories
-   │  │           │     │  ├─ ICustomerRepository.java
-   │  │           │     │  ├─ IEmployeeRepository.java
-   │  │           │     │  └─ IUserRepository.java
    │  │           │     └─ services
-   │  │           │        ├─ ICustomerService.java
-   │  │           │        ├─ IEmployeeService.java
-   │  │           │        ├─ IUserService.java
    │  │           │        └─ impl
-   │  │           │           ├─ CustomerService.java
-   │  │           │           ├─ EmployeeService.java
-   │  │           │           └─ UserService.java
    │  │           ├─ shared
    │  │           │  ├─ audit
    │  │           │  │  └─ AuditorAwareImpl.java
