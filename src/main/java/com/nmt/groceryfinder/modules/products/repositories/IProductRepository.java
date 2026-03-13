@@ -1,7 +1,6 @@
 package com.nmt.groceryfinder.modules.products.repositories;
 
-import com.nmt.groceryfinder.modules.products.domain.model.entities.CategoryEntity;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntity;
+import com.nmt.groceryfinder.modules.products.entities.ProductEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

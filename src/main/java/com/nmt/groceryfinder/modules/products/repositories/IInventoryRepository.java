@@ -1,6 +1,6 @@
 package com.nmt.groceryfinder.modules.products.repositories;
 
-import com.nmt.groceryfinder.modules.products.domain.model.entities.InventoryEntity;
+import com.nmt.groceryfinder.modules.products.entities.InventoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

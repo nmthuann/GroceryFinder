@@ -1,9 +1,9 @@
 package com.nmt.groceryfinder.modules.products.repositories;
 
 
-import com.nmt.groceryfinder.modules.products.domain.model.entities.PriceEntity;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.PriceIdEntity;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
+import com.nmt.groceryfinder.modules.products.entities.PriceEntity;
+import com.nmt.groceryfinder.modules.products.entities.PriceIdEntity;
+import com.nmt.groceryfinder.modules.products.entities.ProductSkuEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

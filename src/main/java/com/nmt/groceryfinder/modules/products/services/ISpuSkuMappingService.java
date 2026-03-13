@@ -1,9 +1,9 @@
 package com.nmt.groceryfinder.modules.products.services;
 
 import com.nmt.groceryfinder.common.bases.IBaseService;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.SpuSkuMappingDto;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntity;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
+import com.nmt.groceryfinder.modules.products.dto.SpuSkuMappingDto;
+import com.nmt.groceryfinder.modules.products.entities.ProductEntity;
+import com.nmt.groceryfinder.modules.products.entities.ProductSkuEntity;
 
 import java.util.List;
 import java.util.Optional;

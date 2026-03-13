@@ -1,7 +1,7 @@
 package com.nmt.groceryfinder.shared.passport.strategies;
 
-import com.nmt.groceryfinder.common.dtos.Payload;
-import com.nmt.groceryfinder.modules.auth.dtos.requests.PassportDto;
+import com.nmt.groceryfinder.common.dto.Payload;
+import com.nmt.groceryfinder.modules.auth.requests.PassportDto;
 import com.nmt.groceryfinder.shared.passport.PassportStrategy;
 import jakarta.security.auth.message.AuthException;
 import org.springframework.stereotype.Component;

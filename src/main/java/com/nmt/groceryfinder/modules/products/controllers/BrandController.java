@@ -1,7 +1,7 @@
 package com.nmt.groceryfinder.modules.products.controllers;
 
 import com.nmt.groceryfinder.exceptions.ModuleException;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.BrandDto;
+import com.nmt.groceryfinder.modules.products.dto.BrandDto;
 import com.nmt.groceryfinder.modules.products.services.IBrandService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
 import com.nmt.groceryfinder.shared.ratelimit.RateLimiter;

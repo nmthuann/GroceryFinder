@@ -1,6 +1,6 @@
 package com.nmt.groceryfinder.modules.products.controllers;
 
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.SupplierDto;
+import com.nmt.groceryfinder.modules.products.dto.SupplierDto;
 import com.nmt.groceryfinder.modules.products.services.ISupplierService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
 import com.nmt.groceryfinder.shared.ratelimit.RateLimiter;

@@ -1,7 +1,7 @@
 package com.nmt.groceryfinder.shared.passport;
 
-import com.nmt.groceryfinder.common.dtos.Payload;
-import com.nmt.groceryfinder.modules.auth.dtos.requests.PassportDto;
+import com.nmt.groceryfinder.common.dto.Payload;
+import com.nmt.groceryfinder.modules.auth.requests.PassportDto;
 import jakarta.security.auth.message.AuthException;
 
 /**

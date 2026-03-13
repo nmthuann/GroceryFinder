@@ -2,11 +2,11 @@ package com.nmt.groceryfinder.modules.auth;
 
 import com.nmt.groceryfinder.exceptions.ModuleException;
 import com.nmt.groceryfinder.exceptions.messages.AuthExceptionMessages;
-import com.nmt.groceryfinder.modules.auth.dtos.requests.*;
-import com.nmt.groceryfinder.modules.auth.dtos.responses.AuthenticationResponseDto;
-import com.nmt.groceryfinder.modules.auth.dtos.responses.LoginResponseDto;
-import com.nmt.groceryfinder.modules.auth.dtos.responses.RegisterAdminResponseDto;
-import com.nmt.groceryfinder.modules.auth.dtos.responses.RegisterResponseDto;
+import com.nmt.groceryfinder.modules.auth.responses.AuthenticationResponseDto;
+import com.nmt.groceryfinder.modules.auth.responses.LoginResponseDto;
+import com.nmt.groceryfinder.modules.auth.responses.RegisterAdminResponseDto;
+import com.nmt.groceryfinder.modules.auth.responses.RegisterResponseDto;
+import com.nmt.groceryfinder.modules.auth.requests.*;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;

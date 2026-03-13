@@ -1,12 +1,12 @@
 package com.nmt.groceryfinder.modules.products.controllers;
 
 import com.nmt.groceryfinder.exceptions.ModuleException;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.InventoryDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateInventoryDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreatePriceDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductSkuResponse;
+import com.nmt.groceryfinder.modules.products.dto.InventoryDto;
+import com.nmt.groceryfinder.modules.products.dto.PriceDto;
+import com.nmt.groceryfinder.modules.products.dto.ProductSkuDto;
+import com.nmt.groceryfinder.modules.products.requests.CreateInventoryDto;
+import com.nmt.groceryfinder.modules.products.requests.CreatePriceDto;
+import com.nmt.groceryfinder.modules.products.responses.ProductSkuResponse;
 import com.nmt.groceryfinder.modules.products.services.IProductSkuService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
 import com.nmt.groceryfinder.shared.ratelimit.RateLimiter;

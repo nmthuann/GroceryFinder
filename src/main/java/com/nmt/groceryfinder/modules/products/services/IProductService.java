@@ -2,15 +2,15 @@ package com.nmt.groceryfinder.modules.products.services;
 
 import com.nmt.groceryfinder.common.bases.IBaseService;
 import com.nmt.groceryfinder.exceptions.ModuleException;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.ProductSkuDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.SpuSkuMappingDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateProductSkuDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateProductDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.ProductCardResponse;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SearchProductResponse;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.responses.SpuSkuMappingResponse;
+import com.nmt.groceryfinder.modules.products.dto.ProductDto;
+import com.nmt.groceryfinder.modules.products.dto.ProductSkuDto;
+import com.nmt.groceryfinder.modules.products.dto.SpuSkuMappingDto;
+import com.nmt.groceryfinder.modules.products.requests.CreateProductDto;
+import com.nmt.groceryfinder.modules.products.requests.CreateProductSkuDto;
+import com.nmt.groceryfinder.modules.products.requests.UpdateProductDto;
+import com.nmt.groceryfinder.modules.products.responses.ProductCardResponse;
+import com.nmt.groceryfinder.modules.products.responses.SearchProductResponse;
+import com.nmt.groceryfinder.modules.products.responses.SpuSkuMappingResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

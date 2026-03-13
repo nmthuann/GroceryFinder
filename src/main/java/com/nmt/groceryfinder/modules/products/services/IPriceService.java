@@ -2,10 +2,10 @@ package com.nmt.groceryfinder.modules.products.services;
 
 import com.nmt.groceryfinder.common.bases.IBaseService;
 import com.nmt.groceryfinder.exceptions.ModuleException;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreatePriceDto;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.PriceIdEntity;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
+import com.nmt.groceryfinder.modules.products.dto.PriceDto;
+import com.nmt.groceryfinder.modules.products.requests.CreatePriceDto;
+import com.nmt.groceryfinder.modules.products.entities.PriceIdEntity;
+import com.nmt.groceryfinder.modules.products.entities.ProductSkuEntity;
 
 import java.util.List;
 import java.util.Optional;

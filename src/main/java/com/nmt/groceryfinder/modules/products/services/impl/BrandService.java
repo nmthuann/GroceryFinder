@@ -1,9 +1,9 @@
 package com.nmt.groceryfinder.modules.products.services.impl;
 
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
-import com.nmt.groceryfinder.modules.products.domain.mappers.BrandMapper;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.BrandDto;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.BrandEntity;
+import com.nmt.groceryfinder.modules.products.mappers.BrandMapper;
+import com.nmt.groceryfinder.modules.products.dto.BrandDto;
+import com.nmt.groceryfinder.modules.products.entities.BrandEntity;
 import com.nmt.groceryfinder.modules.products.repositories.IBrandRepository;
 import com.nmt.groceryfinder.modules.products.services.IBrandService;
 import org.springframework.beans.factory.annotation.Autowired;

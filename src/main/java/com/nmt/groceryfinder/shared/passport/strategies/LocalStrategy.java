@@ -1,10 +1,10 @@
 package com.nmt.groceryfinder.shared.passport.strategies;
 
-import com.nmt.groceryfinder.common.dtos.Payload;
+import com.nmt.groceryfinder.common.dto.Payload;
 import com.nmt.groceryfinder.exceptions.messages.AuthExceptionMessages;
-import com.nmt.groceryfinder.modules.auth.dtos.requests.PassportDto;
-import com.nmt.groceryfinder.modules.users.user.dtos.AccountDto;
-import com.nmt.groceryfinder.modules.users.user.IUserService;
+import com.nmt.groceryfinder.modules.auth.requests.PassportDto;
+import com.nmt.groceryfinder.modules.users.dto.AccountDto;
+import com.nmt.groceryfinder.modules.users.services.IUserService;
 import com.nmt.groceryfinder.shared.passport.PassportStrategy;
 import com.nmt.groceryfinder.shared.passport.common.UsernamePasswordLoginDto;
 import com.nmt.groceryfinder.utils.PasswordUtil;

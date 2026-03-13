@@ -2,12 +2,12 @@ package com.nmt.groceryfinder.modules.products.services.impl;
 
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
 import com.nmt.groceryfinder.exceptions.ModuleException;
-import com.nmt.groceryfinder.modules.products.domain.mappers.PriceMapper;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.PriceDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreatePriceDto;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.PriceEntity;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.PriceIdEntity;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
+import com.nmt.groceryfinder.modules.products.mappers.PriceMapper;
+import com.nmt.groceryfinder.modules.products.dto.PriceDto;
+import com.nmt.groceryfinder.modules.products.requests.CreatePriceDto;
+import com.nmt.groceryfinder.modules.products.entities.PriceEntity;
+import com.nmt.groceryfinder.modules.products.entities.PriceIdEntity;
+import com.nmt.groceryfinder.modules.products.entities.ProductSkuEntity;
 import com.nmt.groceryfinder.modules.products.repositories.IPriceRepository;
 import com.nmt.groceryfinder.modules.products.services.IPriceService;
 import org.springframework.beans.factory.annotation.Autowired;

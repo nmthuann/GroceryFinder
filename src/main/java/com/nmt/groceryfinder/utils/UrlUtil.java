@@ -2,6 +2,7 @@ package com.nmt.groceryfinder.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author LENOVO
@@ -10,10 +11,6 @@ import java.net.URLDecoder;
  */
 public class UrlUtil {
     public static String decodeUrl(String encodedUrl) {
-        try {
-            return URLDecoder.decode(encodedUrl, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Failed to decode URL", e);
-        }
+        return URLDecoder.decode(encodedUrl, StandardCharsets.UTF_8);
     }
 }

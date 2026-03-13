@@ -1,11 +1,11 @@
 package com.nmt.groceryfinder.modules.products.services.impl;
 
 import com.nmt.groceryfinder.common.bases.AbstractBaseService;
-import com.nmt.groceryfinder.modules.products.domain.mappers.SpuSkuMappingMapper;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.SpuSkuMappingDto;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductEntity;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.ProductSkuEntity;
-import com.nmt.groceryfinder.modules.products.domain.model.entities.SpuSkuMappingEntity;
+import com.nmt.groceryfinder.modules.products.mappers.SpuSkuMappingMapper;
+import com.nmt.groceryfinder.modules.products.dto.SpuSkuMappingDto;
+import com.nmt.groceryfinder.modules.products.entities.ProductEntity;
+import com.nmt.groceryfinder.modules.products.entities.ProductSkuEntity;
+import com.nmt.groceryfinder.modules.products.entities.SpuSkuMappingEntity;
 import com.nmt.groceryfinder.modules.products.repositories.ISpuSkuMappingRepository;
 import com.nmt.groceryfinder.modules.products.services.ISpuSkuMappingService;
 import org.springframework.beans.factory.annotation.Autowired;

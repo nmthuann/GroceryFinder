@@ -1,9 +1,9 @@
 package com.nmt.groceryfinder.modules.products.controllers;
 
 import com.nmt.groceryfinder.exceptions.ModuleException;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.CategoryDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.CreateCategoryDto;
-import com.nmt.groceryfinder.modules.products.domain.model.dtos.requests.UpdateCategoryDto;
+import com.nmt.groceryfinder.modules.products.dto.CategoryDto;
+import com.nmt.groceryfinder.modules.products.requests.CreateCategoryDto;
+import com.nmt.groceryfinder.modules.products.requests.UpdateCategoryDto;
 import com.nmt.groceryfinder.modules.products.services.ICategoryService;
 import com.nmt.groceryfinder.shared.logging.LoggingInterceptor;
 import com.nmt.groceryfinder.shared.ratelimit.RateLimiter;
